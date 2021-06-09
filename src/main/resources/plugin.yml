@@ -1,0 +1,6 @@
+name: GuardianChat
+version: ${project.version}
+main: dev.mruniverse.guardianchat.GuardianChat
+depend: [ GuardianLIB ]
+authors: [ MrUniverse44 ]
+description: Simple Chat System plugin

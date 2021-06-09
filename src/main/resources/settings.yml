@@ -1,0 +1,173 @@
+#    _____                     _ _                _____ _           _
+#  / ____|                   | (_)              / ____| |         | |
+# | |  __ _   _  __ _ _ __ __| |_  __ _ _ __   | |    | |__   __ _| |_
+# | | |_ | | | |/ _` | '__/ _` | |/ _` | '_ \  | |    | '_ \ / _` | __|
+# | |__| | |_| | (_| | | | (_| | | (_| | | | | | |____| | | | (_| | |_
+#  \_____|\__,_|\__,_|_|  \__,_|_|\__,_|_| |_|  \_____|_| |_|\__,_|\__|
+#
+# Created by MrUniverse44
+# Version 1.0.0-SNAPSHOT
+#
+settings:
+  # Chat Configuration
+  chat:
+    # Block player's chat until a movement
+    block-until-movement: true
+    # Toggle Anti-Caps System
+    anti-caps: true
+    # Toggle custom Chat
+    custom-chat: true
+    # Toggle delay system
+    delay-system: true
+# + ------------------------- +
+#  Block Movement - Configuration
+# + ------------------------- +
+block-until-movement:
+  # Event Priorities: NORMAL-MONITOR-LOWEST-LOW-HIGHEST
+  priority: NORMAL
+  # Message
+  message:
+    # Toggle this system
+    toggle: true
+    # Message formats: CHAT, TITLE, ACTIONBAR, BOSSBAR
+    format: CHAT
+    # Message value
+    value: '&c&lMove to use the chat'
+  # Do other actions instead a message.
+  other-actions:
+    # Toggle this option.
+    toggle: false
+    # These actions will be executed when the player is in the max warn
+    # [CONSOLE] = Console Execute command
+    # [MESSAGE] = The plugin will send a message to the player
+    # [COMMAND] = The player will Execute a command
+    # [SOUND] = The plugin will play a sound to the player
+    # [ACTIONBAR] = The plugin will send a actionbar to the player
+    # [TITLE] = The plugin will send titles to the player
+    # [BOSSBAR] = The plugin will send a bossbar to the player
+    # [MESSAGE_OTHERS] = The plugin will send a message to all player
+    # [SOUND_OTHERS] = The plugin will play a sound to all players
+    # [COMMAND_OTHERS] = All players will Execute a command
+    # [ACTIONBAR_OTHERS] = The plugin will send a actionbar to all players
+    # [TITLE_OTHERS] = The plugin will send titles to all players
+    # [BOSSBAR_OTHERS] = The plugin will send a bossbar to all players
+    # If you don't put nothing of [] in action list, the plugin will put automatically that action as a console command.
+    actions:
+      - '[SOUND]NOTE_PLING'
+# + ------------------------- +
+#  Anti Caps  - Configuration
+# + ------------------------- +
+anti-caps:
+  # Event Priorities: NORMAL-MONITOR-LOWEST-LOW-HIGHEST
+  priority: NORMAL
+  # The user will send the message but without caps.
+  send-message: false
+  # Warn System
+  warn-system:
+    # Toggle this system
+    toggle: true
+    # Warn message on warn
+    message:
+      # Toggle this message
+      toggle: false
+      # Message formats: CHAT, TITLE, ACTIONBAR, BOSSBAR
+      format: CHAT
+      # Message value
+      value: '&c&lAnti Caps system blocked your message (&f%user_warns%&c&l/&f%max_warns%&c&l)'
+    # Max warns
+    max-warns:
+      # Size of max warns,disable max using 0
+      size: 5
+      # These actions will be executed when the player is in the max warn
+      # [CONSOLE] = Console Execute command
+      # [MESSAGE] = The plugin will send a message to the player
+      # [COMMAND] = The player will Execute a command
+      # [SOUND] = The plugin will play a sound to the player
+      # [ACTIONBAR] = The plugin will send a actionbar to the player
+      # [TITLE] = The plugin will send titles to the player
+      # [BOSSBAR] = The plugin will send a bossbar to the player
+      # [MESSAGE_OTHERS] = The plugin will send a message to all player
+      # [SOUND_OTHERS] = The plugin will play a sound to all players
+      # [COMMAND_OTHERS] = All players will Execute a command
+      # [ACTIONBAR_OTHERS] = The plugin will send a actionbar to all players
+      # [TITLE_OTHERS] = The plugin will send titles to all players
+      # [BOSSBAR_OTHERS] = The plugin will send a bossbar to all players
+      # If you don't put nothing of [] in action list, the plugin will put automatically that action as a console command.
+      actions:
+        - '[CONSOLE]kick %player% max-warns reached!'
+
+# + ------------------------- +
+# Custom Chat - Configuration
+# + ------------------------- +
+custom-chat:
+  # Event Priorities: NORMAL-MONITOR-LOWEST-LOW-HIGHEST
+  priority: NORMAL
+  # Customize chat format
+  format: '&a%player% %message%'
+  # Default chat color, you can disable this using 'NONE' instead '&7'
+  default-color: '&7'
+  # Toggle json-chat system
+  json:
+    # Toggle this option
+    toggle: true
+    # Click Actions: COMMAND, MESSAGE, SUGGEST, LINK, NONE
+    click-action: NONE
+    # Click Action Value
+    click-action-value: ''
+    # Custom Hover
+    hover: []
+  per-group-chat:
+    # Toggle this option
+    toggle: false
+    # copy and paste the default group if you want add your group but replace 'default' with your group name.
+    default:
+      # Customize chat format
+      format: '&a%player% %message%'
+      # Default chat color, you can disable this using 'NONE' instead '&7'
+      default-color: '&7'
+      # Toggle json-chat system
+      json:
+        # Toggle this option
+        toggle: true
+        # Click Actions: COMMAND, MESSAGE, SUGGEST, LINK, NONE
+        click-action: NONE
+        # Click Action Value
+        click-action-value: ''
+        # Custom Hover
+        hover: []
+# + ------------------------- +
+# DelaySystem - Configuration
+# + ------------------------- +
+delay-system:
+  # Event Priorities: NORMAL-MONITOR-LOWEST-LOW-HIGHEST
+  priority: NORMAL
+  # Value in seconds, important!
+  value: 1
+  # Message
+  message:
+    # Toggle this system
+    toggle: true
+    # Message formats: CHAT, TITLE, ACTIONBAR, BOSSBAR
+    format: CHAT
+    # Message value
+    value: '&aPlease wait &b%time_left% &ato speak.'
+    # Do other actions instead a message.
+    other-actions:
+      # Toggle this option.
+      toggle: false
+      # These actions will be executed when the player is in the max warn
+      # [CONSOLE] = Console Execute command
+      # [MESSAGE] = The plugin will send a message to the player
+      # [COMMAND] = The player will Execute a command
+      # [SOUND] = The plugin will play a sound to the player
+      # [ACTIONBAR] = The plugin will send a actionbar to the player
+      # [TITLE] = The plugin will send titles to the player
+      # [BOSSBAR] = The plugin will send a bossbar to the player
+      # [MESSAGE_OTHERS] = The plugin will send a message to all player
+      # [SOUND_OTHERS] = The plugin will play a sound to all players
+      # [COMMAND_OTHERS] = All players will Execute a command
+      # [ACTIONBAR_OTHERS] = The plugin will send a actionbar to all players
+      # [TITLE_OTHERS] = The plugin will send titles to all players
+      # [BOSSBAR_OTHERS] = The plugin will send a bossbar to all players
+      # If you don't put nothing of [] in action list, the plugin will put automatically that action as a console command.
+      actions: []
