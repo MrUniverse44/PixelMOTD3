@@ -1,173 +1,53 @@
-#    _____                     _ _                _____ _           _
-#  / ____|                   | (_)              / ____| |         | |
-# | |  __ _   _  __ _ _ __ __| |_  __ _ _ __   | |    | |__   __ _| |_
-# | | |_ | | | |/ _` | '__/ _` | |/ _` | '_ \  | |    | '_ \ / _` | __|
-# | |__| | |_| | (_| | | | (_| | | (_| | | | | | |____| | | | (_| | |_
-#  \_____|\__,_|\__,_|_|  \__,_|_|\__,_|_| |_|  \_____|_| |_|\__,_|\__|
+#   _____ _          _ __  __  ____ _______ _____
+#   |  __ (_)        | |  \/  |/ __ \__   __|  __ \
+#   | |__) |__  _____| | \  / | |  | | | |  | |  | |
+#   |  ___/ \ \/ / _ \ | |\/| | |  | | | |  | |  | |
+#   | |   | |>  <  __/ | |  | | |__| | | |  | |__| |
+#   |_|   |_/_/\_\___|_|_|  |_|\____/  |_|  |_____/
 #
-# Created by MrUniverse44
-# Version 1.0.0-SNAPSHOT
+#   Using version 9.0.0-SNAPSHOT
+#   Author: MrUniverse44
+#   SpigotMC Link: https://www.spigotmc.org/resources/37177/
 #
 settings:
-  # Chat Configuration
-  chat:
-    # Block player's chat until a movement
-    block-until-movement: true
-    # Toggle Anti-Caps System
-    anti-caps: true
-    # Toggle custom Chat
-    custom-chat: true
-    # Toggle delay system
-    delay-system: true
-# + ------------------------- +
-#  Block Movement - Configuration
-# + ------------------------- +
-block-until-movement:
-  # Event Priorities: NORMAL-MONITOR-LOWEST-LOW-HIGHEST
-  priority: NORMAL
-  # Message
-  message:
-    # Toggle this system
-    toggle: true
-    # Message formats: CHAT, TITLE, ACTIONBAR, BOSSBAR
-    format: CHAT
-    # Message value
-    value: '&c&lMove to use the chat'
-  # Do other actions instead a message.
-  other-actions:
-    # Toggle this option.
-    toggle: false
-    # These actions will be executed when the player is in the max warn
-    # [CONSOLE] = Console Execute command
-    # [MESSAGE] = The plugin will send a message to the player
-    # [COMMAND] = The player will Execute a command
-    # [SOUND] = The plugin will play a sound to the player
-    # [ACTIONBAR] = The plugin will send a actionbar to the player
-    # [TITLE] = The plugin will send titles to the player
-    # [BOSSBAR] = The plugin will send a bossbar to the player
-    # [MESSAGE_OTHERS] = The plugin will send a message to all player
-    # [SOUND_OTHERS] = The plugin will play a sound to all players
-    # [COMMAND_OTHERS] = All players will Execute a command
-    # [ACTIONBAR_OTHERS] = The plugin will send a actionbar to all players
-    # [TITLE_OTHERS] = The plugin will send titles to all players
-    # [BOSSBAR_OTHERS] = The plugin will send a bossbar to all players
-    # If you don't put nothing of [] in action list, the plugin will put automatically that action as a console command.
-    actions:
-      - '[SOUND]NOTE_PLING'
-# + ------------------------- +
-#  Anti Caps  - Configuration
-# + ------------------------- +
-anti-caps:
-  # Event Priorities: NORMAL-MONITOR-LOWEST-LOW-HIGHEST
-  priority: NORMAL
-  # The user will send the message but without caps.
-  send-message: false
-  # Warn System
-  warn-system:
-    # Toggle this system
-    toggle: true
-    # Warn message on warn
-    message:
-      # Toggle this message
-      toggle: false
-      # Message formats: CHAT, TITLE, ACTIONBAR, BOSSBAR
-      format: CHAT
-      # Message value
-      value: '&c&lAnti Caps system blocked your message (&f%user_warns%&c&l/&f%max_warns%&c&l)'
-    # Max warns
-    max-warns:
-      # Size of max warns,disable max using 0
-      size: 5
-      # These actions will be executed when the player is in the max warn
-      # [CONSOLE] = Console Execute command
-      # [MESSAGE] = The plugin will send a message to the player
-      # [COMMAND] = The player will Execute a command
-      # [SOUND] = The plugin will play a sound to the player
-      # [ACTIONBAR] = The plugin will send a actionbar to the player
-      # [TITLE] = The plugin will send titles to the player
-      # [BOSSBAR] = The plugin will send a bossbar to the player
-      # [MESSAGE_OTHERS] = The plugin will send a message to all player
-      # [SOUND_OTHERS] = The plugin will play a sound to all players
-      # [COMMAND_OTHERS] = All players will Execute a command
-      # [ACTIONBAR_OTHERS] = The plugin will send a actionbar to all players
-      # [TITLE_OTHERS] = The plugin will send titles to all players
-      # [BOSSBAR_OTHERS] = The plugin will send a bossbar to all players
-      # If you don't put nothing of [] in action list, the plugin will put automatically that action as a console command.
-      actions:
-        - '[CONSOLE]kick %player% max-warns reached!'
-
-# + ------------------------- +
-# Custom Chat - Configuration
-# + ------------------------- +
-custom-chat:
-  # Event Priorities: NORMAL-MONITOR-LOWEST-LOW-HIGHEST
-  priority: NORMAL
-  # Customize chat format
-  format: '&a%player% %message%'
-  # Default chat color, you can disable this using 'NONE' instead '&7'
-  default-color: '&7'
-  # Toggle json-chat system
-  json:
-    # Toggle this option
-    toggle: true
-    # Click Actions: COMMAND, MESSAGE, SUGGEST, LINK, NONE
-    click-action: NONE
-    # Click Action Value
-    click-action-value: ''
-    # Custom Hover
-    hover: []
-  per-group-chat:
-    # Toggle this option
-    toggle: false
-    # copy and paste the default group if you want add your group but replace 'default' with your group name.
-    default:
-      # Customize chat format
-      format: '&a%player% %message%'
-      # Default chat color, you can disable this using 'NONE' instead '&7'
-      default-color: '&7'
-      # Toggle json-chat system
-      json:
-        # Toggle this option
-        toggle: true
-        # Click Actions: COMMAND, MESSAGE, SUGGEST, LINK, NONE
-        click-action: NONE
-        # Click Action Value
-        click-action-value: ''
-        # Custom Hover
-        hover: []
-# + ------------------------- +
-# DelaySystem - Configuration
-# + ------------------------- +
-delay-system:
-  # Event Priorities: NORMAL-MONITOR-LOWEST-LOW-HIGHEST
-  priority: NORMAL
-  # Value in seconds, important!
-  value: 1
-  # Message
-  message:
-    # Toggle this system
-    toggle: true
-    # Message formats: CHAT, TITLE, ACTIONBAR, BOSSBAR
-    format: CHAT
-    # Message value
-    value: '&aPlease wait &b%time_left% &ato speak.'
-    # Do other actions instead a message.
-    other-actions:
-      # Toggle this option.
-      toggle: false
-      # These actions will be executed when the player is in the max warn
-      # [CONSOLE] = Console Execute command
-      # [MESSAGE] = The plugin will send a message to the player
-      # [COMMAND] = The player will Execute a command
-      # [SOUND] = The plugin will play a sound to the player
-      # [ACTIONBAR] = The plugin will send a actionbar to the player
-      # [TITLE] = The plugin will send titles to the player
-      # [BOSSBAR] = The plugin will send a bossbar to the player
-      # [MESSAGE_OTHERS] = The plugin will send a message to all player
-      # [SOUND_OTHERS] = The plugin will play a sound to all players
-      # [COMMAND_OTHERS] = All players will Execute a command
-      # [ACTIONBAR_OTHERS] = The plugin will send a actionbar to all players
-      # [TITLE_OTHERS] = The plugin will send titles to all players
-      # [BOSSBAR_OTHERS] = The plugin will send a bossbar to all players
-      # If you don't put nothing of [] in action list, the plugin will put automatically that action as a console command.
-      actions: []
+  # Enable Check update when the plugin load
+  update-check: true
+  # Plugin language file, if you want add your custom lang file you need put the name ("messages_<code>.yml") and in the language you put the code, example:
+  # messages_en.yml | code: en | language: en
+  # messages_es.yml | code: es | language: es
+  language: en
+  # Customize your event priority level, priorities: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST
+  event-priority: HIGH
+  # Toggle outdated-client motd system
+  outdated-client-motd: true
+  # Toggle outdated-server motd system
+  outdated-server-motd: true
+  # Config your max-server-protocol and min-server-protocol for the check of the outdated-client and outdated-server.
+  # You can see protocols here: https://minecraft.fandom.com/wiki/Protocol_version
+  max-server-protocol: 755
+  min-server-protocol: 47
+  # Toggle update-check for Alpha and Beta Versions
+  check-alpha-updates: false
+  # Toggle Events,if this option is disabled, events will not load and variables will not work. Recommended: false, if you have +1000 users.
+  # Only enable this option when you have an event running.
+  events-toggle: false
+  # Customize your own events
+  events:
+    # This is the default event, to add more events only copy and paste it
+    # (obviously replacing the name 'exampleEvent' with another name)
+    exampleEvent:
+      eventName: Example Event
+      eventDate: 12/21/21 23:59:00
+      TimeZone: ECT
+      format-Type: FIRST
+      endMessage: '&cThe event finished.'
+  # Time Option
+  timer:
+    weeks: weeks
+    week: week
+    days: days
+    day: day
+    minutes: minutes
+    minute: minute
+    seconds: seconds
+    second: second

@@ -1,7 +1,7 @@
-package dev.mruniverse.guardianchat.cloudlytext.part;
+package dev.mruniverse.pixelmotd.spigot.cloudlytext.part;
 
-import dev.mruniverse.guardianchat.cloudlytext.part.action.ActionClick;
-import dev.mruniverse.guardianchat.cloudlytext.part.hover.HoverBuilder;
+import dev.mruniverse.pixelmotd.spigot.cloudlytext.part.action.ActionClick;
+import dev.mruniverse.pixelmotd.spigot.cloudlytext.part.hover.HoverBuilder;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;

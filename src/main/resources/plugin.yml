@@ -1,6 +1,6 @@
-name: GuardianChat
+name: PixelMOTD
 version: ${project.version}
-main: dev.mruniverse.guardianchat.GuardianChat
-depend: [ GuardianLIB ]
+main: dev.mruniverse.guardianchat.PixelMOTD
+depend: [ ProtocolLIB ]
 authors: [ MrUniverse44 ]
 description: Simple Chat System plugin

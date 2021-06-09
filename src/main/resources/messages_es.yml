@@ -1,0 +1,21 @@
+#   _____ _          _ __  __  ____ _______ _____
+#   |  __ (_)        | |  \/  |/ __ \__   __|  __ \
+#   | |__) |__  _____| | \  / | |  | | | |  | |  | |
+#   |  ___/ \ \/ / _ \ | |\/| | |  | | | |  | |  | |
+#   | |   | |>  <  __/ | |  | | |__| | | |  | |__| |
+#   |_|   |_/_/\_\___|_|_|  |_|\____/  |_|  |_____/
+#
+#   Using version 9.0.0-SNAPSHOT
+#   Author: MrUniverse44
+#   SpigotMC Link: https://www.spigotmc.org/resources/37177/
+#
+messages:
+  reload: '&aEl plugin ha sido recargado en <ms>ms.'
+  no-perms: '&cNecesitas el permiso <permission> para este comando.'
+  whitelist-enabled: '&aEl modo mantenimiento ahora esta &b&lACTIVADO&a.'
+  whitelist-disabled: '&aEl modo mantenimiento ahora esta &c&lDESACTIVADO&a.'
+  status-enabled: '&aEl estado de mantenimiento <type> &b<value> &aAhora es &b&lACTIVO&a.'
+  status-disabled: '&aEl estado de mantenimiento <type> &b<value> &aAhora es &c&lINACTIVO&a.'
+  whitelist-player-add: '&a<type> &e<player> &aha sido &bagregado &aa la lista blanca.'
+  whitelist-player-remove: '&a<type> &e<player> &afue &celiminado &ade la lista blanca.'
+  already-whitelisted: '&a<type> &e<player> &aya esta en la lista blanca!'

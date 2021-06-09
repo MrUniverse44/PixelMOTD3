@@ -1,4 +1,4 @@
-package dev.mruniverse.guardianchat.cloudlytext.part;
+package dev.mruniverse.pixelmotd.spigot.cloudlytext.part;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 

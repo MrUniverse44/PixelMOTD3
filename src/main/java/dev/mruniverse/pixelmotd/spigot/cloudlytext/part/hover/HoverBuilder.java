@@ -1,4 +1,4 @@
-package dev.mruniverse.guardianchat.cloudlytext.part.hover;
+package dev.mruniverse.pixelmotd.spigot.cloudlytext.part.hover;
 
 import net.md_5.bungee.api.ChatColor;
 

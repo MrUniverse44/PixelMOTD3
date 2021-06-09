@@ -1,4 +1,4 @@
-package dev.mruniverse.guardianchat.cloudlytext.part.action;
+package dev.mruniverse.pixelmotd.spigot.cloudlytext.part.action;
 
 @SuppressWarnings("unused")
 public enum ActionTypeClick {

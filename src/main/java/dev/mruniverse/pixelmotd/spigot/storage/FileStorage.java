@@ -1,6 +1,6 @@
-package dev.mruniverse.guardianchat.storage;
+package dev.mruniverse.pixelmotd.spigot.storage;
 
-import dev.mruniverse.guardianchat.GuardianChat;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,18 +13,67 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class FileStorage {
-    private final GuardianChat plugin;
+
+    private final PixelMOTD plugin;
+
     private FileConfiguration settings;
+    private FileConfiguration messagesEn;
+    private FileConfiguration messagesEs;
+    private FileConfiguration messages;
+    private FileConfiguration motds;
+
     private final File rxSettings;
-    public FileStorage(GuardianChat plugin) {
+    private final File rxMessagesEn;
+    private final File rxMessagesEs;
+    private final File rxMotds;
+
+    private File rxMessages;
+
+    public FileStorage(PixelMOTD plugin) {
         this.plugin = plugin;
         File dataFolder = plugin.getDataFolder();
         rxSettings = new File(dataFolder, "settings.yml");
+        rxMessages = new File(dataFolder, "messages_en.yml");
+        rxMessagesEn = new File(dataFolder, "messages_en.yml");
+        rxMessagesEs = new File(dataFolder, "messages_es.yml");
+        rxMotds = new File(dataFolder, "motds.yml");
+        settings = loadConfig("settings");
+        messagesEn = loadConfig("messages_en");
+        messagesEs = loadConfig("messages_es");
+        messages = loadConfig("messages_es");
+        motds = loadConfig("motds");
 
     }
 
+    public void setMessages(String code) {
+        if(code.equalsIgnoreCase("en")) {
+            rxMessages = rxMessagesEn;
+            messages = messagesEn;
+            return;
+        }
+        if(code.equalsIgnoreCase("es")) {
+            rxMessages = rxMessagesEs;
+            messages = messagesEs;
+            return;
+        }
+        rxMessages = new File(plugin.getDataFolder(),"messages_" + code + ".yml");
+        messages = loadConfig("messages_" + code);
+    }
+
     public File getFile(GuardianFiles fileToGet) {
-        return rxSettings;
+        switch (fileToGet) {
+            case MESSAGES:
+                return rxMessages;
+            case MESSAGES_ES:
+                return rxMessagesEs;
+            case MESSAGES_EN:
+                return rxMessagesEn;
+            case MOTDS:
+                return rxMotds;
+            case SETTINGS:
+            default:
+                return rxSettings;
+        }
     }
 
     /**
@@ -81,10 +130,28 @@ public class FileStorage {
      */
     public void reloadFile(FileSaveMode Mode) {
         switch (Mode) {
+            case MESSAGES_ES:
+                messagesEs = YamlConfiguration.loadConfiguration(rxMessagesEs);
+                break;
+            case MESSAGES:
+                messages = YamlConfiguration.loadConfiguration(rxMessages);
+                break;
+            case MOTDS:
+                motds = YamlConfiguration.loadConfiguration(rxMotds);
+                break;
+            case MESSAGES_EN:
+                messagesEn = YamlConfiguration.loadConfiguration(rxMessagesEn);
+                break;
             case SETTINGS:
+                settings = YamlConfiguration.loadConfiguration(rxSettings);
+                break;
             case ALL:
             default:
                 settings = YamlConfiguration.loadConfiguration(rxSettings);
+                motds = YamlConfiguration.loadConfiguration(rxMotds);
+                messages = YamlConfiguration.loadConfiguration(rxMessages);
+                messagesEn = YamlConfiguration.loadConfiguration(rxMessagesEn);
+                messagesEs = YamlConfiguration.loadConfiguration(rxMessagesEs);
                 break;
         }
     }
@@ -97,10 +164,28 @@ public class FileStorage {
     public void save(FileSaveMode fileToSave) {
         try {
             switch (fileToSave) {
+                case MESSAGES_ES:
+                    messagesEs.save(rxMessagesEs);
+                    break;
+                case MESSAGES:
+                    messages.save(rxMessages);
+                    break;
+                case MOTDS:
+                    motds.save(rxMotds);
+                    break;
+                case MESSAGES_EN:
+                    messagesEn.save(rxMessagesEn);
+                    break;
                 case SETTINGS:
+                    settings.save(rxSettings);
+                    break;
                 case ALL:
                 default:
-                    getControl(GuardianFiles.SETTINGS).save(rxSettings);
+                    settings.save(rxSettings);
+                    messages.save(rxMessages);
+                    messagesEs.save(rxMessagesEs);
+                    messagesEn.save(rxMessagesEn);
+                    motds.save(rxMotds);
                     break;
             }
         } catch (Throwable throwable) {
@@ -162,8 +247,24 @@ public class FileStorage {
      * @param fileToControl config to control.
      */
     public FileConfiguration getControl(GuardianFiles fileToControl) {
-        if (settings == null) settings = loadConfig(rxSettings);
-        return settings;
+        switch (fileToControl) {
+            case MESSAGES:
+                if (messages == null) messages = loadConfig(rxMessages);
+                return messages;
+            case MESSAGES_ES:
+                if (messagesEs == null) messagesEs = loadConfig(rxMessagesEs);
+                return messagesEs;
+            case MESSAGES_EN:
+                if (messagesEn == null) messagesEn = loadConfig(rxMessagesEn);
+                return messagesEn;
+            case MOTDS:
+                if (motds == null) motds = loadConfig(rxMotds);
+                return motds;
+            case SETTINGS:
+            default:
+                if (settings == null) settings = loadConfig(rxSettings);
+                return settings;
+        }
     }
 
     public List<String> getContent(GuardianFiles file, String path, boolean getKeys) {

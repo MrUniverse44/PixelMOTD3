@@ -1,6 +1,6 @@
-package dev.mruniverse.guardianchat.utils;
+package dev.mruniverse.pixelmotd.spigot.utils;
 
-import dev.mruniverse.guardianchat.cloudlytext.part.action.ActionTypeClick;
+import dev.mruniverse.pixelmotd.spigot.cloudlytext.part.action.ActionTypeClick;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 

@@ -1,7 +1,7 @@
-package dev.mruniverse.guardianchat.cloudlytext;
+package dev.mruniverse.pixelmotd.spigot.cloudlytext;
 
-import dev.mruniverse.guardianchat.cloudlytext.part.TextPart;
-import dev.mruniverse.guardianchat.cloudlytext.part.TextPartBuilder;
+import dev.mruniverse.pixelmotd.spigot.cloudlytext.part.TextPart;
+import dev.mruniverse.pixelmotd.spigot.cloudlytext.part.TextPartBuilder;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import java.util.ArrayList;
