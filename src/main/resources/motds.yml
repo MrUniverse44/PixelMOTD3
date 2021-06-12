@@ -53,6 +53,12 @@ normal:
       # NOTE: Variables not supported right now.
       hover:
         toggle: true
+        # Show players of an specific world in the hover.
+        showCustomPlayers:
+          # Toggle this option
+          toggle: false
+          # This world will be selected to show players.
+          world: world
         # List of string message to display
         # on player count hover.
         message:
@@ -95,6 +101,12 @@ normal:
       # NOTE: Variables not supported right now.
       hover:
         toggle: true
+        # Show players of an specific world in the hover.
+        showCustomPlayers:
+          # Toggle this option
+          toggle: false
+          # This world will be selected to show players.
+          world: world
         # List of string message to display
         # on player count hover.
         message:
@@ -167,6 +179,12 @@ whitelist:
       # NOTE: Variables not supported right now.
       hover:
         toggle: true
+        # Show players of an specific world in the hover.
+        showCustomPlayers:
+          # Toggle this option
+          toggle: false
+          # This world will be selected to show players.
+          world: world
         # List of string message to display
         # on player count hover.
         message:
@@ -209,6 +227,12 @@ whitelist:
       # NOTE: Variables not supported right now.
       hover:
         toggle: true
+        # Show players of an specific world in the hover.
+        showCustomPlayers:
+          # Toggle this option
+          toggle: false
+          # This world will be selected to show players.
+          world: world
         # List of string message to display
         # on player count hover.
         message:
@@ -282,6 +306,12 @@ outdated-client:
       # NOTE: Variables not supported right now.
       hover:
         toggle: true
+        # Show players of an specific world in the hover.
+        showCustomPlayers:
+          # Toggle this option
+          toggle: false
+          # This world will be selected to show players.
+          world: world
         # List of string message to display
         # on player count hover.
         message:
@@ -324,6 +354,12 @@ outdated-client:
       # NOTE: Variables not supported right now.
       hover:
         toggle: true
+        # Show players of an specific world in the hover.
+        showCustomPlayers:
+          # Toggle this option
+          toggle: false
+          # This world will be selected to show players.
+          world: world
         # List of string message to display
         # on player count hover.
         message:
@@ -397,6 +433,12 @@ outdated-server:
       # NOTE: Variables not supported right now.
       hover:
         toggle: true
+        # Show players of an specific world in the hover.
+        showCustomPlayers:
+          # Toggle this option
+          toggle: false
+          # This world will be selected to show players.
+          world: world
         # List of string message to display
         # on player count hover.
         message:
@@ -439,6 +481,12 @@ outdated-server:
       # NOTE: Variables not supported right now.
       hover:
         toggle: true
+        # Show players of an specific world in the hover.
+        showCustomPlayers:
+          # Toggle this option
+          toggle: false
+          # This world will be selected to show players.
+          world: world
         # List of string message to display
         # on player count hover.
         message:

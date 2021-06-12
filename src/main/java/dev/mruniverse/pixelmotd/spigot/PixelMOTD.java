@@ -1,11 +1,11 @@
 package dev.mruniverse.pixelmotd.spigot;
 
-import com.comphenix.protocol.events.ListenerPriority;
-import dev.mruniverse.pixelmotd.spigot.listener.CustomMotdListener;
+import com.google.inject.Injector;
+import dev.mruniverse.pixelmotd.spigot.injector.ModuleController;
 import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
-import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 
 import dev.mruniverse.pixelmotd.spigot.utils.GuardianLogger;
+import dev.mruniverse.pixelmotd.spigot.utils.Loader;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
@@ -16,20 +16,18 @@ public final class PixelMOTD extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        logger = new GuardianLogger("PixelMOTD", "dev.mruniverse.pixelmotd.spigot.");
-        storage = new FileStorage(this);
 
-        new CustomMotdListener(this,getEventPriority(storage.getControl(GuardianFiles.SETTINGS).getString("settings.event-priority")));
+        ModuleController moduleController = new ModuleController(this);
+
+        Injector injector = moduleController.createInjector();
+
+        injector.injectMembers(this);
+
+        new Loader(this).load();
     }
 
-    private ListenerPriority getEventPriority(String priorityLevel) {
-        try {
-            if (priorityLevel == null) return ListenerPriority.HIGH;
-            return ListenerPriority.valueOf(priorityLevel.toUpperCase());
-        } catch (Throwable ignored) {
-            return ListenerPriority.HIGH;
-        }
-    }
+    public void setStorage(FileStorage storage) { this.storage = storage; }
+    public void setLogger(GuardianLogger logger) { this.logger = logger; }
 
     public FileStorage getStorage() { return storage; }
 

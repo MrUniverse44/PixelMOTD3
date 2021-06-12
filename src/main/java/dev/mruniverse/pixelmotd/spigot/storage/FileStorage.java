@@ -20,12 +20,10 @@ public class FileStorage {
     private FileConfiguration messagesEn;
     private FileConfiguration messagesEs;
     private FileConfiguration messages;
-    private FileConfiguration motds;
 
     private final File rxSettings;
     private final File rxMessagesEn;
     private final File rxMessagesEs;
-    private final File rxMotds;
 
     private File rxMessages;
 
@@ -36,12 +34,10 @@ public class FileStorage {
         rxMessages = new File(dataFolder, "messages_en.yml");
         rxMessagesEn = new File(dataFolder, "messages_en.yml");
         rxMessagesEs = new File(dataFolder, "messages_es.yml");
-        rxMotds = new File(dataFolder, "motds.yml");
         settings = loadConfig("settings");
         messagesEn = loadConfig("messages_en");
         messagesEs = loadConfig("messages_es");
         messages = loadConfig("messages_es");
-        motds = loadConfig("motds");
 
     }
 
@@ -68,8 +64,6 @@ public class FileStorage {
                 return rxMessagesEs;
             case MESSAGES_EN:
                 return rxMessagesEn;
-            case MOTDS:
-                return rxMotds;
             case SETTINGS:
             default:
                 return rxSettings;
@@ -136,9 +130,6 @@ public class FileStorage {
             case MESSAGES:
                 messages = YamlConfiguration.loadConfiguration(rxMessages);
                 break;
-            case MOTDS:
-                motds = YamlConfiguration.loadConfiguration(rxMotds);
-                break;
             case MESSAGES_EN:
                 messagesEn = YamlConfiguration.loadConfiguration(rxMessagesEn);
                 break;
@@ -148,7 +139,6 @@ public class FileStorage {
             case ALL:
             default:
                 settings = YamlConfiguration.loadConfiguration(rxSettings);
-                motds = YamlConfiguration.loadConfiguration(rxMotds);
                 messages = YamlConfiguration.loadConfiguration(rxMessages);
                 messagesEn = YamlConfiguration.loadConfiguration(rxMessagesEn);
                 messagesEs = YamlConfiguration.loadConfiguration(rxMessagesEs);
@@ -170,9 +160,6 @@ public class FileStorage {
                 case MESSAGES:
                     messages.save(rxMessages);
                     break;
-                case MOTDS:
-                    motds.save(rxMotds);
-                    break;
                 case MESSAGES_EN:
                     messagesEn.save(rxMessagesEn);
                     break;
@@ -185,7 +172,6 @@ public class FileStorage {
                     messages.save(rxMessages);
                     messagesEs.save(rxMessagesEs);
                     messagesEn.save(rxMessagesEn);
-                    motds.save(rxMotds);
                     break;
             }
         } catch (Throwable throwable) {
@@ -257,9 +243,6 @@ public class FileStorage {
             case MESSAGES_EN:
                 if (messagesEn == null) messagesEn = loadConfig(rxMessagesEn);
                 return messagesEn;
-            case MOTDS:
-                if (motds == null) motds = loadConfig(rxMotds);
-                return motds;
             case SETTINGS:
             default:
                 if (settings == null) settings = loadConfig(rxSettings);

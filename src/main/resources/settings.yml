@@ -28,26 +28,3 @@ settings:
   min-server-protocol: 47
   # Toggle update-check for Alpha and Beta Versions
   check-alpha-updates: false
-  # Toggle Events,if this option is disabled, events will not load and variables will not work. Recommended: false, if you have +1000 users.
-  # Only enable this option when you have an event running.
-  events-toggle: false
-  # Customize your own events
-  events:
-    # This is the default event, to add more events only copy and paste it
-    # (obviously replacing the name 'exampleEvent' with another name)
-    exampleEvent:
-      eventName: Example Event
-      eventDate: 12/21/21 23:59:00
-      TimeZone: ECT
-      format-Type: FIRST
-      endMessage: '&cThe event finished.'
-  # Time Option
-  timer:
-    weeks: weeks
-    week: week
-    days: days
-    day: day
-    minutes: minutes
-    minute: minute
-    seconds: seconds
-    second: second
