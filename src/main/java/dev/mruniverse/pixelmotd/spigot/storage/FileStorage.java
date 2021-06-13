@@ -1,6 +1,7 @@
 package dev.mruniverse.pixelmotd.spigot.storage;
 
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
+import dev.mruniverse.pixelmotd.spigot.listener.MotdType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,12 +25,23 @@ public class FileStorage {
     private final File rxSettings;
     private final File rxMessagesEn;
     private final File rxMessagesEs;
+    private final File iconsFolder;
+    private final File normalFolder;
+    private final File whitelistFolder;
+    private final File outdatedClientFolder;
+    private final File outdatedServerFolder;
+
 
     private File rxMessages;
 
     public FileStorage(PixelMOTD plugin) {
         this.plugin = plugin;
         File dataFolder = plugin.getDataFolder();
+        iconsFolder = new File(dataFolder, "icons");
+        normalFolder = new File(iconsFolder, "normal");
+        whitelistFolder = new File(iconsFolder, "whitelist");
+        outdatedClientFolder = new File(iconsFolder, "outdatedClient");
+        outdatedServerFolder = new File(iconsFolder, "outdatedServer");
         rxSettings = new File(dataFolder, "settings.yml");
         rxMessages = new File(dataFolder, "messages_en.yml");
         rxMessagesEn = new File(dataFolder, "messages_en.yml");
@@ -38,7 +50,38 @@ public class FileStorage {
         messagesEn = loadConfig("messages_en");
         messagesEs = loadConfig("messages_es");
         messages = loadConfig("messages_es");
+        checkIconFolder();
+    }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void checkIconFolder() {
+        if(!iconsFolder.exists()) iconsFolder.mkdir();
+        if(!normalFolder.exists()) normalFolder.mkdir();
+        if(!whitelistFolder.exists()) whitelistFolder.mkdir();
+        if(!outdatedClientFolder.exists()) outdatedClientFolder.mkdir();
+        if(!outdatedServerFolder.exists()) outdatedServerFolder.mkdir();
+    }
+
+    public File getIconsFolder(MotdType motdType) {
+        checkIconFolder();
+        switch (motdType) {
+            case WHITELIST:
+                return whitelistFolder;
+            case OUTDATED_CLIENT:
+                return outdatedClientFolder;
+            case OUTDATED_SERVER:
+                return outdatedServerFolder;
+            default:
+            case NORMAL:
+                return normalFolder;
+        }
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public File getIconsFolder(MotdType motdType, String motdName) {
+        File iconFolder = new File(iconsFolder,motdType.getName() + "-" + motdName);
+        if(!iconFolder.exists()) iconFolder.mkdir();
+        return iconFolder;
     }
 
     public void setMessages(String code) {

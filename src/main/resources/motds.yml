@@ -18,7 +18,12 @@ normal:
       # If you want to change protocol when a player tries
       # to join on a incompatible version, keep it false.
       # Instead will display protocol name always.
-      change-protocol-version: false
+      change-protocol-version:
+        # Toggle this option
+        toggle: false
+        # Value of this protocol, protocol list: https://minecraft.fandom.com/wiki/Protocol_version
+        # Show Incompatible version using '-1'
+        value: '-1'
       # Custom protocol name to set if enabled.
       name: PixelMOTD
   #
@@ -70,18 +75,14 @@ normal:
           - ""
           - "&7Please leave a &e⭐⭐⭐⭐⭐"
           - "&7star review!"
-      # Use custom icon for Normal MOTDs
-      # Can set it on plugins/PixelMOTD/icons/normal/default.png
+      # Use custom icon for your motd
+      # Can set it on plugins/PixelMOTD/icons/normal/
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
         enable: true
-        # If enabled, you should set here the file.png
-        # REMEMBER, this is a normal motd. Should be on
-        # the /plugins/PixelMOTD/normal-icon/(icon-name.png).
-        #
-        # Otherwise if enabled it will create a icon with a
-        # not set text.
+        # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
+        # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
         name: "icon.png"
     another: # <-- Avoid duplication names on this if you want to add more.
       line-1: "&b&lPixelMOTD &7| Using &d1.8-1.15 &7display!"
@@ -118,19 +119,15 @@ normal:
           - ""
           - "&7Please leave a &e⭐⭐⭐⭐⭐"
           - "&7star review!"
-      # Use custom icon for Normal MOTDs
-      # Can set it on plugins/PixelMOTD/icons/normal/default.png
+      # Use custom icon for your motd
+      # Can set it on plugins/PixelMOTD/icons/normal/
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
         enable: true
-        # If enabled, you should set here the file.png
-        # REMEMBER, this is a normal motd. Should be on
-        # the /plugins/PixelMOTD/normal-icon/(icon-name.png).
-        #
-        # Otherwise if enabled it will create a icon with a
-        # not set text.
-        name: "not-set.png"
+        # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
+        # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
+        name: "icon.png"
 whitelist:
   # Use custom icon for Whitelist MOTDs
   # Can set it on plugins/PixelMOTD/icons/whitelist/whitelist.png
@@ -144,7 +141,12 @@ whitelist:
       # If you want to change protocol when a player tries
       # to join on a incompatible version, keep it false.
       # Instead will display protocol name always.
-      change-protocol-version: false
+      change-protocol-version:
+        # Toggle this option
+        toggle: true
+        # Value of this protocol, protocol list: https://minecraft.fandom.com/wiki/Protocol_version
+        # Show Incompatible version using '-1' (this is by default in whitelist motd)
+        value: '-1'
       # Custom protocol name to set if enabled.
       name: Whitelist PixelMOTD
   #
@@ -196,18 +198,14 @@ whitelist:
           - ""
           - "&7Please leave a &e⭐⭐⭐⭐⭐"
           - "&7star review!"
-      # Use custom icon for Normal MOTDs
-      # Can set it on plugins/PixelMOTD/icons/whitelist/normal.png
+      # Use custom icon for your motd
+      # Can set it on plugins/PixelMOTD/icons/whitelist/
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
         enable: true
-        # If enabled, you should set here the file.png
-        # REMEMBER, this is a normal motd. Should be on
-        # the /plugins/PixelMOTD/whitelist-icon/(icon-name.png).
-        #
-        # Otherwise if enabled it will create a icon with a
-        # not set text.
+        # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
+        # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
         name: "icon.png"
     another:
       line-1: "&b&lPixelMOTD &7| Using &d1.8-1.15 &7display!"
@@ -244,19 +242,15 @@ whitelist:
           - ""
           - "&7Please leave a &e⭐⭐⭐⭐⭐"
           - "&7star review!"
-      # Use custom icon for Normal MOTDs
-      # Can set it on plugins/PixelMOTD/icons/whitelist/normal.png
+      # Use custom icon for your motd
+      # Can set it on plugins/PixelMOTD/icons/whitelist/
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
         enable: true
-        # If enabled, you should set here the file.png
-        # REMEMBER, this is a normal motd. Should be on
-        # the /plugins/PixelMOTD/whitelist-icon/(icon-name.png).
-        #
-        # Otherwise if enabled it will create a icon with a
-        # not set text.
-        name: "not-set.png"
+        # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
+        # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
+        name: "icon.png"
 
 outdated-client:
   # Use custom icon for Outdated-client MOTDs
@@ -271,7 +265,12 @@ outdated-client:
       # If you want to change protocol when a player tries
       # to join on a incompatible version, keep it false.
       # Instead will display protocol name always.
-      change-protocol-version: false
+      change-protocol-version:
+        # Toggle this option
+        toggle: false
+        # Value of this protocol, protocol list: https://minecraft.fandom.com/wiki/Protocol_version
+        # Show Incompatible version using '-1'
+        value: '-1'
       # Custom protocol name to set if enabled.
       name: Outdated Client PixelMOTD
   #
@@ -323,18 +322,14 @@ outdated-client:
           - ""
           - "&7Please leave a &e⭐⭐⭐⭐⭐"
           - "&7star review!"
-      # Use custom icon for Normal MOTDs
-      # Can set it on plugins/PixelMOTD/icons/outdatedClient/normal.png
+      # Use custom icon for your motd
+      # Can set it on plugins/PixelMOTD/icons/outdatedClient/
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
         enable: true
-        # If enabled, you should set here the file.png
-        # REMEMBER, this is a normal motd. Should be on
-        # the /plugins/PixelMOTD/outdated-icon/(icon-name.png).
-        #
-        # Otherwise if enabled it will create a icon with a
-        # not set text.
+        # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
+        # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
         name: "icon.png"
     another:
       line-1: "&b&lPixelMOTD &7| Using &d1.8-1.15 &7display!"
@@ -371,19 +366,15 @@ outdated-client:
           - ""
           - "&7Please leave a &e⭐⭐⭐⭐⭐"
           - "&7star review!"
-      # Use custom icon for Outdated Client MOTDs
-      # Can set it on plugins/PixelMOTD/icons/outdatedClient/normal.png
+      # Use custom icon for your motd
+      # Can set it on plugins/PixelMOTD/icons/outdatedClient/
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
         enable: true
-        # If enabled, you should set here the file.png
-        # REMEMBER, this is a normal motd. Should be on
-        # the /plugins/PixelMOTD/outdated-icon/(icon-name.png).
-        #
-        # Otherwise if enabled it will create a icon with a
-        # not set text.
-        name: "not-set.png"
+        # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
+        # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
+        name: "icon.png"
 
 outdated-server:
   # Use custom icon for Outdated-client MOTDs
@@ -398,7 +389,12 @@ outdated-server:
       # If you want to change protocol when a player tries
       # to join on a incompatible version, keep it false.
       # Instead will display protocol name always.
-      change-protocol-version: false
+      change-protocol-version:
+        # Toggle this option
+        toggle: false
+        # Value of this protocol, protocol list: https://minecraft.fandom.com/wiki/Protocol_version
+        # Show Incompatible version using '-1'
+        value: '-1'
       # Custom protocol name to set if enabled.
       name: Outdated Server PixelMOTD
   #
@@ -450,18 +446,14 @@ outdated-server:
           - ""
           - "&7Please leave a &e⭐⭐⭐⭐⭐"
           - "&7star review!"
-      # Use custom icon for Normal MOTDs
-      # Can set it on plugins/PixelMOTD/icons/outdatedServer/normal.png
+      # Use custom icon for your motd
+      # Can set it on plugins/PixelMOTD/icons/outdatedServer/
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
         enable: true
-        # If enabled, you should set here the file.png
-        # REMEMBER, this is a normal motd. Should be on
-        # the /plugins/PixelMOTD/outdated-icon/(icon-name.png).
-        #
-        # Otherwise if enabled it will create a icon with a
-        # not set text.
+        # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
+        # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
         name: "icon.png"
     another:
       line-1: "&b&lPixelMOTD &7| Using &d1.8-1.15 &7display!"
@@ -498,16 +490,12 @@ outdated-server:
           - ""
           - "&7Please leave a &e⭐⭐⭐⭐⭐"
           - "&7star review!"
-      # Use custom icon for Outdated Client MOTDs
-      # Can set it on plugins/PixelMOTD/icons/outdatedServer/normal.png
+      # Use custom icon for your motd
+      # Can set it on plugins/PixelMOTD/icons/outdatedServer/
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
         enable: true
-        # If enabled, you should set here the file.png
-        # REMEMBER, this is a normal motd. Should be on
-        # the /plugins/PixelMOTD/outdated-icon/(icon-name.png).
-        #
-        # Otherwise if enabled it will create a icon with a
-        # not set text.
-        name: "not-set.png"
+        # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
+        # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
+        name: "icon.png"

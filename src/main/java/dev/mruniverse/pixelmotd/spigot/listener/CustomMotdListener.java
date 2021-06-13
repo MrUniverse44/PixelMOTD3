@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
+import com.google.common.io.Files;
 import com.google.inject.Inject;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import dev.mruniverse.pixelmotd.spigot.storage.Configuration;
@@ -16,12 +17,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import javax.imageio.ImageIO;
 import javax.inject.Named;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+@SuppressWarnings("unused")
 public class CustomMotdListener extends PacketAdapter {
 
     private final PixelMOTD plugin;
@@ -87,6 +91,7 @@ public class CustomMotdListener extends PacketAdapter {
         return result;
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void onPacketSending(final PacketEvent event){
         if(event.isCancelled()) return;
@@ -114,10 +119,68 @@ public class CustomMotdListener extends PacketAdapter {
             ping.setPlayers(getHover(info.getHover()));
         }
 
+        if(plugin.getStorage().getControl(GuardianFiles.SETTINGS).getBoolean("settings.icon-system") && motds.getBoolean(info.getMotdType().getPath() + "settings.icon")) {
+
+            File[] icons;
+            File motdFolder;
+
+            if(info.getCustomIconStatus()) {
+                motdFolder = plugin.getStorage().getIconsFolder(info.getMotdType(),info.getMotdName());
+            } else {
+                motdFolder = plugin.getStorage().getIconsFolder(info.getMotdType());
+            }
+
+            icons = motdFolder.listFiles();
+            if (icons != null && icons.length != 0) {
+
+                List<File> validIcons = new ArrayList<>();
+
+                if(info.getCustomIconName().equalsIgnoreCase("RANDOM")) {
+                    for (File image : icons) {
+                        if (Files.getFileExtension(image.getPath()).equals("png")) {
+                            validIcons.add(image);
+                        }
+                    }
+
+                } else {
+
+                    File finding = new File(motdFolder,info.getCustomIconName());
+
+                    if(!finding.exists()) {
+                        plugin.getLogs().error("File " + info.getCustomIconName() + " doesn't exists");
+                    } else {
+
+                        if (Files.getFileExtension(finding.getPath()).equals("png")) {
+                            validIcons.add(finding);
+                        } else {
+                            plugin.getLogs().error("This image " + info.getCustomIconName() + " need be (.png) 64x64, this image isn't (.png) format");
+                        }
+                    }
+                }
+
+                if (validIcons.size() != 0) {
+                    WrappedServerPing.CompressedImage image = getCompressedImage(validIcons.get(random.nextInt(validIcons.size())));
+                    if (image != null) ping.setFavicon(image);
+                }
+
+            }
+        }
 
         /*
-         * MOTD SYSTEM
+         * PLAYERS SYSTEM - PROTOCOL VERSION MODIFIER
          */
 
+    }
+
+    private WrappedServerPing.CompressedImage getCompressedImage(File file) {
+        try {
+            return WrappedServerPing.CompressedImage.fromPng(ImageIO.read(file));
+        } catch(Throwable ignored) {
+            reportBadImage(file.getPath());
+            return null;
+        }
+    }
+    private void reportBadImage(String filePath) {
+        plugin.getLogs().warn("Can't read image: &b" + filePath + "&f. Please check image size: 64x64 or check if the image isn't corrupted.");
     }
 }

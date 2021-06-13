@@ -34,6 +34,20 @@ public enum MotdType {
         }
     }
 
+    public String getName() {
+        switch (this) {
+            case WHITELIST:
+                return "whitelist";
+            case OUTDATED_CLIENT:
+                return "outdatedClient";
+            case OUTDATED_SERVER:
+                return "outdatedServer";
+            default:
+            case NORMAL:
+                return "normal";
+        }
+    }
+
     public String getPath() {
         switch (this){
             case WHITELIST:
