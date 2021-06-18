@@ -8,9 +8,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
 import com.google.common.io.Files;
-import com.google.inject.Inject;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
-import dev.mruniverse.pixelmotd.spigot.storage.Configuration;
 import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 import dev.mruniverse.pixelmotd.spigot.utils.WrappedStatus;
 import org.bukkit.Bukkit;
@@ -18,7 +16,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import javax.imageio.ImageIO;
-import javax.inject.Named;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,21 +29,15 @@ public class CustomMotdListener extends PacketAdapter {
 
     private final Random random = new Random();
 
-    @Inject
-    @Named("motds")
-    private Configuration motds;
+    private final FileConfiguration motds;
 
-    @Inject
-    @Named("events")
-    private Configuration events;
-
-    @Inject
-    @Named("whitelist")
-    private Configuration whitelist;
+    private final FileConfiguration whitelist;
 
 
     public CustomMotdListener(PixelMOTD plugin, ListenerPriority priority) {
         super(plugin,priority, PacketType.Status.Server.SERVER_INFO);
+        motds = plugin.getStorage().getControl(GuardianFiles.MOTDS);
+        whitelist = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
         this.plugin = plugin;
         ProtocolLibrary.getProtocolManager().addPacketListener(this);
     }
@@ -60,7 +51,7 @@ public class CustomMotdListener extends PacketAdapter {
 
     private MotdInformation getCurrentMotd(int currentProtocol,int max,int online) {
         if(whitelist.getBoolean("whitelist.toggle")) {
-            return new MotdInformation(MotdType.WHITELIST,getMotd(MotdType.WHITELIST),max,online);
+            return new MotdInformation(plugin.getStorage(),MotdType.WHITELIST,getMotd(MotdType.WHITELIST),max,online);
         }
         FileConfiguration settings = plugin.getStorage().getControl(GuardianFiles.SETTINGS);
 
@@ -71,15 +62,15 @@ public class CustomMotdListener extends PacketAdapter {
         int minProtocol = plugin.getStorage().getControl(GuardianFiles.SETTINGS).getInt("settings.min-server-protocol");
 
         if(!outdatedClientMotd && !outdatedServerMotd || currentProtocol >= minProtocol && currentProtocol <= maxProtocol) {
-            return new MotdInformation(MotdType.NORMAL,getMotd(MotdType.NORMAL),max,online);
+            return new MotdInformation(plugin.getStorage(),MotdType.NORMAL,getMotd(MotdType.NORMAL),max,online);
         }
         if(maxProtocol < currentProtocol && outdatedServerMotd) {
-            return new MotdInformation(MotdType.OUTDATED_SERVER,getMotd(MotdType.OUTDATED_SERVER),max,online);
+            return new MotdInformation(plugin.getStorage(),MotdType.OUTDATED_SERVER,getMotd(MotdType.OUTDATED_SERVER),max,online);
         }
         if(minProtocol > currentProtocol && outdatedClientMotd) {
-            return new MotdInformation(MotdType.OUTDATED_CLIENT,getMotd(MotdType.OUTDATED_CLIENT),max,online);
+            return new MotdInformation(plugin.getStorage(),MotdType.OUTDATED_CLIENT,getMotd(MotdType.OUTDATED_CLIENT),max,online);
         }
-        return new MotdInformation(MotdType.NORMAL,getMotd(MotdType.NORMAL),max,online);
+        return new MotdInformation(plugin.getStorage(),MotdType.NORMAL,getMotd(MotdType.NORMAL),max,online);
     }
 
     public static List<WrappedGameProfile> getHover(List<String> hover) {

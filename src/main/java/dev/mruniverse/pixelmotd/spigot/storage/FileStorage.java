@@ -2,9 +2,11 @@ package dev.mruniverse.pixelmotd.spigot.storage;
 
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import dev.mruniverse.pixelmotd.spigot.listener.MotdType;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
@@ -21,8 +23,14 @@ public class FileStorage {
     private FileConfiguration messagesEn;
     private FileConfiguration messagesEs;
     private FileConfiguration messages;
+    private FileConfiguration motds;
+    private FileConfiguration whitelist;
+    private FileConfiguration events;
 
     private final File rxSettings;
+    private final File rxMotds;
+    private final File rxEvents;
+    private final File rxWhitelist;
     private final File rxMessagesEn;
     private final File rxMessagesEs;
     private final File iconsFolder;
@@ -39,6 +47,9 @@ public class FileStorage {
         File dataFolder = plugin.getDataFolder();
         iconsFolder = new File(dataFolder, "icons");
         normalFolder = new File(iconsFolder, "normal");
+        rxMotds = new File(dataFolder,"motds.yml");
+        rxEvents = new File(dataFolder,"events.yml");
+        rxWhitelist = new File(dataFolder, "whitelist.yml");
         whitelistFolder = new File(iconsFolder, "whitelist");
         outdatedClientFolder = new File(iconsFolder, "outdatedClient");
         outdatedServerFolder = new File(iconsFolder, "outdatedServer");
@@ -49,6 +60,9 @@ public class FileStorage {
         settings = loadConfig("settings");
         messagesEn = loadConfig("messages_en");
         messagesEs = loadConfig("messages_es");
+        events = loadConfig("events");
+        motds = loadConfig("motds");
+        whitelist = loadConfig("whitelist");
         messages = loadConfig("messages_es");
         checkIconFolder();
     }
@@ -101,10 +115,16 @@ public class FileStorage {
 
     public File getFile(GuardianFiles fileToGet) {
         switch (fileToGet) {
+            case EVENTS:
+                return rxEvents;
             case MESSAGES:
                 return rxMessages;
             case MESSAGES_ES:
                 return rxMessagesEs;
+            case WHITELIST:
+                return rxWhitelist;
+            case MOTDS:
+                return rxMotds;
             case MESSAGES_EN:
                 return rxMessagesEn;
             case SETTINGS:
@@ -167,8 +187,17 @@ public class FileStorage {
      */
     public void reloadFile(FileSaveMode Mode) {
         switch (Mode) {
+            case EVENTS:
+                events = YamlConfiguration.loadConfiguration(rxEvents);
+                break;
             case MESSAGES_ES:
                 messagesEs = YamlConfiguration.loadConfiguration(rxMessagesEs);
+                break;
+            case MOTDS:
+                motds = YamlConfiguration.loadConfiguration(rxMotds);
+                break;
+            case WHITELIST:
+                whitelist = YamlConfiguration.loadConfiguration(rxWhitelist);
                 break;
             case MESSAGES:
                 messages = YamlConfiguration.loadConfiguration(rxMessages);
@@ -181,6 +210,9 @@ public class FileStorage {
                 break;
             case ALL:
             default:
+                events = YamlConfiguration.loadConfiguration(rxEvents);
+                whitelist = YamlConfiguration.loadConfiguration(rxWhitelist);
+                motds = YamlConfiguration.loadConfiguration(rxMotds);
                 settings = YamlConfiguration.loadConfiguration(rxSettings);
                 messages = YamlConfiguration.loadConfiguration(rxMessages);
                 messagesEn = YamlConfiguration.loadConfiguration(rxMessagesEn);
@@ -197,6 +229,15 @@ public class FileStorage {
     public void save(FileSaveMode fileToSave) {
         try {
             switch (fileToSave) {
+                case MOTDS:
+                    motds.save(rxMotds);
+                    break;
+                case WHITELIST:
+                    whitelist.save(rxWhitelist);
+                    break;
+                case EVENTS:
+                    events.save(rxEvents);
+                    break;
                 case MESSAGES_ES:
                     messagesEs.save(rxMessagesEs);
                     break;
@@ -211,6 +252,9 @@ public class FileStorage {
                     break;
                 case ALL:
                 default:
+                    events.save(rxEvents);
+                    whitelist.save(rxWhitelist);
+                    motds.save(rxMotds);
                     settings.save(rxSettings);
                     messages.save(rxMessages);
                     messagesEs.save(rxMessagesEs);
@@ -277,6 +321,15 @@ public class FileStorage {
      */
     public FileConfiguration getControl(GuardianFiles fileToControl) {
         switch (fileToControl) {
+            case EVENTS:
+                if (events == null) events = loadConfig(rxEvents);
+                return events;
+            case WHITELIST:
+                if (whitelist == null) whitelist = loadConfig(rxWhitelist);
+                return whitelist;
+            case MOTDS:
+                if (motds == null) motds = loadConfig(rxMotds);
+                return motds;
             case MESSAGES:
                 if (messages == null) messages = loadConfig(rxMessages);
                 return messages;
@@ -291,6 +344,24 @@ public class FileStorage {
                 if (settings == null) settings = loadConfig(rxSettings);
                 return settings;
         }
+    }
+
+    public String getString(GuardianFiles file,@NotNull String path) {
+        String currentPath = getControl(file).getString(path);
+        if(currentPath == null) currentPath = "invalid path";
+        return ChatColor.translateAlternateColorCodes('&', currentPath);
+    }
+
+    public String getStringWithoutColors(GuardianFiles file,String path) {
+        return getControl(file).getString(path);
+    }
+
+    public List<String> getColoredList(GuardianFiles file,String path) {
+        List<String> coloredList = new ArrayList<>();
+        getControl(file).getStringList(path).forEach(text -> {
+            coloredList.add(ChatColor.translateAlternateColorCodes('&', text));
+        });
+        return coloredList;
     }
 
     public List<String> getContent(GuardianFiles file, String path, boolean getKeys) {

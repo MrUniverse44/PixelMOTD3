@@ -1,7 +1,5 @@
 package dev.mruniverse.pixelmotd.spigot;
 
-import com.google.inject.Injector;
-import dev.mruniverse.pixelmotd.spigot.injector.ModuleController;
 import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
 
 import dev.mruniverse.pixelmotd.spigot.utils.GuardianLogger;
@@ -16,13 +14,6 @@ public final class PixelMOTD extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
-        ModuleController moduleController = new ModuleController(this);
-
-        Injector injector = moduleController.createInjector();
-
-        injector.injectMembers(this);
-
         new Loader(this).load();
     }
 

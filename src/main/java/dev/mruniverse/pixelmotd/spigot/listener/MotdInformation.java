@@ -1,9 +1,8 @@
 package dev.mruniverse.pixelmotd.spigot.listener;
 
-import com.google.inject.Inject;
-import dev.mruniverse.pixelmotd.spigot.storage.Configuration;
+import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
+import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 
-import javax.inject.Named;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -35,33 +34,20 @@ public class MotdInformation {
 
     private final int min;
 
-    @Inject
-    @Named("motds")
-    private Configuration motds;
-
-    @Inject
-    @Named("events")
-    private Configuration events;
-
-    @Inject
-    @Named("whitelist")
-    private Configuration whitelist;
-
-    @SuppressWarnings("ConstantConditions")
-    public MotdInformation(MotdType motdType, String motdName,int max,int online){
+    public MotdInformation(FileStorage storage, MotdType motdType, String motdName, int max, int online){
         this.min = online;
         this.max = max;
         currentMotdType = motdType;
         currentMotdName = motdName;
-        HexMotdLine1 = motds.getString(getPath(MotdPaths.HEX_LINE1));
-        HexMotdLine2 = motds.getString(getPath(MotdPaths.HEX_LINE2));
-        motdLine1 = motds.getString(getPath(MotdPaths.LINE1));
-        motdLine2 = motds.getString(getPath(MotdPaths.LINE1));
-        hoverStatus = motds.getBoolean(getPath(MotdPaths.HOVER_STATUS));
-        hover = motds.getColoredList(getPath(MotdPaths.HOVER));
-        customIconStatus = motds.getBoolean(getPath(MotdPaths.CUSTOM_ICON_STATUS));
-        hexStatus = motds.getBoolean(getPath(MotdPaths.HEX_STATUS));
-        customIconName = motds.getString(getPath(MotdPaths.CUSTOM_ICON_NAME));
+        HexMotdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE1));
+        HexMotdLine2 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE2));
+        motdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE1));
+        motdLine2 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE2));
+        hoverStatus = storage.getControl(GuardianFiles.MOTDS).getBoolean(getPath(MotdPaths.HOVER_STATUS));
+        hover = storage.getColoredList(GuardianFiles.MOTDS,getPath(MotdPaths.HOVER));
+        customIconStatus = storage.getControl(GuardianFiles.MOTDS).getBoolean(getPath(MotdPaths.CUSTOM_ICON_STATUS));
+        hexStatus = storage.getControl(GuardianFiles.MOTDS).getBoolean(getPath(MotdPaths.HEX_STATUS));
+        customIconName = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.CUSTOM_ICON_NAME));
     }
 
     public boolean getCustomIconStatus() { return customIconStatus; }

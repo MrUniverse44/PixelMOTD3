@@ -18,28 +18,28 @@ whitelist:
   permissionBypass: pixelmotd.whitelist.bypass
   check-mode: LoginEvent
   kick-message:
-  - ' '
-  - '&cYou were removed from the %type%!'
-  - '&cWhitelist Status Enabled by %whitelist_author%'
-  - ' '
+    - ' '
+    - '&cYou were removed from the %type%!'
+    - '&cWhitelist Status Enabled by %whitelist_author%'
+    - ' '
   players-name:
-  - 'md_5'
+    - 'md_5'
   players-uuid:
-  - '0-0-0-0'
+    - '0-0-0-0'
 blacklist:
   toggle: false
   kick-message:
-  - ' '
-  - '&cYou were removed from the %type%!'
-  - '&cYou''re in the black list of the server!'
-  - '&eYour nick: &f%nick%'
-  - ' '
+    - ' '
+    - '&cYou were removed from the %type%!'
+    - '&cYou''re in the black list of the server!'
+    - '&eYour nick: &f%nick%'
+    - ' '
   players-name:
-  - 'md_5'
+    - 'md_5'
   players-uuid:
-  - '0-0-0-0'
-  - 'MyNameIsBlocked'
-  - 'ImAHacker'
+    - '0-0-0-0'
+    - 'MyNameIsBlocked'
+    - 'ImAHacker'
 
 modules:
   block-users:
@@ -49,37 +49,37 @@ modules:
       - '0-0-0-0'
       - 'MyNameIsBlocked'
       - 'ImAHacker'
-      kickMessage:
+    kickMessage:
       - '&b------------- &aPixelMOTD &b-------------'
       - '&fYou has been kicked from the server'
       - '&fYour name is in the blackList'
       - '&b%blocked_name%'
       - '&b------------- &aPixelMOTD &b-------------'
-    block-words-in-name:
-      enabled: false
-      ignoreCase: false
-      blockedWords:
-        - 'hacker'
-        - '123456789'
-        - 'racist'
-        - 'Stupid'
-        kickMessage:
-        - '&b------------- &aPixelMOTD &b-------------'
-        - '&fYou has been kicked from the server'
-        - '&fYour name has a blocked word.'
-        - '&b%blocked_word%'
-        - '&b------------- &aPixelMOTD &b-------------'
-    worlds-whitelist:
-      toggle: false
-      kickMessage:
-        - '&b------------ &aPixelMotd &b------------'
-          - '&aThis %type% is currently in whitelist.'
-          - '&c%type%: &f%value%'
-          - '&cWhitelist by: &f%whitelist_author%'
-          - '&cReason: &f%whitelist_reason%'
-          - '&b------------ &aPixelMotd &b------------'
-          worlds:
-            worldName:
-              whitelist-status: false
-              whitelist-author: RetiredUniverse44
-              whitelist-reason: This %type% is whitelisted!
+  block-words-in-name:
+    enabled: false
+    ignoreCase: false
+    blockedWords:
+      - 'hacker'
+      - '123456789'
+      - 'racist'
+      - 'Stupid'
+    kickMessage:
+      - '&b------------- &aPixelMOTD &b-------------'
+      - '&fYou has been kicked from the server'
+      - '&fYour name has a blocked word.'
+      - '&b%blocked_word%'
+      - '&b------------- &aPixelMOTD &b-------------'
+  worlds-whitelist:
+    toggle: false
+    kickMessage:
+      - '&b------------ &aPixelMotd &b------------'
+      - '&aThis %type% is currently in whitelist.'
+      - '&c%type%: &f%value%'
+      - '&cWhitelist by: &f%whitelist_author%'
+      - '&cReason: &f%whitelist_reason%'
+      - '&b------------ &aPixelMotd &b------------'
+    worlds:
+      worldName:
+        whitelist-status: false
+        whitelist-author: RetiredUniverse44
+        whitelist-reason: This %type% is whitelisted!
