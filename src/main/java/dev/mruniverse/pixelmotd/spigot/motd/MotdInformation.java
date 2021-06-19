@@ -1,4 +1,4 @@
-package dev.mruniverse.pixelmotd.spigot.listener;
+package dev.mruniverse.pixelmotd.spigot.motd;
 
 import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;

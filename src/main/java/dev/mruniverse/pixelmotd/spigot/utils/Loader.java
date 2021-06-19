@@ -2,7 +2,7 @@ package dev.mruniverse.pixelmotd.spigot.utils;
 
 import com.comphenix.protocol.events.ListenerPriority;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
-import dev.mruniverse.pixelmotd.spigot.listener.CustomMotdListener;
+import dev.mruniverse.pixelmotd.spigot.motd.CustomMotdListener;
 import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
 import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 

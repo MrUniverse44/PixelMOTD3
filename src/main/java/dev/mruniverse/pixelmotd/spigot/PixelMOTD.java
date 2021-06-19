@@ -2,8 +2,14 @@ package dev.mruniverse.pixelmotd.spigot;
 
 import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
 
+import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 import dev.mruniverse.pixelmotd.spigot.utils.GuardianLogger;
 import dev.mruniverse.pixelmotd.spigot.utils.Loader;
+import dev.mruniverse.pixelmotd.spigot.whitelist.AbstractWhitelistListener;
+import dev.mruniverse.pixelmotd.spigot.whitelist.type.CustomWhitelistListener;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
@@ -15,6 +21,24 @@ public final class PixelMOTD extends JavaPlugin {
     @Override
     public void onEnable() {
         new Loader(this).load();
+
+        AbstractWhitelistListener abstractWhitelistListener = new CustomWhitelistListener(this);
+
+        EventPriority customExtraPriority = getEventPriority(storage.getControl(GuardianFiles.SETTINGS).getString("settings.extras-event-priority"));
+
+        PluginManager pluginManager = getServer().getPluginManager();
+
+        pluginManager.registerEvent(PlayerLoginEvent.class, abstractWhitelistListener,customExtraPriority, abstractWhitelistListener,this,true);
+
+    }
+
+    private EventPriority getEventPriority(String priorityLevel) {
+        try {
+            if (priorityLevel == null) return EventPriority.NORMAL;
+            return EventPriority.valueOf(priorityLevel.toUpperCase());
+        } catch (Throwable ignored) {
+            return EventPriority.NORMAL;
+        }
     }
 
     public void setStorage(FileStorage storage) { this.storage = storage; }

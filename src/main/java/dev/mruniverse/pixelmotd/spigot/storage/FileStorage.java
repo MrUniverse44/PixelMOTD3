@@ -1,7 +1,7 @@
 package dev.mruniverse.pixelmotd.spigot.storage;
 
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
-import dev.mruniverse.pixelmotd.spigot.listener.MotdType;
+import dev.mruniverse.pixelmotd.spigot.motd.MotdType;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;

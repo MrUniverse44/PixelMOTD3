@@ -1,8 +1,10 @@
-package dev.mruniverse.pixelmotd.spigot.listener;
+package dev.mruniverse.pixelmotd.spigot.motd;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class MotdUtils {
 
@@ -16,6 +18,21 @@ public class MotdUtils {
             }
         }
         return message;
+    }
+
+    public static String ListToString(List<String> list) {
+        StringBuilder builder = new StringBuilder();
+        int line = 0;
+        int maxLine = list.size();
+        for (String lines : list) {
+            line++;
+            if(line != maxLine) {
+                builder.append(lines).append("\n");
+            } else {
+                builder.append(lines);
+            }
+        }
+        return builder.toString();
     }
 
 

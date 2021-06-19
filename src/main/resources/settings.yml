@@ -18,6 +18,8 @@ settings:
   language: en
   # Customize your event priority level, priorities: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST
   event-priority: HIGH
+  # Customize your event priority level for blacklist & whitelist check: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST
+  extras-event-priority: HIGH
   # Toggle outdated-client motd system
   outdated-client-motd: true
   # Toggle outdated-server motd system

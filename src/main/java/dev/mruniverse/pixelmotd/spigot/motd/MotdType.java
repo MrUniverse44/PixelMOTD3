@@ -1,4 +1,4 @@
-package dev.mruniverse.pixelmotd.spigot.listener;
+package dev.mruniverse.pixelmotd.spigot.motd;
 
 public enum MotdType {
     NORMAL,
