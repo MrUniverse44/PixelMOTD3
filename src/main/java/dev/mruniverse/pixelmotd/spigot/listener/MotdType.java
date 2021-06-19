@@ -20,6 +20,22 @@ public enum MotdType {
         }
     }
 
+    public String getSettings(MotdSettings settings) {
+        switch (settings) {
+            case CUSTOM_PROTOCOL_VERSION_TOGGLE:
+                return getPath() + "settings.custom-protocol.change-protocol-version.toggle";
+            case CUSTOM_PROTOCOL_TOGGLE:
+                return getPath() + "settings.custom-protocol.enable";
+            case CUSTOM_PROTOCOL_VALUE:
+                return getPath() + "settings.custom-protocol.change-protocol-version.value";
+            case CUSTOM_PROTOCOL_NAME:
+                return getPath() + "settings.custom-protocol.name";
+            default:
+            case ICON_SYSTEM:
+                return getPath() + "settings.icon";
+        }
+    }
+
     public String getMotdsUsingPath() {
         switch (this){
             case WHITELIST:

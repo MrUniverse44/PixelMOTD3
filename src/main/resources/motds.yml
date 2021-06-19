@@ -203,10 +203,10 @@ whitelist:
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
-        enable: true
+        enable: false
         # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
         # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
-        name: "icon.png"
+        name: "RANDOM"
     another:
       line-1: "&b&lPixelMOTD &7| Using &d1.8-1.15 &7display!"
       line-2:  "&fWorking hard to bring up new updates."
@@ -247,10 +247,10 @@ whitelist:
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
-        enable: true
+        enable: false
         # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
         # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
-        name: "icon.png"
+        name: "RANDOM"
 
 outdated-client:
   # Use custom icon for Outdated-client MOTDs
@@ -327,10 +327,10 @@ outdated-client:
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
-        enable: true
+        enable: false
         # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
         # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
-        name: "icon.png"
+        name: "RANDOM"
     another:
       line-1: "&b&lPixelMOTD &7| Using &d1.8-1.15 &7display!"
       line-2:  "&fThis version is not supported."
@@ -371,10 +371,10 @@ outdated-client:
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
-        enable: true
+        enable: false
         # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
         # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
-        name: "icon.png"
+        name: "RANDOM"
 
 outdated-server:
   # Use custom icon for Outdated-client MOTDs
@@ -451,10 +451,10 @@ outdated-server:
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
-        enable: true
+        enable: false
         # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
         # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
-        name: "icon.png"
+        name: "RANDOM"
     another:
       line-1: "&b&lPixelMOTD &7| Using &d1.8-1.15 &7display!"
       line-2:  "&fThis version is not supported."
@@ -495,7 +495,7 @@ outdated-server:
       # MUST BE 64x64 icon.
       custom-icon:
         # Enable per-motd icon
-        enable: true
+        enable: false
         # If this option is enabled the plugin will create a new folder called "<mode>-<motdName>"
         # If you don't want use only 1 icon and you want more icons, you can use "RANDOM" in the name.
-        name: "icon.png"
+        name: "RANDOM"

@@ -1,5 +1,6 @@
 package dev.mruniverse.pixelmotd.spigot.listener;
 
+import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
 import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 
@@ -71,7 +72,7 @@ public class MotdInformation {
     }
 
     public String getHexAllMotd() {
-        return HexMotdLine1 + "\n" + HexMotdLine2;
+        return IridiumColorAPI.process(HexMotdLine1) + "\n" + IridiumColorAPI.process(HexMotdLine2);
     }
 
     public int getMax() { return max; }

@@ -157,9 +157,18 @@ public class CustomMotdListener extends PacketAdapter {
             }
         }
 
-        /*
-         * PLAYERS SYSTEM - PROTOCOL VERSION MODIFIER
-         */
+        if(motds.getBoolean(info.getMotdType().getSettings(MotdSettings.CUSTOM_PROTOCOL_TOGGLE))) {
+            ping.setVersionName(MotdUtils.getWorlds(motds.getString(info.getMotdType().getSettings(MotdSettings.CUSTOM_PROTOCOL_NAME))));
+            if(motds.getBoolean(info.getMotdType().getSettings(MotdSettings.CUSTOM_PROTOCOL_VERSION_TOGGLE))) {
+                String value = motds.getString(info.getMotdType().getSettings(MotdSettings.CUSTOM_PROTOCOL_VALUE));
+                if(value==null) value = "EQUALS";
+                if(value.equalsIgnoreCase("EQUALS") || value.equalsIgnoreCase("SAME")) {
+                    ping.setVersionProtocol(protocol);
+                    return;
+                }
+                ping.setVersionProtocol(Integer.parseInt(value));
+            }
+        }
 
     }
 

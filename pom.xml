@@ -39,6 +39,12 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.iridium.iridiumcolorapi</pattern>
+                                    <shadedPattern>dev.mruniverse.pixelmotd.extras.iridiumcolorapi</shadedPattern>
+                                </relocation>
+                            </relocations>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
@@ -54,6 +60,11 @@
     </build>
 
     <repositories>
+        <!-- IridiumColorAPI Repo -->
+        <repository>
+            <id>savagelabs</id>
+            <url>https://nexus.savagelabs.net/repository/maven-releases/</url>
+        </repository>
         <!-- Spigot Repo -->
         <repository>
             <id>spigotmc-repo</id>
@@ -82,6 +93,11 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.iridium</groupId>
+            <artifactId>IridiumColorAPI</artifactId>
+            <version>LATEST</version>
+        </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
