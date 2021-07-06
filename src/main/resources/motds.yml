@@ -20,10 +20,10 @@ normal:
       # Instead will display protocol name always.
       change-protocol-version:
         # Toggle this option
-        toggle: false
+        toggle: true
         # Value of this protocol, protocol list: https://minecraft.fandom.com/wiki/Protocol_version
         # Show Incompatible version using '-1'
-        value: '-1'
+        value: 'EQUALS'
       # Custom protocol name to set if enabled.
       name: PixelMOTD
   #
