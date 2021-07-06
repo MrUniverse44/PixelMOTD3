@@ -2,11 +2,9 @@ package dev.mruniverse.pixelmotd.spigot.utils.command;
 
 
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
+import dev.mruniverse.pixelmotd.spigot.storage.FileSaveMode;
 import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
-import dev.mruniverse.pixelmotd.spigot.utils.command.sub.AddCommand;
-import dev.mruniverse.pixelmotd.spigot.utils.command.sub.ModulesCommand;
-import dev.mruniverse.pixelmotd.spigot.utils.command.sub.RemoveCommand;
-import dev.mruniverse.pixelmotd.spigot.utils.command.sub.WhitelistCommand;
+import dev.mruniverse.pixelmotd.spigot.utils.command.sub.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,17 +17,13 @@ public class MainCommand implements CommandExecutor {
     private final PixelMOTD plugin;
     private final String cmdPrefix;
     private final WhitelistCommand whitelist;
-    private final AddCommand add;
-    private final RemoveCommand remove;
-    private final ModulesCommand modules;
+    private final BlacklistCommand blacklist;
 
     public MainCommand(PixelMOTD plugin, String command) {
         this.plugin = plugin;
         this.cmdPrefix = "&e/" + command;
+        blacklist = new BlacklistCommand(plugin,command);
         whitelist = new WhitelistCommand(plugin,command);
-        add = new AddCommand(plugin,command);
-        remove = new RemoveCommand(plugin,command);
-        modules = new ModulesCommand(plugin,command);
     }
 
     public static void sendMessage(Player player,String message) {
@@ -71,18 +65,40 @@ public class MainCommand implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("admin")) {
                 if(args.length == 1 || args[1].equalsIgnoreCase("1")) {
-                    if(hasPermission(sender,"pmotd.admin.help.game",true)) {
+                    if (hasPermission(sender, "pmotd.admin.help.game", true)) {
                         sender.sendMessage(" ");
-                        sendMessage(sender,"&b------------ &aPixelMOTD &b------------");
-                        sendMessage(sender,"&a- working");
-                        sendMessage(sender,"&b------------ &a(Page 1&l/1&a) &b------------");
+                        sendMessage(sender, "&b------------ &aPixelMOTD &b------------");
+                        sendMessage(sender, cmdPrefix + " admin whitelist add [player or uuid] &e- &fAdd player to whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin whitelist remove [player or uuid] &e- &fRemove player from whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin blacklist add [player or uuid] &e- &fAdd player to whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin blacklist remove [player or uuid] &e- &fRemove player from whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin reload &e- &fReload the plugin.");
+                        sendMessage(sender, "&b------------ &a(Page 1&l/1&a) &b------------");
+                    }
+                    return true;
+                }
+
+                if(args[1].equalsIgnoreCase("reload")) {
+                    if(hasPermission(sender,"pmotd.admin.use.reload",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
+                        long timeMS = System.currentTimeMillis();
+                        plugin.getStorage().reloadFile(FileSaveMode.ALL);
+                        String reload = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.reload","&aThe plugin was reloaded correctly in <ms>ms.");
+                        reload = reload.replace("<ms>", (System.currentTimeMillis() - timeMS) + "");
+                        sendMessage(sender,reload);
                     }
                     return true;
                 }
 
                 if(args[1].equalsIgnoreCase("whitelist") && args.length >= 4) {
-                    if(hasPermission(sender,"pmotd.admin.help.*",true)) {
+                    if(hasPermission(sender,"pmotd.admin.help.whitelist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         whitelist.usage(sender,getArguments(args));
+
+                    }
+                    return true;
+                }
+                if(args[1].equalsIgnoreCase("blacklist") && args.length >= 4) {
+                    if(hasPermission(sender,"pmotd.admin.help.blacklist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
+                        blacklist.usage(sender,getArguments(args));
 
                     }
                     return true;

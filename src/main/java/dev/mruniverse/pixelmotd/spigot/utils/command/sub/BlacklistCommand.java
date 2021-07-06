@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class WhitelistCommand {
+public class BlacklistCommand {
     private final PixelMOTD plugin;
     private final String command;
-    private final ListType currentType = ListType.WHITELIST;
+    private final ListType currentType = ListType.BLACKLIST;
 
-    public WhitelistCommand(PixelMOTD plugin, String command) {
+    public BlacklistCommand(PixelMOTD plugin, String command) {
         this.plugin = plugin;
         this.command = command;
     }
@@ -35,7 +35,7 @@ public class WhitelistCommand {
                     plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(currentType.getPath() + path,users);
                     plugin.getStorage().save(FileSaveMode.WHITELIST);
                     plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
-                    String message = msg.getString(MessagePath.WHITELIST_PLAYER_ADD.getPath(),"&a<type> &e<player> &ahas been&b added &ato the whitelist.");
+                    String message = msg.getString(MessagePath.BLACKLIST_PLAYER_ADD.getPath(),"&a<type> &e<player> &ahas been&b added &ato the blacklist.");
                     MainCommand.sendMessage(sender,messageReplace(message,playerType,currentType));
                     return;
                 }
@@ -57,7 +57,7 @@ public class WhitelistCommand {
                     plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(currentType.getPath() + path,users);
                     plugin.getStorage().save(FileSaveMode.WHITELIST);
                     plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
-                    String message = msg.getString(MessagePath.WHITELIST_PLAYER_REMOVE.getPath(),"&a<type> &e<player> &ahas been&b removed &afrom the whitelist.");
+                    String message = msg.getString(MessagePath.BLACKLIST_PLAYER_REMOVE.getPath(),"&a<type> &e<player> &ahas been&b removed &afrom the blacklist.");
                     MainCommand.sendMessage(sender,messageReplace(message,playerType,currentType));
                     return;
                 }
@@ -75,10 +75,10 @@ public class WhitelistCommand {
             plugin.getStorage().save(FileSaveMode.WHITELIST);
             plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
             if(finalValue) {
-                MainCommand.sendMessage(sender,msg.getString(MessagePath.WHITELIST_TOGGLE_ON.getPath(),"&aThe whitelist has been &b&lENABLED&a."));
+                MainCommand.sendMessage(sender,msg.getString(MessagePath.BLACKLIST_TOGGLE_ON.getPath(),"&aThe blacklist has been &b&lENABLED&a."));
                 return;
             }
-            MainCommand.sendMessage(sender,msg.getString(MessagePath.WHITELIST_TOGGLE_OFF.getPath(),"&aThe whitelist has been &b&lDISABLED&a."));
+            MainCommand.sendMessage(sender,msg.getString(MessagePath.BLACKLIST_TOGGLE_OFF.getPath(),"&aThe blacklist has been &b&lDISABLED&a."));
             return;
         }
         argumentsIssue(sender);
@@ -91,9 +91,9 @@ public class WhitelistCommand {
     public void playerIssue(CommandSender sender, PlayerType type, ListType listType, boolean isAdding) {
         String message;
         if(isAdding) {
-            message = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString(MessagePath.ALREADY_WHITELISTED.getPath(),"&a<type> &e<player> &ais already in the whitelist!");
+            message = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString(MessagePath.ALREADY_BLACKLISTED.getPath(),"&a<type> &e<player> &ais already in the blacklist!");
         } else {
-            message = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString(MessagePath.NOT_WHITELISTED.getPath(),"&a<type> &e<player> &ais not in the whitelist!");
+            message = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString(MessagePath.NOT_BLACKLISTED.getPath(),"&a<type> &e<player> &ais not in the blacklist!");
         }
         MainCommand.sendMessage(sender, messageReplace(message,type,listType));
     }
