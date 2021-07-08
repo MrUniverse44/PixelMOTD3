@@ -27,9 +27,9 @@ whitelist:
 blacklist:
   toggle: false
   author: Console
-    customConsoleName:
-      toggle: true
-      name: Console
+  customConsoleName:
+    toggle: true
+    name: Console
   kick-message:
     - " "
     - "&cYou were removed from the %type%!"
