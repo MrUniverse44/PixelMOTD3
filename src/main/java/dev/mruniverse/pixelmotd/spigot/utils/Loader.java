@@ -20,6 +20,8 @@ public class Loader {
 
         plugin.setStorage(currentStorage);
 
+        new BukkitMetrics(plugin, 8509);
+
         motdListener = new CustomMotdListener(plugin,getEventPriority(currentStorage.getControl(GuardianFiles.SETTINGS).getString("settings.event-priority")));
     }
 
