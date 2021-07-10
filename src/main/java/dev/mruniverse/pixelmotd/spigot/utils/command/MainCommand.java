@@ -81,7 +81,14 @@ public class MainCommand implements CommandExecutor {
                 if(args[1].equalsIgnoreCase("reload")) {
                     if(hasPermission(sender,"pmotd.admin.use.reload",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         long timeMS = System.currentTimeMillis();
-                        plugin.getStorage().reloadFile(FileSaveMode.ALL);
+                        try {
+                            plugin.getLoader().getMotdListener().update();
+                            plugin.getStorage().reloadFile(FileSaveMode.ALL);
+                        }catch (Throwable throwable) {
+                            plugin.getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");
+                            plugin.getLogs().error("If you are sure than this isn't your error, please contact the developer.");
+                            plugin.getLogs().error(throwable);
+                        }
                         String reload = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.reload","&aThe plugin was reloaded correctly in <ms>ms.");
                         reload = reload.replace("<ms>", (System.currentTimeMillis() - timeMS) + "");
                         sendMessage(sender,reload);

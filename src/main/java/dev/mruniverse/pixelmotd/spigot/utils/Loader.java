@@ -8,6 +8,7 @@ import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 
 public class Loader {
     private final PixelMOTD plugin;
+    private CustomMotdListener motdListener = null;
     public Loader(PixelMOTD plugin) {
         this.plugin = plugin;
     }
@@ -19,7 +20,11 @@ public class Loader {
 
         plugin.setStorage(currentStorage);
 
-        new CustomMotdListener(plugin,getEventPriority(currentStorage.getControl(GuardianFiles.SETTINGS).getString("settings.event-priority")));
+        motdListener = new CustomMotdListener(plugin,getEventPriority(currentStorage.getControl(GuardianFiles.SETTINGS).getString("settings.event-priority")));
+    }
+
+    public CustomMotdListener getMotdListener() {
+        return motdListener;
     }
 
     private ListenerPriority getEventPriority(String priorityLevel) {

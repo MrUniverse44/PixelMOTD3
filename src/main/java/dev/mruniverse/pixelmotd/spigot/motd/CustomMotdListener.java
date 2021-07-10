@@ -29,9 +29,9 @@ public class CustomMotdListener extends PacketAdapter {
 
     private final Random random = new Random();
 
-    private final FileConfiguration motds;
+    private FileConfiguration motds;
 
-    private final FileConfiguration whitelist;
+    private FileConfiguration whitelist;
 
 
     public CustomMotdListener(PixelMOTD plugin, ListenerPriority priority) {
@@ -40,6 +40,11 @@ public class CustomMotdListener extends PacketAdapter {
         whitelist = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
         this.plugin = plugin;
         ProtocolLibrary.getProtocolManager().addPacketListener(this);
+    }
+
+    public void update() {
+        motds = plugin.getStorage().getControl(GuardianFiles.MOTDS);
+        whitelist = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
     }
 
     private String getMotd(MotdType motdType) {

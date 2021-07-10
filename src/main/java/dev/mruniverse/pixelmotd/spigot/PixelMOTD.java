@@ -15,12 +15,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 @SuppressWarnings("unused")
 public final class PixelMOTD extends JavaPlugin {
 
+    private Loader loader;
     private GuardianLogger logger;
     private FileStorage storage;
 
     @Override
     public void onEnable() {
-        new Loader(this).load();
+        loader = new Loader(this);
+
+        loader.load();
 
         AbstractWhitelistListener abstractWhitelistListener = new CustomWhitelistListener(this);
 
@@ -43,6 +46,8 @@ public final class PixelMOTD extends JavaPlugin {
 
     public void setStorage(FileStorage storage) { this.storage = storage; }
     public void setLogger(GuardianLogger logger) { this.logger = logger; }
+
+    public Loader getLoader() { return loader; }
 
     public FileStorage getStorage() { return storage; }
 
