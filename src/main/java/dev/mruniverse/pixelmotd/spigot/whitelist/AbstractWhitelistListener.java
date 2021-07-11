@@ -1,8 +1,8 @@
 package dev.mruniverse.pixelmotd.spigot.whitelist;
 
+import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import dev.mruniverse.pixelmotd.spigot.motd.MotdUtils;
-import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

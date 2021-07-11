@@ -1,4 +1,4 @@
-package dev.mruniverse.pixelmotd.spigot.storage;
+package dev.mruniverse.pixelmotd.global.enums;
 
 public enum GuardianFiles {
     SETTINGS,

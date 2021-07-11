@@ -1,10 +1,10 @@
-package dev.mruniverse.pixelmotd.spigot.motd;
+package dev.mruniverse.pixelmotd.bungeecord.motd;
 
 import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.enums.MotdPaths;
 import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
+import dev.mruniverse.pixelmotd.bungeecord.storage.FileStorage;
 
 import java.util.List;
 

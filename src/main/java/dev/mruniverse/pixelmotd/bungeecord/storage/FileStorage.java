@@ -1,13 +1,13 @@
-package dev.mruniverse.pixelmotd.spigot.storage;
+package dev.mruniverse.pixelmotd.bungeecord.storage;
 
+import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.global.enums.FileSaveMode;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -21,13 +21,13 @@ public class FileStorage {
 
     private final PixelMOTD plugin;
 
-    private FileConfiguration settings;
-    private FileConfiguration messagesEn;
-    private FileConfiguration messagesEs;
-    private FileConfiguration messages;
-    private FileConfiguration motds;
-    private FileConfiguration whitelist;
-    private FileConfiguration events;
+    private Configuration settings;
+    private Configuration messagesEn;
+    private Configuration messagesEs;
+    private Configuration messages;
+    private Configuration motds;
+    private Configuration whitelist;
+    private Configuration events;
 
     private final File rxSettings;
     private final File rxMotds;
@@ -141,16 +141,16 @@ public class FileStorage {
      *
      * @param configName config to create/reload.
      */
-    public FileConfiguration loadConfig(String configName) {
+    public Configuration loadConfig(String configName) {
         File configFile = new File(plugin.getDataFolder(), configName + ".yml");
 
         if (!configFile.exists()) {
             saveConfig(configName);
         }
 
-        FileConfiguration cnf = null;
+        Configuration cnf = null;
         try {
-            cnf = YamlConfiguration.loadConfiguration(configFile);
+            cnf = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configFile);
         } catch (Exception e) {
             plugin.getLogs().warn(String.format("A error occurred while loading the settings file. Error: %s", e));
             e.printStackTrace();
@@ -165,14 +165,14 @@ public class FileStorage {
      *
      * @param rigoxFile config to create/reload.
      */
-    public FileConfiguration loadConfig(File rigoxFile) {
+    public Configuration loadConfig(File rigoxFile) {
         if (!rigoxFile.exists()) {
             saveConfig(rigoxFile);
         }
 
-        FileConfiguration cnf = null;
+        Configuration cnf = null;
         try {
-            cnf = YamlConfiguration.loadConfiguration(rigoxFile);
+            cnf = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rigoxFile);
         } catch (Exception e) {
             plugin.getLogs().warn(String.format("A error occurred while loading the settings file. Error: %s", e));
             e.printStackTrace();
@@ -188,38 +188,43 @@ public class FileStorage {
      * @param Mode mode of reload.
      */
     public void reloadFile(FileSaveMode Mode) {
-        switch (Mode) {
-            case EVENTS:
-                events = YamlConfiguration.loadConfiguration(rxEvents);
-                break;
-            case MESSAGES_ES:
-                messagesEs = YamlConfiguration.loadConfiguration(rxMessagesEs);
-                break;
-            case MOTDS:
-                motds = YamlConfiguration.loadConfiguration(rxMotds);
-                break;
-            case WHITELIST:
-                whitelist = YamlConfiguration.loadConfiguration(rxWhitelist);
-                break;
-            case MESSAGES:
-                messages = YamlConfiguration.loadConfiguration(rxMessages);
-                break;
-            case MESSAGES_EN:
-                messagesEn = YamlConfiguration.loadConfiguration(rxMessagesEn);
-                break;
-            case SETTINGS:
-                settings = YamlConfiguration.loadConfiguration(rxSettings);
-                break;
-            case ALL:
-            default:
-                events = YamlConfiguration.loadConfiguration(rxEvents);
-                whitelist = YamlConfiguration.loadConfiguration(rxWhitelist);
-                motds = YamlConfiguration.loadConfiguration(rxMotds);
-                settings = YamlConfiguration.loadConfiguration(rxSettings);
-                messages = YamlConfiguration.loadConfiguration(rxMessages);
-                messagesEn = YamlConfiguration.loadConfiguration(rxMessagesEn);
-                messagesEs = YamlConfiguration.loadConfiguration(rxMessagesEs);
-                break;
+        try {
+            switch (Mode) {
+                case MOTDS:
+                    motds = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMotds);
+                    break;
+                case WHITELIST:
+                    whitelist = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxWhitelist);
+                    break;
+                case EVENTS:
+                    events = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxEvents);
+                    break;
+                case MESSAGES_ES:
+                    messagesEs = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMessagesEs);
+                    break;
+                case MESSAGES:
+                    messages = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMessages);
+                    break;
+                case MESSAGES_EN:
+                    messagesEn = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMessagesEn);
+                    break;
+                case SETTINGS:
+                    settings = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxSettings);
+                    break;
+                case ALL:
+                default:
+                    events = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxEvents);
+                    whitelist = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxWhitelist);
+                    motds = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMotds);
+                    settings = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxSettings);
+                    messagesEs = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMessagesEs);
+                    messagesEn = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMessagesEn);
+                    messages = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMessages);
+                    break;
+            }
+        }catch (Throwable throwable) {
+            plugin.getLogs().error("Unexpected error when the plugin was loading files:");
+            plugin.getLogs().error(throwable);
         }
     }
 
@@ -232,35 +237,35 @@ public class FileStorage {
         try {
             switch (fileToSave) {
                 case MOTDS:
-                    motds.save(rxMotds);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(motds, rxMotds);
                     break;
                 case WHITELIST:
-                    whitelist.save(rxWhitelist);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(whitelist, rxWhitelist);
                     break;
                 case EVENTS:
-                    events.save(rxEvents);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(events, rxEvents);
                     break;
                 case MESSAGES_ES:
-                    messagesEs.save(rxMessagesEs);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(messagesEs, rxMessagesEs);
                     break;
                 case MESSAGES:
-                    messages.save(rxMessages);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(messages, rxMessages);
                     break;
                 case MESSAGES_EN:
-                    messagesEn.save(rxMessagesEn);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(messagesEn, rxMessagesEn);
                     break;
                 case SETTINGS:
-                    settings.save(rxSettings);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(settings, rxSettings);
                     break;
                 case ALL:
                 default:
-                    events.save(rxEvents);
-                    whitelist.save(rxWhitelist);
-                    motds.save(rxMotds);
-                    settings.save(rxSettings);
-                    messages.save(rxMessages);
-                    messagesEs.save(rxMessagesEs);
-                    messagesEn.save(rxMessagesEn);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(events, rxEvents);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(whitelist, rxWhitelist);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(motds, rxMotds);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(settings, rxSettings);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(messagesEs, rxMessagesEs);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(messagesEn, rxMessagesEn);
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(messages, rxMessages);
                     break;
             }
         } catch (Throwable throwable) {
@@ -282,7 +287,7 @@ public class FileStorage {
         }
 
         if (!file.exists()) {
-            try (InputStream in = plugin.getResource(configName + ".yml")) {
+            try (InputStream in = plugin.getResourceAsStream(configName + ".yml")) {
                 if(in != null) {
                     Files.copy(in, file.toPath());
                 }
@@ -305,7 +310,7 @@ public class FileStorage {
 
         if (!fileToSave.exists()) {
             plugin.getLogs().debug(fileToSave.getName());
-            try (InputStream in = plugin.getResource(fileToSave.getName() + ".yml")) {
+            try (InputStream in = plugin.getResourceAsStream(fileToSave.getName() + ".yml")) {
                 if(in != null) {
                     Files.copy(in, fileToSave.toPath());
                 }
@@ -321,7 +326,7 @@ public class FileStorage {
      *
      * @param fileToControl config to control.
      */
-    public FileConfiguration getControl(GuardianFiles fileToControl) {
+    public Configuration getControl(GuardianFiles fileToControl) {
         switch (fileToControl) {
             case EVENTS:
                 if (events == null) events = loadConfig(rxEvents);
@@ -360,18 +365,17 @@ public class FileStorage {
 
     public List<String> getColoredList(GuardianFiles file,String path) {
         List<String> coloredList = new ArrayList<>();
-        getControl(file).getStringList(path).forEach(text -> {
-            coloredList.add(ChatColor.translateAlternateColorCodes('&', text));
-        });
+        getControl(file).getStringList(path).forEach(text -> coloredList.add(ChatColor.translateAlternateColorCodes('&', text)));
         return coloredList;
     }
 
     public List<String> getContent(GuardianFiles file, String path, boolean getKeys) {
         List<String> rx = new ArrayList<>();
-        ConfigurationSection section = getControl(file).getConfigurationSection(path);
+        Configuration section = getControl(file).getSection(path);
         if(section == null) return rx;
-        rx.addAll(section.getKeys(getKeys));
+        rx.addAll(section.getKeys());
         return rx;
     }
 
 }
+

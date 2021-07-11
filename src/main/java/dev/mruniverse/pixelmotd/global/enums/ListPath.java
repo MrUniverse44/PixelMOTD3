@@ -1,4 +1,5 @@
-package dev.mruniverse.pixelmotd.spigot.utils.command;
+package dev.mruniverse.pixelmotd.global.enums;
+
 
 public enum ListPath {
     TOGGLE,

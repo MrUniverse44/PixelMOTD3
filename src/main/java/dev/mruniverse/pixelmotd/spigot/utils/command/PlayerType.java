@@ -1,5 +1,6 @@
 package dev.mruniverse.pixelmotd.spigot.utils.command;
 
+import dev.mruniverse.pixelmotd.global.enums.ListPath;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

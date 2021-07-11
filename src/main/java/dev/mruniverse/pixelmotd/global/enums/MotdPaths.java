@@ -1,4 +1,4 @@
-package dev.mruniverse.pixelmotd.spigot.motd;
+package dev.mruniverse.pixelmotd.global.enums;
 
 public enum MotdPaths {
     LINE1,

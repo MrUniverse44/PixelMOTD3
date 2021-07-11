@@ -1,9 +1,9 @@
 package dev.mruniverse.pixelmotd.spigot.utils.command;
 
 
+import dev.mruniverse.pixelmotd.global.enums.FileSaveMode;
+import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
-import dev.mruniverse.pixelmotd.spigot.storage.FileSaveMode;
-import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 import dev.mruniverse.pixelmotd.spigot.utils.command.sub.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

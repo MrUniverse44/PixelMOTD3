@@ -1,8 +1,8 @@
 package dev.mruniverse.pixelmotd.spigot;
 
+import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
 
-import dev.mruniverse.pixelmotd.spigot.storage.GuardianFiles;
 import dev.mruniverse.pixelmotd.spigot.utils.GuardianLogger;
 import dev.mruniverse.pixelmotd.spigot.utils.Loader;
 import dev.mruniverse.pixelmotd.spigot.whitelist.AbstractWhitelistListener;
