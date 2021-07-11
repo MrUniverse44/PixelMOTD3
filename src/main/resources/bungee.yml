@@ -1,0 +1,5 @@
+name: PixelMOTD
+version: ${project.version}
+main: dev.mruniverse.pixelmotd.bungeecord.PixelMOTD
+authors: [ MrUniverse44 ]
+description: Simple MOTD System plugin
