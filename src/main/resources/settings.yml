@@ -28,6 +28,7 @@ settings:
   icon-system: true
   # Config your max-server-protocol and min-server-protocol for the check of the outdated-client and outdated-server.
   # You can see protocols here: https://minecraft.fandom.com/wiki/Protocol_version
+  # Default protocol versions are 1.8 to 1.17
   max-server-protocol: 755
   min-server-protocol: 47
   # Toggle update-check for Alpha and Beta Versions
