@@ -29,10 +29,13 @@
 
 ---
 Config files:
-- settings.yml
-- motds.yml
-- messages_en.yml
-- messages.es.yml
+> - events.yml
+> - events.yml
+> - whitelist.yml
+> - settings.yml
+> - motds.yml
+> - messages_en.yml
+> - messages.es.yml
 
 ---
 
