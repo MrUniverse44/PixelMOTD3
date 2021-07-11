@@ -81,6 +81,8 @@ public class MotdInformation {
 
     public int getMin() { return min; }
 
+    public int getOnline() { return min; }
+
     public String getMotdLine1() { return motdLine1; }
 
     public String getMotdLine2() { return motdLine2; }

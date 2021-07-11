@@ -5,6 +5,8 @@ import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import dev.mruniverse.pixelmotd.spigot.motd.CustomMotdListener;
 import dev.mruniverse.pixelmotd.spigot.storage.FileStorage;
+import dev.mruniverse.pixelmotd.spigot.utils.command.MainCommand;
+import org.bukkit.command.PluginCommand;
 
 public class Loader {
     private final PixelMOTD plugin;
@@ -23,6 +25,12 @@ public class Loader {
         new Metrics(plugin, 8509);
 
         motdListener = new CustomMotdListener(plugin,getEventPriority(currentStorage.getControl(GuardianFiles.SETTINGS).getString("settings.event-priority")));
+    }
+
+    public void loadCommand(String command) {
+        PluginCommand cmd = plugin.getCommand(command);
+        if(cmd == null) return;
+        cmd.setExecutor(new MainCommand(plugin,command));
     }
 
     public CustomMotdListener getMotdListener() {

@@ -25,6 +25,10 @@ public final class PixelMOTD extends JavaPlugin {
 
         loader.load();
 
+        loader.loadCommand("pmotd");
+
+        loader.loadCommand("pixelmotd");
+
         AbstractWhitelistListener abstractWhitelistListener = new CustomWhitelistListener(this);
 
         EventPriority customExtraPriority = getEventPriority(storage.getControl(GuardianFiles.SETTINGS).getString("settings.extras-event-priority"));

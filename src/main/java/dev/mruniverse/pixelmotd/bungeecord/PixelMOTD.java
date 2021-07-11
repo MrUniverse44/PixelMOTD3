@@ -20,7 +20,11 @@ public class PixelMOTD extends Plugin {
     public void onEnable() {
         loader = new Loader(this);
 
-        //loader.load();
+        loader.load();
+
+        loader.loadCommand("pmotd");
+
+        loader.loadCommand("pixelmotd");
 
         AbstractWhitelistListener abstractWhitelistListener;
 
@@ -48,10 +52,6 @@ public class PixelMOTD extends Plugin {
         }
 
         pluginManager.registerListener(this,abstractWhitelistListener);
-
-        //pluginManager.registerEvent(PlayerLoginEvent.class, abstractWhitelistListener,customExtraPriority, abstractWhitelistListener,this,true);
-
-
 
     }
     private PriorityLevel getEventPriority(String priorityLevel) {

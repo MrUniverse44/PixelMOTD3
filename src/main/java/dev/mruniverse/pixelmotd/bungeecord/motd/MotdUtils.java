@@ -20,6 +20,7 @@ public class MotdUtils {
         return message;
     }
 
+    @SuppressWarnings("unused")
     public static String ListToString(List<String> list) {
         StringBuilder builder = new StringBuilder();
         int line = 0;

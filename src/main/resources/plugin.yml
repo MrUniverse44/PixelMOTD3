@@ -4,3 +4,8 @@ main: dev.mruniverse.pixelmotd.spigot.PixelMOTD
 depend: [ ProtocolLib ]
 authors: [ MrUniverse44 ]
 description: Simple MOTD System plugin
+commands:
+  pmotd:
+    description: Main command of the plugin
+  pixelmotd:
+    description: Main command of the pluginsss
