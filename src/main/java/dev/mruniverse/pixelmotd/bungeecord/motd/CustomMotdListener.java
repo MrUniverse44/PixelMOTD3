@@ -79,8 +79,11 @@ public class CustomMotdListener implements Listener {
     @SuppressWarnings("UnstableApiUsage")
     @EventHandler(priority = EventPriority.HIGH)
     public void onPingEvent(ProxyPingEvent event) {
+        plugin.getLogs().info("A");
         if(event.getConnection() == null) return;
+        plugin.getLogs().info("B");
         if(event.getResponse() == null) return;
+        plugin.getLogs().info("C");
         if(event instanceof Cancellable && ((Cancellable) event).isCancelled()) return;
 
         ServerPing ping = event.getResponse();
@@ -100,7 +103,7 @@ public class CustomMotdListener implements Listener {
         Favicon icon = null;
 
         MotdInformation info = getCurrentMotd(protocol,max,online);
-
+        plugin.getLogs().info("D");
         if(info.getHexStatus() && protocol >= 721) {
             motd = info.getHexAllMotd();
         } else {
@@ -176,9 +179,9 @@ public class CustomMotdListener implements Listener {
                 if(value==null) value = "EQUALS";
                 if(value.equalsIgnoreCase("EQUALS") || value.equalsIgnoreCase("SAME")) {
                     received.setProtocol(protocol);
-                    return;
+                } else {
+                    received.setProtocol(Integer.parseInt(value));
                 }
-                received.setProtocol(Integer.parseInt(value));
             }
             protocolInfo = received;
         } else {
