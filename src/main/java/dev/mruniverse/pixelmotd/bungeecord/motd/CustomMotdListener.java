@@ -5,6 +5,7 @@ import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.enums.MotdSettings;
 import dev.mruniverse.pixelmotd.global.enums.MotdType;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.Favicon;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -15,7 +16,6 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-import org.bukkit.ChatColor;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
