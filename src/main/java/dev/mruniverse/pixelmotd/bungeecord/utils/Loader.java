@@ -4,6 +4,7 @@ import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.bungeecord.motd.CustomMotdListener;
 import dev.mruniverse.pixelmotd.bungeecord.storage.FileStorage;
 import dev.mruniverse.pixelmotd.bungeecord.utils.command.MainCommand;
+import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 
 public class Loader {
     private final PixelMOTD plugin;
@@ -21,11 +22,19 @@ public class Loader {
 
         FileStorage currentStorage = new FileStorage(plugin);
 
+        String lang = currentStorage.getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
+
+        currentStorage.setMessages(lang);
+
         plugin.setStorage(currentStorage);
 
         new Metrics(plugin, 8509);
+        plugin.getLogs().info("Metrics has been loaded.");
 
         motdListener = new CustomMotdListener(plugin);
+
+        plugin.getProxy().getPluginManager().registerListener(plugin,motdListener);
+        plugin.getLogs().info("Motd listener has been registered.");
     }
 
     public void loadCommand(String command) {

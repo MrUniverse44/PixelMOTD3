@@ -91,6 +91,11 @@ public class MainCommand extends Command {
                         try {
                             plugin.getLoader().getMotdListener().update();
                             plugin.getStorage().reloadFile(FileSaveMode.ALL);
+
+                            String lang = plugin.getStorage().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
+
+                            plugin.getStorage().setMessages(lang);
+                            
                         }catch (Throwable throwable) {
                             plugin.getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");
                             plugin.getLogs().error("If you are sure than this isn't your error, please contact the developer.");

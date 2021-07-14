@@ -1,5 +1,6 @@
 package dev.mruniverse.pixelmotd.bungeecord;
 
+import dev.mruniverse.pixelmotd.bungeecord.motd.CustomMotdListener;
 import dev.mruniverse.pixelmotd.bungeecord.storage.FileStorage;
 import dev.mruniverse.pixelmotd.bungeecord.utils.GuardianLogger;
 import dev.mruniverse.pixelmotd.bungeecord.utils.Loader;
@@ -54,6 +55,7 @@ public class PixelMOTD extends Plugin {
         pluginManager.registerListener(this,abstractWhitelistListener);
 
     }
+
     private PriorityLevel getEventPriority(String priorityLevel) {
         try {
             if (priorityLevel == null) return PriorityLevel.NORMAL;
