@@ -79,11 +79,8 @@ public class CustomMotdListener implements Listener {
     @SuppressWarnings("UnstableApiUsage")
     @EventHandler(priority = EventPriority.HIGH)
     public void onPingEvent(ProxyPingEvent event) {
-        plugin.getLogs().info("A");
         if(event.getConnection() == null) return;
-        plugin.getLogs().info("B");
         if(event.getResponse() == null) return;
-        plugin.getLogs().info("C");
         if(event instanceof Cancellable && ((Cancellable) event).isCancelled()) return;
 
         ServerPing ping = event.getResponse();
@@ -193,7 +190,6 @@ public class CustomMotdListener implements Listener {
         ServerPing result = new ServerPing(protocolInfo,players,new TextComponent(motd),icon);
 
         event.setResponse(result);
-
     }
 
     private ServerPing.PlayerInfo[] getHover(MotdInformation info) {
