@@ -39,6 +39,11 @@ public final class PixelMOTD extends JavaPlugin {
 
     }
 
+    @Override
+    public void onDisable() {
+        loader.unloadPlayers();
+    }
+
     private EventPriority getEventPriority(String priorityLevel) {
         try {
             if (priorityLevel == null) return EventPriority.NORMAL;

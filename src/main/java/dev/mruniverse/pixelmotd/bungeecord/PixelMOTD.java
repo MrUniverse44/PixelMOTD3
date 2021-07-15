@@ -56,6 +56,11 @@ public class PixelMOTD extends Plugin {
 
     }
 
+    @Override
+    public void onDisable() {
+        loader.unloadPlayers();
+    }
+
     private PriorityLevel getEventPriority(String priorityLevel) {
         try {
             if (priorityLevel == null) return PriorityLevel.NORMAL;

@@ -53,6 +53,11 @@ public class Loader {
         }
     }
 
+    public void unloadPlayers() {
+        online.clear();
+        max.clear();
+    }
+
     public HashMap<MotdType, MotdPlayers> getMax() { return max; }
 
     public HashMap<MotdType, MotdPlayers> getOnline() { return online; }
