@@ -60,6 +60,7 @@ public class Loader {
 
     public void update() {
         try {
+            motdListener.update();
             for (MotdType type : MotdType.values()) {
                 online.get(type).update();
                 max.get(type).update();
