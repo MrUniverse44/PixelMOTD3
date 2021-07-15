@@ -125,7 +125,6 @@ public class CustomMotdListener implements Listener {
             info.setOnline(online);
         }
 
-        plugin.getLogs().info("D");
         if(info.getHexStatus() && protocol >= 721) {
             motd = info.getHexAllMotd();
         } else {
