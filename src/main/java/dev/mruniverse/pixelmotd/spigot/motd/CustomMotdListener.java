@@ -9,6 +9,7 @@ import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
 import com.google.common.io.Files;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.global.enums.MotdPlayersMode;
 import dev.mruniverse.pixelmotd.global.enums.MotdSettings;
 import dev.mruniverse.pixelmotd.global.enums.MotdType;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
@@ -99,13 +100,37 @@ public class CustomMotdListener extends PacketAdapter {
         WrappedStatus packet = new WrappedStatus(event.getPacket());
         WrappedServerPing ping = packet.getJsonResponse();
 
+        MotdPlayers onlinePlayers, maxPlayers;
+
         int max = Bukkit.getMaxPlayers();
         int online = Bukkit.getOnlinePlayers().size();
+
         int protocol;
 
         protocol = ProtocolLibrary.getProtocolManager().getProtocolVersion(event.getPlayer());
 
         MotdInformation info = getCurrentMotd(protocol,max,online);
+
+        onlinePlayers = plugin.getLoader().getOnline().get(info.getMotdType());
+        maxPlayers = plugin.getLoader().getOnline().get(info.getMotdType());
+
+        if(maxPlayers.isEnabled()) {
+            if (maxPlayers.getMode() == MotdPlayersMode.EQUALS) {
+                max = online;
+            } else {
+                max = onlinePlayers.getResult(max);
+            }
+            info.setMax(max);
+        }
+
+        if(onlinePlayers.isEnabled()) {
+            if (onlinePlayers.getMode() == MotdPlayersMode.EQUALS) {
+                online = max;
+            } else {
+                online = onlinePlayers.getResult(online);
+            }
+            info.setOnline(online);
+        }
 
         if(info.getHexStatus() && protocol >= 721) {
             ping.setMotD(info.getHexAllMotd());

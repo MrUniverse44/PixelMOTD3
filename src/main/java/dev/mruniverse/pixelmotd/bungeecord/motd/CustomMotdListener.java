@@ -3,6 +3,7 @@ package dev.mruniverse.pixelmotd.bungeecord.motd;
 import com.google.common.io.Files;
 import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.global.enums.MotdPlayersMode;
 import dev.mruniverse.pixelmotd.global.enums.MotdSettings;
 import dev.mruniverse.pixelmotd.global.enums.MotdType;
 import net.md_5.bungee.api.ChatColor;
@@ -87,6 +88,8 @@ public class CustomMotdListener implements Listener {
 
         PendingConnection data = event.getConnection();
 
+        MotdPlayers onlinePlayers,maxPlayers;
+
         int max = ping.getPlayers().getMax();
         int online = ping.getPlayers().getOnline();
         int protocol = data.getVersion();
@@ -100,6 +103,28 @@ public class CustomMotdListener implements Listener {
         Favicon icon = null;
 
         MotdInformation info = getCurrentMotd(protocol,max,online);
+
+        onlinePlayers = plugin.getLoader().getOnline().get(info.getMotdType());
+        maxPlayers = plugin.getLoader().getOnline().get(info.getMotdType());
+
+        if(maxPlayers.isEnabled()) {
+            if (maxPlayers.getMode() == MotdPlayersMode.EQUALS) {
+                max = online;
+            } else {
+                max = onlinePlayers.getResult(max);
+            }
+            info.setMax(max);
+        }
+
+        if(onlinePlayers.isEnabled()) {
+            if (onlinePlayers.getMode() == MotdPlayersMode.EQUALS) {
+                online = max;
+            } else {
+                online = onlinePlayers.getResult(online);
+            }
+            info.setOnline(online);
+        }
+
         plugin.getLogs().info("D");
         if(info.getHexStatus() && protocol >= 721) {
             motd = info.getHexAllMotd();

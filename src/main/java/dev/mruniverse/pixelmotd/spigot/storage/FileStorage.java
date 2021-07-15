@@ -101,16 +101,20 @@ public class FileStorage {
     }
 
     public void setMessages(String code) {
+        plugin.getLogs().info("Trying to use language code: " + code);
         if(code.equalsIgnoreCase("en")) {
             rxMessages = rxMessagesEn;
             messages = messagesEn;
+            plugin.getLogs().info("Plugin now is using language-file English");
             return;
         }
         if(code.equalsIgnoreCase("es")) {
             rxMessages = rxMessagesEs;
             messages = messagesEs;
+            plugin.getLogs().info("Plugin now is using language-file Spanish");
             return;
         }
+        plugin.getLogs().info("Plugin now is using language-file-code '" + code + "'.");
         rxMessages = new File(plugin.getDataFolder(),"messages_" + code + ".yml");
         messages = loadConfig("messages_" + code);
     }
@@ -360,9 +364,7 @@ public class FileStorage {
 
     public List<String> getColoredList(GuardianFiles file,String path) {
         List<String> coloredList = new ArrayList<>();
-        getControl(file).getStringList(path).forEach(text -> {
-            coloredList.add(ChatColor.translateAlternateColorCodes('&', text));
-        });
+        getControl(file).getStringList(path).forEach(text -> coloredList.add(ChatColor.translateAlternateColorCodes('&', text)));
         return coloredList;
     }
 

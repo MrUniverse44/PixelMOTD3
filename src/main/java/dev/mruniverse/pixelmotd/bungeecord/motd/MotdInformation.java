@@ -33,9 +33,9 @@ public class MotdInformation {
 
     private final MotdType currentMotdType;
 
-    private final int max;
+    private int max;
 
-    private final int min;
+    private int min;
 
     public MotdInformation(FileStorage storage, MotdType motdType, String motdName, int max, int online){
         this.min = online;
@@ -52,6 +52,10 @@ public class MotdInformation {
         hexStatus = storage.getControl(GuardianFiles.MOTDS).getBoolean(getPath(MotdPaths.HEX_STATUS));
         customIconName = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.CUSTOM_ICON_NAME));
     }
+
+    public void setMax(int max) { this.max = max; }
+
+    public void setOnline(int min) { this.min = min; }
 
     public boolean getCustomIconStatus() { return customIconStatus; }
 
