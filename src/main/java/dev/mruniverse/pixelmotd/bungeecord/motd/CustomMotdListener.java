@@ -16,7 +16,6 @@ import net.md_5.bungee.api.plugin.Cancellable;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
-import net.md_5.bungee.event.EventPriority;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -78,13 +77,13 @@ public class CustomMotdListener implements Listener {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = 64)
     public void onPingEvent(ProxyPingEvent event) {
-        if(event.getConnection() == null) return;
-        if(event.getResponse() == null) return;
-        if(event instanceof Cancellable && ((Cancellable) event).isCancelled()) return;
+        final ServerPing ping = event.getResponse();
 
-        ServerPing ping = event.getResponse();
+        if (ping == null || event instanceof Cancellable && ((Cancellable) event).isCancelled()) {
+            return;
+        }
 
         PendingConnection data = event.getConnection();
 

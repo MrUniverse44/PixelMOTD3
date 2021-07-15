@@ -68,7 +68,8 @@ public class MotdPlayers {
                 return value + Integer.parseInt(modeText);
             default:
             case VALUES:
-                return Integer.parseInt(values.get(random.nextInt(values.size())));
+                if(values.size() >= 1) return Integer.parseInt(values.get(random.nextInt(values.size())));
+                return value;
 
         }
     }
