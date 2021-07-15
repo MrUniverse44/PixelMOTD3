@@ -120,6 +120,7 @@ public class CustomMotdListener extends PacketAdapter {
             } else {
                 max = onlinePlayers.getResult(max);
             }
+            ping.setPlayersMaximum(max);
             info.setMax(max);
         }
 
@@ -129,6 +130,7 @@ public class CustomMotdListener extends PacketAdapter {
             } else {
                 online = onlinePlayers.getResult(online);
             }
+            ping.setPlayersOnline(online);
             info.setOnline(online);
         }
 

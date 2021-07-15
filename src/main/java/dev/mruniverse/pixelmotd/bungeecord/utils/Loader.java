@@ -57,6 +57,19 @@ public class Loader {
         }
     }
 
+    public void update() {
+        try {
+            for (MotdType type : MotdType.values()) {
+                online.get(type).update();
+                max.get(type).update();
+                plugin.getLogs().info("Motd Players Online in MotdType: " + type.getName() + " has been updated!");
+                plugin.getLogs().info("Motd Players Max in MotdType: " + type.getName() + " has been updated!");
+            }
+        }catch (Throwable ignored) {
+            plugin.getLogs().info("Can't update Motd Players.");
+        }
+    }
+
     public void unloadPlayers() {
         online.clear();
         max.clear();

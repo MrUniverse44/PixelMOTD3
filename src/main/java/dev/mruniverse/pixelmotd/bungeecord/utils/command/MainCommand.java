@@ -94,6 +94,8 @@ public class MainCommand extends Command {
 
                             String lang = plugin.getStorage().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
 
+                            plugin.getLoader().update();
+
                             plugin.getStorage().setMessages(lang);
                             
                         }catch (Throwable throwable) {
