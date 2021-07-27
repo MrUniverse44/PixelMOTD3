@@ -1,6 +1,7 @@
 package dev.mruniverse.pixelmotd.global.iridiumcolorapi.patterns;
 
-import com.iridium.iridiumcolorapi.IridiumColorAPI;
+
+import dev.mruniverse.pixelmotd.global.iridiumcolorapi.IridiumColorAPI;
 
 import java.awt.*;
 import java.util.regex.Matcher;
