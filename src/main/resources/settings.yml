@@ -12,6 +12,18 @@
 settings:
   # Enable Check update when the plugin load
   update-check: true
+  # Update all fileStorage on plugin-reload-command to prevent issues:
+  update-file-storage: true
+  # Player Name system, usage: %player_<number>% system
+  player-system:
+    # Toggle this option
+    toggle: true
+    # The system will stop the call the variable to this max (Recommended a low number)
+    # The max number will be the maximum, for example:
+    # -  If the max is 10, the variable only will work to %player_10%, if you use
+    # -  %player_11% this line will not be showed.
+    # -  If the online player size is > than the max, the plugin will only show the online number.
+    max: 10
   # Plugin language file, if you want add your custom lang file you need put the name ("messages_<code>.yml") and in the language you put the code, example:
   # messages_en.yml | code: en | language: en
   # messages_es.yml | code: es | language: es

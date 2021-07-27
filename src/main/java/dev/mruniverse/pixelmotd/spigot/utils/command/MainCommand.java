@@ -83,7 +83,12 @@ public class MainCommand implements CommandExecutor {
                         long timeMS = System.currentTimeMillis();
                         try {
                             plugin.getLoader().getMotdListener().update();
-                            plugin.getStorage().reloadFile(FileSaveMode.ALL);
+
+                            if(plugin.getStorage().getControl(GuardianFiles.SETTINGS).getBoolean("settings.update-file-storage",true)) {
+                                plugin.getStorage().updateFileManager();
+                            } else {
+                                plugin.getStorage().reloadFile(FileSaveMode.ALL);
+                            }
 
                             String lang = plugin.getStorage().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
 

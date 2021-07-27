@@ -42,8 +42,8 @@ public class MotdInformation {
         this.max = max;
         currentMotdType = motdType;
         currentMotdName = motdName;
-        HexMotdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE1));
-        HexMotdLine2 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE2));
+        HexMotdLine1 = storage.getUncoloredString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE1));
+        HexMotdLine2 = storage.getUncoloredString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE2));
         motdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE1));
         motdLine2 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE2));
         hoverStatus = storage.getControl(GuardianFiles.MOTDS).getBoolean(getPath(MotdPaths.HOVER_STATUS));

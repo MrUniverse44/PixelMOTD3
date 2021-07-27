@@ -352,10 +352,20 @@ public class FileStorage {
         }
     }
 
+    public void updateFileManager() {
+        plugin.setStorage(new FileStorage(plugin));
+    }
+
     public String getString(GuardianFiles file,@NotNull String path) {
         String currentPath = getControl(file).getString(path);
-        if(currentPath == null) currentPath = "invalid path";
+        if(currentPath == null) currentPath = "&cThis current path doesn't exists or is duplicated";
         return ChatColor.translateAlternateColorCodes('&', currentPath);
+    }
+
+    public String getUncoloredString(GuardianFiles file,@NotNull String path) {
+        String currentPath = getControl(file).getString(path);
+        if(currentPath == null) currentPath = "&cThis current path doesn't exists or is duplicated";
+        return currentPath;
     }
 
     public String getStringWithoutColors(GuardianFiles file,String path) {
