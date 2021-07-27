@@ -35,7 +35,6 @@ public class MotdPlayers {
         this.modeText = modeText.replace(mode.getReplace(),"");
         this.enabled = configuration.getBoolean(type + "enable");
         this.values = configuration.getStringList(type + "values");
-
     }
 
     public void update() {
@@ -64,6 +63,7 @@ public class MotdPlayers {
                 if(value > 0) {
                     value = value - (value/2);
                 }
+                return value;
             case ADD:
                 return value + Integer.parseInt(modeText);
             default:

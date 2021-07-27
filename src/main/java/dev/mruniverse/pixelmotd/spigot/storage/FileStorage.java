@@ -155,9 +155,9 @@ public class FileStorage {
         FileConfiguration cnf = null;
         try {
             cnf = YamlConfiguration.loadConfiguration(configFile);
-        } catch (Exception e) {
-            plugin.getLogs().warn(String.format("A error occurred while loading the settings file. Error: %s", e));
-            e.printStackTrace();
+        } catch (Throwable throwable) {
+            plugin.getLogs().error("Can't load: " + configName + ".yml!");
+            plugin.getLogs().error(throwable);
         }
 
         plugin.getLogs().info(String.format("&7File &e%s.yml &7has been loaded", configName));
@@ -177,9 +177,9 @@ public class FileStorage {
         FileConfiguration cnf = null;
         try {
             cnf = YamlConfiguration.loadConfiguration(rigoxFile);
-        } catch (Exception e) {
-            plugin.getLogs().warn(String.format("A error occurred while loading the settings file. Error: %s", e));
-            e.printStackTrace();
+        } catch (Throwable throwable) {
+            plugin.getLogs().error("Can't load: " + rigoxFile + ".!");
+            plugin.getLogs().error(throwable);
         }
 
         plugin.getLogs().info(String.format("&7File &e%s &7has been loaded", rigoxFile.getName()));

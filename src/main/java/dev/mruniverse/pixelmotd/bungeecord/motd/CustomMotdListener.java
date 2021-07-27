@@ -105,7 +105,6 @@ public class CustomMotdListener implements Listener {
 
         onlinePlayers = plugin.getLoader().getOnline().get(info.getMotdType());
         maxPlayers = plugin.getLoader().getOnline().get(info.getMotdType());
-
         if(maxPlayers.isEnabled()) {
             if (maxPlayers.getMode() == MotdPlayersMode.EQUALS) {
                 max = online;
@@ -114,7 +113,6 @@ public class CustomMotdListener implements Listener {
             }
             info.setMax(max);
         }
-
         if(onlinePlayers.isEnabled()) {
             if (onlinePlayers.getMode() == MotdPlayersMode.EQUALS) {
                 online = max;

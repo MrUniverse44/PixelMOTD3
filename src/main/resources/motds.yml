@@ -18,7 +18,7 @@ normal:
       enable: true
       # Modes:
       # ADD-<number>,REMOVE-<number>, VALUES, ADD_MIDDLE, REMOVE_MIDDLE, EQUALS
-      mode: 'ADD-450'
+      mode: 'EQUALS'
       # List of values:
       values:
         - 300
