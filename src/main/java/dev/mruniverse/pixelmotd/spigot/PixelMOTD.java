@@ -18,6 +18,7 @@ public final class PixelMOTD extends JavaPlugin {
     private Loader loader;
     private GuardianLogger logger;
     private FileStorage storage;
+    private AbstractWhitelistListener abstractWhitelistListener;
 
     @Override
     public void onEnable() {
@@ -29,7 +30,7 @@ public final class PixelMOTD extends JavaPlugin {
 
         loader.loadCommand("pixelmotd");
 
-        AbstractWhitelistListener abstractWhitelistListener = new CustomWhitelistListener(this);
+        abstractWhitelistListener = new CustomWhitelistListener(this);
 
         EventPriority customExtraPriority = getEventPriority(storage.getControl(GuardianFiles.SETTINGS).getString("settings.extras-event-priority"));
 
@@ -38,6 +39,8 @@ public final class PixelMOTD extends JavaPlugin {
         pluginManager.registerEvent(PlayerLoginEvent.class, abstractWhitelistListener,customExtraPriority, abstractWhitelistListener,this,true);
 
     }
+
+    public AbstractWhitelistListener getListener() { return abstractWhitelistListener; }
 
     @Override
     public void onDisable() {

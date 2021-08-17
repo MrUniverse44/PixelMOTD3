@@ -34,6 +34,8 @@ public class WhitelistCommand {
                     plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(currentType.getPath() + path,users);
                     plugin.getStorage().save(FileSaveMode.WHITELIST);
                     plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
+                    plugin.getLoader().getMotdListener().update();
+                    plugin.getListener().update(plugin);
                     String message = msg.getString(MessagePath.WHITELIST_PLAYER_ADD.getPath(),"&a<type> &e<player> &ahas been&b added &ato the whitelist.");
                     MainCommand.sendMessage(sender,messageReplace(message,playerType,currentType));
                     return;
@@ -53,9 +55,11 @@ public class WhitelistCommand {
                 List<String> users = file.getStringList(currentType.getPath() + path);
                 if(users.contains(user)) {
                     users.remove(user);
-                    plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(currentType.getPath() + path,users);
+                    plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(currentType.getPath() + path, users);
                     plugin.getStorage().save(FileSaveMode.WHITELIST);
                     plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
+                    plugin.getLoader().getMotdListener().update();
+                    plugin.getListener().update(plugin);
                     String message = msg.getString(MessagePath.WHITELIST_PLAYER_REMOVE.getPath(),"&a<type> &e<player> &ahas been&b removed &afrom the whitelist.");
                     MainCommand.sendMessage(sender,messageReplace(message,playerType,currentType));
                     return;
@@ -73,6 +77,8 @@ public class WhitelistCommand {
             plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(path,finalValue);
             plugin.getStorage().save(FileSaveMode.WHITELIST);
             plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
+            plugin.getLoader().getMotdListener().update();
+            plugin.getListener().update(plugin);
             if(finalValue) {
                 MainCommand.sendMessage(sender,msg.getString(MessagePath.WHITELIST_TOGGLE_ON.getPath(),"&aThe whitelist has been &b&lENABLED&a."));
                 return;

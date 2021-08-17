@@ -11,9 +11,13 @@ import net.md_5.bungee.config.Configuration;
 
 
 public abstract class AbstractWhitelistListener implements Listener {
-    private final Configuration whitelist;
+    private Configuration whitelist;
 
     public AbstractWhitelistListener(PixelMOTD plugin) {
+        whitelist = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
+    }
+
+    public void update(PixelMOTD plugin) {
         whitelist = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
     }
 
@@ -38,14 +42,16 @@ public abstract class AbstractWhitelistListener implements Listener {
         if(whitelist.getBoolean("whitelist.toggle")) {
             if(!whitelist.getStringList("whitelist.players-name").contains(user) || !whitelist.getStringList("whitelist.players-uuid").contains(uuid)) {
                 String reason = MotdUtils.ListToString(whitelist.getStringList("whitelist.kick-message"));
-                loginEvent.setCancelReason(new TextComponent(ChatColor.translateAlternateColorCodes('&',reason.replace("%whitelist_author%",getAuthor()).replace("%type%","Server"))));
+                loginEvent.setCancelReason(new TextComponent(ChatColor.translateAlternateColorCodes('&',reason.replace("%uuid%",user).replace("%nick%",user).replace("%whitelist_author%",getAuthor()).replace("%type%","Server"))));
+                loginEvent.setCancelled(true);
+                return;
             }
-            return;
         }
         if(whitelist.getBoolean("blacklist.toggle")) {
             if(whitelist.getStringList("blacklist.players-name").contains(user) || whitelist.getStringList("blacklist.players-uuid").contains(uuid)) {
                 String reason = MotdUtils.ListToString(whitelist.getStringList("blacklist.kick-message"));
-                loginEvent.setCancelReason(new TextComponent(ChatColor.translateAlternateColorCodes('&',reason.replace("%blacklist_author%",getAuthor()).replace("%type%","Server"))));
+                loginEvent.setCancelReason(new TextComponent(ChatColor.translateAlternateColorCodes('&',reason.replace("%uuid%",user).replace("%nick%",user).replace("%blacklist_author%",getAuthor()).replace("%type%","Server"))));
+                loginEvent.setCancelled(true);
             }
         }
     }

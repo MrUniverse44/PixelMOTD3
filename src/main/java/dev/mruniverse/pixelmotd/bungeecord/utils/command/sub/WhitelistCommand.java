@@ -23,6 +23,15 @@ public class WhitelistCommand {
     public void usage(CommandSender sender, @NotNull String[] arguments) {
         Configuration file = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
         Configuration msg = plugin.getStorage().getControl(GuardianFiles.MESSAGES);
+        if (arguments.length == 0 || arguments[0].equalsIgnoreCase("help")) {
+            MainCommand.sendMessage(sender," ");
+            MainCommand.sendMessage(sender, "&b------------ &aPixelMOTD &b------------");
+            MainCommand.sendMessage(sender, "&e/" + command + " admin whitelist add [player or uuid] &e- &fAdd player to whitelist.");
+            MainCommand.sendMessage(sender, "&e/" + command + " admin whitelist remove [player or uuid] &e- &fRemove player from whitelist.");
+            MainCommand.sendMessage(sender, "&e/" + command + " admin whitelist toggle &e- &fToggle whitelist.");
+            MainCommand.sendMessage(sender, "&b------------ &a(Page 1&l/1&a) &b------------");
+            return;
+        }
         if (arguments[0].equalsIgnoreCase("add")) {
             if (arguments.length == 2) {
                 String user = arguments[1];
@@ -37,6 +46,7 @@ public class WhitelistCommand {
                     plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
                     String message = msg.getString(MessagePath.WHITELIST_PLAYER_ADD.getPath(),"&a<type> &e<player> &ahas been&b added &ato the whitelist.");
                     MainCommand.sendMessage(sender,messageReplace(message,playerType,currentType));
+                    plugin.getListener().update(plugin);
                     return;
                 }
                 playerIssue(sender,playerType,currentType,true);
@@ -59,6 +69,7 @@ public class WhitelistCommand {
                     plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
                     String message = msg.getString(MessagePath.WHITELIST_PLAYER_REMOVE.getPath(),"&a<type> &e<player> &ahas been&b removed &afrom the whitelist.");
                     MainCommand.sendMessage(sender,messageReplace(message,playerType,currentType));
+                    plugin.getListener().update(plugin);
                     return;
                 }
                 playerIssue(sender,playerType,currentType,false);
@@ -74,6 +85,8 @@ public class WhitelistCommand {
             plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(path,finalValue);
             plugin.getStorage().save(FileSaveMode.WHITELIST);
             plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
+            plugin.getLoader().getMotdListener().update();
+            plugin.getListener().update(plugin);
             if(finalValue) {
                 MainCommand.sendMessage(sender,msg.getString(MessagePath.WHITELIST_TOGGLE_ON.getPath(),"&aThe whitelist has been &b&lENABLED&a."));
                 return;

@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 
 public class SolidPattern implements Pattern {
 
-    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("<SOLID:([0-9A-Fa-f]{6})>");
+    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("<SOLID:([0-9A-Fa-f]{6})>|#\\{([0-9A-Fa-f]{6})}");
 
     /**
      * Applies a solid RGB color to the provided String.

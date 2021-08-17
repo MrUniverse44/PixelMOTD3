@@ -11,9 +11,13 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.EventExecutor;
 
 public abstract class AbstractWhitelistListener implements Listener, EventExecutor {
-    private final FileConfiguration whitelist;
+    private FileConfiguration whitelist;
 
     public AbstractWhitelistListener(PixelMOTD plugin) {
+        whitelist = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
+    }
+
+    public void update(PixelMOTD plugin) {
         whitelist = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
     }
 

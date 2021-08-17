@@ -83,6 +83,7 @@ public class MainCommand implements CommandExecutor {
                         long timeMS = System.currentTimeMillis();
                         try {
                             plugin.getLoader().getMotdListener().update();
+                            plugin.getListener().update(plugin);
 
                             if(plugin.getStorage().getControl(GuardianFiles.SETTINGS).getBoolean("settings.update-file-storage",true)) {
                                 plugin.getStorage().updateFileManager();
@@ -108,14 +109,14 @@ public class MainCommand implements CommandExecutor {
                     return true;
                 }
 
-                if(args[1].equalsIgnoreCase("whitelist") && args.length >= 4) {
+                if(args[1].equalsIgnoreCase("whitelist")) {
                     if(hasPermission(sender,"pmotd.admin.help.whitelist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         whitelist.usage(sender,getArguments(args));
 
                     }
                     return true;
                 }
-                if(args[1].equalsIgnoreCase("blacklist") && args.length >= 4) {
+                if(args[1].equalsIgnoreCase("blacklist")) {
                     if(hasPermission(sender,"pmotd.admin.help.blacklist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         blacklist.usage(sender,getArguments(args));
 

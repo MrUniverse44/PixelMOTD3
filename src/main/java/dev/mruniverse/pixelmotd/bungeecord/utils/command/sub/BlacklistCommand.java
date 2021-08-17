@@ -23,6 +23,15 @@ public class BlacklistCommand {
     public void usage(CommandSender sender, @NotNull String[] arguments) {
         Configuration file = plugin.getStorage().getControl(GuardianFiles.WHITELIST);
         Configuration msg = plugin.getStorage().getControl(GuardianFiles.MESSAGES);
+        if (arguments.length == 0 || arguments[0].equalsIgnoreCase("help")) {
+            MainCommand.sendMessage(sender," ");
+            MainCommand.sendMessage(sender, "&b------------ &aPixelMOTD &b------------");
+            MainCommand.sendMessage(sender, "&e/" + command + " admin blacklist add [player or uuid] &e- &fAdd player to whitelist.");
+            MainCommand.sendMessage(sender, "&e/" + command + " admin blacklist remove [player or uuid] &e- &fRemove player from whitelist.");
+            MainCommand.sendMessage(sender, "&e/" + command + " admin blacklist toggle &e- &fToggle blacklist.");
+            MainCommand.sendMessage(sender, "&b------------ &a(Page 1&l/1&a) &b------------");
+            return;
+        }
         if (arguments[0].equalsIgnoreCase("add")) {
             if (arguments.length == 2) {
                 String user = arguments[1];
@@ -35,6 +44,7 @@ public class BlacklistCommand {
                     plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(currentType.getPath() + path,users);
                     plugin.getStorage().save(FileSaveMode.WHITELIST);
                     plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
+                    plugin.getListener().update(plugin);
                     String message = msg.getString(MessagePath.BLACKLIST_PLAYER_ADD.getPath(),"&a<type> &e<player> &ahas been&b added &ato the blacklist.");
                     MainCommand.sendMessage(sender,messageReplace(message,playerType,currentType));
                     return;
@@ -59,6 +69,7 @@ public class BlacklistCommand {
                     plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
                     String message = msg.getString(MessagePath.BLACKLIST_PLAYER_REMOVE.getPath(),"&a<type> &e<player> &ahas been&b removed &afrom the blacklist.");
                     MainCommand.sendMessage(sender,messageReplace(message,playerType,currentType));
+                    plugin.getListener().update(plugin);
                     return;
                 }
                 playerIssue(sender,playerType,currentType,false);
@@ -74,6 +85,7 @@ public class BlacklistCommand {
             plugin.getStorage().getControl(GuardianFiles.WHITELIST).set(path,finalValue);
             plugin.getStorage().save(FileSaveMode.WHITELIST);
             plugin.getStorage().reloadFile(FileSaveMode.WHITELIST);
+            plugin.getListener().update(plugin);
             if(finalValue) {
                 MainCommand.sendMessage(sender,msg.getString(MessagePath.BLACKLIST_TOGGLE_ON.getPath(),"&aThe blacklist has been &b&lENABLED&a."));
                 return;

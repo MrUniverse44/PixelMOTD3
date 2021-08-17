@@ -60,6 +60,11 @@
     </build>
 
     <repositories>
+        <!-- Velocity Repo -->
+        <repository>
+            <id>velocity</id>
+            <url>https://nexus.velocitypowered.com/repository/maven-public/</url>
+        </repository>
         <!-- Spigot Repo -->
         <repository>
             <id>spigotmc-repo</id>
@@ -88,6 +93,12 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.velocitypowered</groupId>
+            <artifactId>velocity-api</artifactId>
+            <version>3.0.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>

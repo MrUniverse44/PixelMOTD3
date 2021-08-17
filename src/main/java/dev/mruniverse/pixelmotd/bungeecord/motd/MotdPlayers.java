@@ -24,17 +24,21 @@ public class MotdPlayers {
 
     private boolean enabled;
 
-    private List<String> values;
+    private List<Integer> values;
 
     public MotdPlayers(PixelMOTD plugin, MotdType motdType, MotdPlayersType motdPlayersType) {
         this.type = motdPlayersType.getPath(motdType);
+        plugin.getLogs().debug(type + "values");
         this.plugin = plugin;
         Configuration configuration = plugin.getStorage().getControl(GuardianFiles.MOTDS);
         this.modeText = configuration.getString(type + "mode","EQUALS");
+        plugin.getLogs().debug(modeText);
         this.mode = MotdPlayersMode.getModeFromText(modeText);
+        plugin.getLogs().debug(mode.toString());
         this.modeText = modeText.replace(mode.getReplace(),"");
         this.enabled = configuration.getBoolean(type + "enable");
-        this.values = configuration.getStringList(type + "values");
+        this.values = configuration.getIntList(type + "values");
+        plugin.getLogs().debug(values.toString());
     }
 
     public void update() {
@@ -43,7 +47,7 @@ public class MotdPlayers {
         this.modeText = configuration.getString(type + "mode","EQUALS");
         this.mode = MotdPlayersMode.getModeFromText(modeText);
         this.enabled = configuration.getBoolean(type + "enable");
-        this.values = configuration.getStringList(type + "values");
+        this.values = configuration.getIntList(type + "values");
     }
 
     public MotdPlayersMode getMode() { return mode; }
@@ -68,7 +72,7 @@ public class MotdPlayers {
                 return value + Integer.parseInt(modeText);
             default:
             case VALUES:
-                if(values.size() >= 1) return Integer.parseInt(values.get(random.nextInt(values.size())));
+                if(values.size() >= 1) return Integer.parseInt(String.valueOf(values.get(random.nextInt(values.size()))));
                 return value;
 
         }

@@ -77,8 +77,10 @@ public class MainCommand extends Command {
                         sendMessage(sender, "&b------------ &aPixelMOTD &b------------");
                         sendMessage(sender, cmdPrefix + " admin whitelist add [player or uuid] &e- &fAdd player to whitelist.");
                         sendMessage(sender, cmdPrefix + " admin whitelist remove [player or uuid] &e- &fRemove player from whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin whitelist toggle &e- &fToggle whitelist.");
                         sendMessage(sender, cmdPrefix + " admin blacklist add [player or uuid] &e- &fAdd player to whitelist.");
                         sendMessage(sender, cmdPrefix + " admin blacklist remove [player or uuid] &e- &fRemove player from whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin blacklist toggle &e- &fToggle blacklist.");
                         sendMessage(sender, cmdPrefix + " admin reload &e- &fReload the plugin.");
                         sendMessage(sender, "&b------------ &a(Page 1&l/1&a) &b------------");
                     }
@@ -96,6 +98,8 @@ public class MainCommand extends Command {
 
                             plugin.getLoader().update();
 
+                            plugin.getListener().update(plugin);
+
                             plugin.getStorage().setMessages(lang);
                             
                         }catch (Throwable throwable) {
@@ -110,14 +114,14 @@ public class MainCommand extends Command {
                     return;
                 }
 
-                if(args[1].equalsIgnoreCase("whitelist") && args.length >= 4) {
+                if(args[1].equalsIgnoreCase("whitelist")) {
                     if(hasPermission(sender,"pmotd.admin.help.whitelist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         whitelist.usage(sender,getArguments(args));
 
                     }
                     return;
                 }
-                if(args[1].equalsIgnoreCase("blacklist") && args.length >= 4) {
+                if(args[1].equalsIgnoreCase("blacklist")) {
                     if(hasPermission(sender,"pmotd.admin.help.blacklist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         blacklist.usage(sender,getArguments(args));
 

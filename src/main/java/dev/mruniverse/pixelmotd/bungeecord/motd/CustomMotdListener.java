@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Random;
 
 public class CustomMotdListener implements Listener {
+
     private final PixelMOTD plugin;
 
     private final Random random = new Random();
