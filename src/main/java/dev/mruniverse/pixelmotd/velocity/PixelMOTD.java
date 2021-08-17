@@ -12,8 +12,8 @@ import java.nio.file.Path;
 import org.slf4j.Logger;
 
 @Plugin(
-        id = "PixelMOTD",
-        name = "Pixel MOTD",
+        id = "pixelmotd",
+        name = "PixelMOTD",
         version = "9.0.0",
         description = "Simple Motd Plugin",
         url = "darkness.studios",
