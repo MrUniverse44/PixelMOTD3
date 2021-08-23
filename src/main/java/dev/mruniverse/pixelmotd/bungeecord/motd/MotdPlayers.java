@@ -28,17 +28,13 @@ public class MotdPlayers {
 
     public MotdPlayers(PixelMOTD plugin, MotdType motdType, MotdPlayersType motdPlayersType) {
         this.type = motdPlayersType.getPath(motdType);
-        plugin.getLogs().debug(type + "values");
         this.plugin = plugin;
         Configuration configuration = plugin.getStorage().getControl(GuardianFiles.MOTDS);
         this.modeText = configuration.getString(type + "mode","EQUALS");
-        plugin.getLogs().debug(modeText);
         this.mode = MotdPlayersMode.getModeFromText(modeText);
-        plugin.getLogs().debug(mode.toString());
         this.modeText = modeText.replace(mode.getReplace(),"");
         this.enabled = configuration.getBoolean(type + "enable");
         this.values = configuration.getIntList(type + "values");
-        plugin.getLogs().debug(values.toString());
     }
 
     public void update() {
