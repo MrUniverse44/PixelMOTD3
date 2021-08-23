@@ -6,6 +6,7 @@ public enum FileSaveMode {
     MESSAGES_ES,
     WHITELIST,
     EVENTS,
+    EMERGENCY,
     MESSAGES,
     SETTINGS,
     ALL

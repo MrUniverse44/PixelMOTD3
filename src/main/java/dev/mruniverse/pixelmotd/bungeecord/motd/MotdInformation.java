@@ -33,6 +33,14 @@ public class MotdInformation {
 
     private final MotdType currentMotdType;
 
+    private final String emergencyLine1;
+
+    private final String emergencyLine2;
+
+    private final String emergencyLine3;
+
+    private final String emergencyLine4;
+
     private int max;
 
     private int min;
@@ -42,6 +50,10 @@ public class MotdInformation {
         this.max = max;
         currentMotdType = motdType;
         currentMotdName = motdName;
+        emergencyLine1 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE1));
+        emergencyLine2 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE2));
+        emergencyLine3 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE3));
+        emergencyLine4 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE4));
         HexMotdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE1));
         HexMotdLine2 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE2));
         motdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE1));
@@ -77,8 +89,20 @@ public class MotdInformation {
         return motdLine1 + "\n" + motdLine2;
     }
 
+    public String getEmergencyNormal() {
+        return emergencyLine1 + "\n" + emergencyLine2;
+    }
+
+    public String getEmergencyHex() {
+        return emergencyLine3 + "\n" + emergencyLine4;
+    }
+
     public String getHexAllMotd() {
-        return IridiumColorAPI.process(HexMotdLine1) + "\n" + IridiumColorAPI.process(HexMotdLine2);
+        try {
+            return IridiumColorAPI.process(HexMotdLine1) + "\n" + IridiumColorAPI.process(HexMotdLine2);
+        }catch (Throwable ignored) {
+            return null;
+        }
     }
 
     public int getMax() { return max; }
@@ -108,6 +132,14 @@ public class MotdInformation {
                 return complete + "with-hex.line-2";
             case LINE2:
                 return complete + "line-2";
+            case EMERGENCY_LINE1:
+                return currentMotdType.getEmergencyPath() + ".line-1";
+            case EMERGENCY_LINE2:
+                return currentMotdType.getEmergencyPath() + ".line-2";
+            case EMERGENCY_LINE3:
+                return currentMotdType.getEmergencyPath() + ".hexMotd.line-1";
+            case EMERGENCY_LINE4:
+                return currentMotdType.getEmergencyPath() + ".hexMotd.line-2";
             case CUSTOM_ICON_STATUS:
                 return complete + "custom-icon.enable";
             case CUSTOM_ICON_NAME:

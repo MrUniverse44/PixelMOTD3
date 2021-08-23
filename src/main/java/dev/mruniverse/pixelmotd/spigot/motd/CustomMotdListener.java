@@ -135,13 +135,29 @@ public class CustomMotdListener extends PacketAdapter {
         }
 
         if(info.getHexStatus() && protocol >= 721) {
-            ping.setMotD(info.getHexAllMotd());
+            try {
+                String motd;
+                if(info.getHexAllMotd() != null) {
+                    motd = info.getHexAllMotd();
+                } else {
+                    reportIssue();
+                    motd = info.getEmergencyHex();
+                }
+                ping.setMotD(motd);
+            }catch (Throwable ignored) {
+                reportIssue();
+                String motd = info.getEmergencyHex();
+                ping.setMotD(motd);
+            }
         } else {
-            ping.setMotD(info.getAllMotd());
-        }
-
-        if(info.getHoverStatus()) {
-            ping.setPlayers(getHover(info.getHover()));
+            try {
+                String motd = info.getAllMotd();
+                ping.setMotD(motd);
+            }catch (Throwable ignored) {
+                plugin.getLogs().error("This error is your fault, you have a bad configuration, to prevent spam of this message fix your motds.yml");
+                String motd = info.getEmergencyNormal();
+                ping.setMotD(motd);
+            }
         }
 
         if(plugin.getStorage().getControl(GuardianFiles.SETTINGS).getBoolean("settings.icon-system") && motds.getBoolean(info.getMotdType().getPath() + "settings.icon")) {
@@ -213,6 +229,15 @@ public class CustomMotdListener extends PacketAdapter {
             reportBadImage(file.getPath());
             return null;
         }
+    }
+    private void reportIssue() {
+        plugin.getLogs().error("Can't show HexColors, maybe your bungeecord.jar is outdated? showing 1.16 motd without HexColors");
+        plugin.getLogs().error("Or maybe this issue is caused because you have a bad configuration in your motds.yml");
+        plugin.getLogs().error("If you are sure than is not your issue please contact developer and send your motds.yml");
+        plugin.getLogs().error("And your bungeecord version or info about your proxy to try to replicate that issue.");
+        plugin.getLogs().error("To disable this warning please disable 'with-hex' motd.");
+        plugin.getLogs().error("Or try update your bungeecord.jar or if you are using a fork try using another fork");
+        plugin.getLogs().error("To see if the error is fixed.");
     }
     private void reportBadImage(String filePath) {
         plugin.getLogs().warn("Can't read image: &b" + filePath + "&f. Please check image size: 64x64 or check if the image isn't corrupted.");

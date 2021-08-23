@@ -98,7 +98,7 @@ public class CustomMotdListener implements Listener {
         ServerPing.Players players;
         ServerPing.PlayerInfo[] hover = ping.getPlayers().getSample();
 
-        final String motd;
+        String motd;
 
         Favicon icon = null;
 
@@ -124,9 +124,24 @@ public class CustomMotdListener implements Listener {
         }
 
         if(info.getHexStatus() && protocol >= 721) {
-            motd = info.getHexAllMotd();
+            try {
+                if(info.getHexAllMotd() != null) {
+                    motd = info.getHexAllMotd();
+                } else {
+                    reportIssue();
+                    motd = info.getEmergencyHex();
+                }
+            }catch (Throwable ignored) {
+                reportIssue();
+                motd = info.getEmergencyHex();
+            }
         } else {
-            motd = info.getAllMotd();
+            try {
+                motd = info.getAllMotd();
+            }catch (Throwable ignored) {
+                plugin.getLogs().error("This error is your fault, you have a bad configuration, to prevent spam of this message fix your motds.yml");
+                motd = info.getEmergencyNormal();
+            }
         }
 
         if(info.getHoverStatus()) {
@@ -226,6 +241,16 @@ public class CustomMotdListener implements Listener {
             number++;
         }
         return hover;
+    }
+
+    private void reportIssue() {
+        plugin.getLogs().error("Can't show HexColors, maybe your bungeecord.jar is outdated? showing 1.16 motd without HexColors");
+        plugin.getLogs().error("Or maybe this issue is caused because you have a bad configuration in your motds.yml");
+        plugin.getLogs().error("If you are sure than is not your issue please contact developer and send your motds.yml");
+        plugin.getLogs().error("And your bungeecord version or info about your proxy to try to replicate that issue.");
+        plugin.getLogs().error("To disable this warning please disable 'with-hex' motd.");
+        plugin.getLogs().error("Or try update your bungeecord.jar or if you are using a fork try using another fork");
+        plugin.getLogs().error("To see if the error is fixed.");
     }
 
     private String color(String message) { return ChatColor.translateAlternateColorCodes('&',message);}

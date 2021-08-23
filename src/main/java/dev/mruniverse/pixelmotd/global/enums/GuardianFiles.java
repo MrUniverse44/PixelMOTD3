@@ -7,5 +7,6 @@ public enum GuardianFiles {
     EVENTS,
     MESSAGES_EN,
     MESSAGES_ES,
-    MESSAGES
+    MESSAGES,
+    EMERGENCY
 }

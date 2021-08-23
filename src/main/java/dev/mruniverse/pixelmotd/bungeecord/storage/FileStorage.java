@@ -27,6 +27,7 @@ public class FileStorage {
     private Configuration messages;
     private Configuration motds;
     private Configuration whitelist;
+    private Configuration emergency;
     private Configuration events;
 
     private final File rxSettings;
@@ -40,6 +41,7 @@ public class FileStorage {
     private final File whitelistFolder;
     private final File outdatedClientFolder;
     private final File outdatedServerFolder;
+    private final File rxEmergency;
 
 
     private File rxMessages;
@@ -49,6 +51,7 @@ public class FileStorage {
         File dataFolder = plugin.getDataFolder();
         iconsFolder = new File(dataFolder, "icons");
         normalFolder = new File(iconsFolder, "normal");
+        rxEmergency = new File(dataFolder,"emergency.yml");
         rxMotds = new File(dataFolder,"motds.yml");
         rxEvents = new File(dataFolder,"events.yml");
         rxWhitelist = new File(dataFolder, "whitelist.yml");
@@ -60,6 +63,7 @@ public class FileStorage {
         rxMessagesEn = new File(dataFolder, "messages_en.yml");
         rxMessagesEs = new File(dataFolder, "messages_es.yml");
         settings = loadConfig("settings");
+        emergency = loadConfig("emergency");
         messagesEn = loadConfig("messages_en");
         messagesEs = loadConfig("messages_es");
         events = loadConfig("events");
@@ -121,6 +125,8 @@ public class FileStorage {
 
     public File getFile(GuardianFiles fileToGet) {
         switch (fileToGet) {
+            case EMERGENCY:
+                return rxEmergency;
             case EVENTS:
                 return rxEvents;
             case MESSAGES:
@@ -194,6 +200,9 @@ public class FileStorage {
     public void reloadFile(FileSaveMode Mode) {
         try {
             switch (Mode) {
+                case EMERGENCY:
+                    emergency = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxEmergency);
+                    break;
                 case MOTDS:
                     motds = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMotds);
                     break;
@@ -217,6 +226,7 @@ public class FileStorage {
                     break;
                 case ALL:
                 default:
+                    emergency = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxEmergency);
                     events = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxEvents);
                     whitelist = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxWhitelist);
                     motds = ConfigurationProvider.getProvider(YamlConfiguration.class).load(rxMotds);
@@ -240,6 +250,9 @@ public class FileStorage {
     public void save(FileSaveMode fileToSave) {
         try {
             switch (fileToSave) {
+                case EMERGENCY:
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(emergency, rxEmergency);
+                    break;
                 case MOTDS:
                     ConfigurationProvider.getProvider(YamlConfiguration.class).save(motds, rxMotds);
                     break;
@@ -263,6 +276,7 @@ public class FileStorage {
                     break;
                 case ALL:
                 default:
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(emergency, rxEmergency);
                     ConfigurationProvider.getProvider(YamlConfiguration.class).save(events, rxEvents);
                     ConfigurationProvider.getProvider(YamlConfiguration.class).save(whitelist, rxWhitelist);
                     ConfigurationProvider.getProvider(YamlConfiguration.class).save(motds, rxMotds);
@@ -332,6 +346,9 @@ public class FileStorage {
      */
     public Configuration getControl(GuardianFiles fileToControl) {
         switch (fileToControl) {
+            case EMERGENCY:
+                if (emergency == null) emergency = loadConfig(rxEmergency);
+                return emergency;
             case EVENTS:
                 if (events == null) events = loadConfig(rxEvents);
                 return events;

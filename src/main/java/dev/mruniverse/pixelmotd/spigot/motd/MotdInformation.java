@@ -29,6 +29,14 @@ public class MotdInformation {
 
     private final String HexMotdLine2;
 
+    private final String emergencyLine1;
+
+    private final String emergencyLine2;
+
+    private final String emergencyLine3;
+
+    private final String emergencyLine4;
+
     private final String currentMotdName;
 
     private final MotdType currentMotdType;
@@ -45,6 +53,10 @@ public class MotdInformation {
         HexMotdLine1 = storage.getUncoloredString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE1));
         HexMotdLine2 = storage.getUncoloredString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE2));
         motdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE1));
+        emergencyLine1 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE1));
+        emergencyLine2 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE2));
+        emergencyLine3 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE3));
+        emergencyLine4 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE4));
         motdLine2 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE2));
         hoverStatus = storage.getControl(GuardianFiles.MOTDS).getBoolean(getPath(MotdPaths.HOVER_STATUS));
         hover = storage.getColoredList(GuardianFiles.MOTDS,getPath(MotdPaths.HOVER));
@@ -78,7 +90,11 @@ public class MotdInformation {
     }
 
     public String getHexAllMotd() {
-        return IridiumColorAPI.process(HexMotdLine1) + "\n" + IridiumColorAPI.process(HexMotdLine2);
+        try {
+            return IridiumColorAPI.process(HexMotdLine1) + "\n" + IridiumColorAPI.process(HexMotdLine2);
+        }catch (Throwable ignored) {
+            return null;
+        }
     }
 
     public int getMax() { return max; }
@@ -86,6 +102,14 @@ public class MotdInformation {
     public int getMin() { return min; }
 
     public String getMotdLine1() { return motdLine1; }
+
+    public String getEmergencyNormal() {
+        return emergencyLine1 + "\n" + emergencyLine2;
+    }
+
+    public String getEmergencyHex() {
+        return emergencyLine3 + "\n" + emergencyLine4;
+    }
 
     public String getMotdLine2() { return motdLine2; }
 
@@ -104,6 +128,14 @@ public class MotdInformation {
                 return complete + "with-hex.line-1";
             case HEX_LINE2:
                 return complete + "with-hex.line-2";
+            case EMERGENCY_LINE1:
+                return currentMotdType.getEmergencyPath() + ".line-1";
+            case EMERGENCY_LINE2:
+                return currentMotdType.getEmergencyPath() + ".line-2";
+            case EMERGENCY_LINE3:
+                return currentMotdType.getEmergencyPath() + ".hexMotd.line-1";
+            case EMERGENCY_LINE4:
+                return currentMotdType.getEmergencyPath() + ".hexMotd.line-2";
             case LINE2:
                 return complete + "line-2";
             case CUSTOM_ICON_STATUS:

@@ -36,6 +36,20 @@ public enum MotdType {
         }
     }
 
+    public String getEmergencyPath() {
+        switch (this){
+            case WHITELIST:
+                return "emergency.whitelist";
+            case OUTDATED_SERVER:
+                return "emergency.outdatedServer";
+            case OUTDATED_CLIENT:
+                return "emergency.outdatedClient";
+            default:
+            case NORMAL:
+                return "emergency.normal";
+        }
+    }
+
     public String getMotdsUsingPath() {
         switch (this){
             case WHITELIST:

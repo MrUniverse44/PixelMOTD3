@@ -28,8 +28,10 @@ public class FileStorage {
     private FileConfiguration motds;
     private FileConfiguration whitelist;
     private FileConfiguration events;
+    private FileConfiguration emergency;
 
     private final File rxSettings;
+    private final File rxEmergency;
     private final File rxMotds;
     private final File rxEvents;
     private final File rxWhitelist;
@@ -50,6 +52,7 @@ public class FileStorage {
         iconsFolder = new File(dataFolder, "icons");
         normalFolder = new File(iconsFolder, "normal");
         rxMotds = new File(dataFolder,"motds.yml");
+        rxEmergency = new File(dataFolder,"emergency.yml");
         rxEvents = new File(dataFolder,"events.yml");
         rxWhitelist = new File(dataFolder, "whitelist.yml");
         whitelistFolder = new File(iconsFolder, "whitelist");
@@ -61,6 +64,7 @@ public class FileStorage {
         rxMessagesEs = new File(dataFolder, "messages_es.yml");
         settings = loadConfig("settings");
         messagesEn = loadConfig("messages_en");
+        emergency = loadConfig("emergency");
         messagesEs = loadConfig("messages_es");
         events = loadConfig("events");
         motds = loadConfig("motds");
@@ -121,6 +125,8 @@ public class FileStorage {
 
     public File getFile(GuardianFiles fileToGet) {
         switch (fileToGet) {
+            case EMERGENCY:
+                return rxEmergency;
             case EVENTS:
                 return rxEvents;
             case MESSAGES:
@@ -193,6 +199,9 @@ public class FileStorage {
      */
     public void reloadFile(FileSaveMode Mode) {
         switch (Mode) {
+            case EMERGENCY:
+                emergency = YamlConfiguration.loadConfiguration(rxEmergency);
+                break;
             case EVENTS:
                 events = YamlConfiguration.loadConfiguration(rxEvents);
                 break;
@@ -216,6 +225,7 @@ public class FileStorage {
                 break;
             case ALL:
             default:
+                emergency = YamlConfiguration.loadConfiguration(rxEmergency);
                 events = YamlConfiguration.loadConfiguration(rxEvents);
                 whitelist = YamlConfiguration.loadConfiguration(rxWhitelist);
                 motds = YamlConfiguration.loadConfiguration(rxMotds);
@@ -235,6 +245,9 @@ public class FileStorage {
     public void save(FileSaveMode fileToSave) {
         try {
             switch (fileToSave) {
+                case EMERGENCY:
+                    emergency.save(rxEmergency);
+                    break;
                 case MOTDS:
                     motds.save(rxMotds);
                     break;
@@ -258,6 +271,7 @@ public class FileStorage {
                     break;
                 case ALL:
                 default:
+                    emergency.save(rxEmergency);
                     events.save(rxEvents);
                     whitelist.save(rxWhitelist);
                     motds.save(rxMotds);
@@ -327,6 +341,9 @@ public class FileStorage {
      */
     public FileConfiguration getControl(GuardianFiles fileToControl) {
         switch (fileToControl) {
+            case EMERGENCY:
+                if (emergency == null) emergency = loadConfig(rxEmergency);
+                return emergency;
             case EVENTS:
                 if (events == null) events = loadConfig(rxEvents);
                 return events;
