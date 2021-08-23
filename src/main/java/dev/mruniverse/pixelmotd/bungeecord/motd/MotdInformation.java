@@ -54,8 +54,8 @@ public class MotdInformation {
         emergencyLine2 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE2));
         emergencyLine3 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE3));
         emergencyLine4 = storage.getString(GuardianFiles.EMERGENCY,getPath(MotdPaths.EMERGENCY_LINE4));
-        HexMotdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE1));
-        HexMotdLine2 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE2));
+        HexMotdLine1 = storage.getStringWithoutColors(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE1));
+        HexMotdLine2 = storage.getStringWithoutColors(GuardianFiles.MOTDS,getPath(MotdPaths.HEX_LINE2));
         motdLine1 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE1));
         motdLine2 = storage.getString(GuardianFiles.MOTDS,getPath(MotdPaths.LINE2));
         hoverStatus = storage.getControl(GuardianFiles.MOTDS).getBoolean(getPath(MotdPaths.HOVER_STATUS));
