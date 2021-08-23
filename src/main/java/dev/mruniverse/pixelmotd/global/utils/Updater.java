@@ -64,6 +64,7 @@ public class Updater {
         thread.start();
     }
 
+    @SuppressWarnings("unused")
     public void disableLogs() {
         logger = false;
     }
@@ -252,6 +253,7 @@ public class Updater {
         {
             URL url = new URL(downloadLink);
             in = new BufferedInputStream(url.openStream());
+
             fout = new FileOutputStream(new File(updateFolder, file.getName()));
 
             final byte[] data = new byte[4096];
@@ -260,29 +262,28 @@ public class Updater {
                 fout.write(data, 0, count);
             }
         }
-        catch (Exception e)
+        catch (Throwable ignored)
         {
             if(logger)
-                logs.error("Can't download");
-                logs.error(e);
-            result = Result.FAILED;
+                logs.info("Can't download latest version automatically, download it manually from website.");
+            result = Result.UPDATE_FOUND;
         }
         finally {
             try {
                 if (in != null) {
                     in.close();
                 }
-            } catch (final IOException e) {
+            } catch (final Throwable throwable) {
                 logs.error("Can't download");
-                logs.error(e);
+                logs.error(throwable);
             }
             try {
                 if (fout != null) {
                     fout.close();
                 }
-            } catch (final IOException e) {
+            } catch (final Throwable throwable) {
                 logs.error("Can't download");
-                logs.error(e);
+                logs.error(throwable);
             }
         }
     }
@@ -297,9 +298,9 @@ public class Updater {
             try
             {
                 thread.join();
-            } catch (InterruptedException e) {
+            } catch (Throwable throwable) {
                 logs.error("Can't download");
-                logs.error(e);
+                logs.error(throwable);
             }
         }
     }
