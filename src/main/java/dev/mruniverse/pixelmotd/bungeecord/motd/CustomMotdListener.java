@@ -131,8 +131,9 @@ public class CustomMotdListener implements Listener {
                     reportIssue();
                     motd = info.getEmergencyHex();
                 }
-            }catch (Throwable ignored) {
+            }catch (Throwable throwest) {
                 reportIssue();
+                plugin.getLogs().error(throwest);
                 motd = info.getEmergencyHex();
             }
         } else {

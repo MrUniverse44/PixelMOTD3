@@ -100,7 +100,7 @@ public class MotdInformation {
     public String getHexAllMotd() {
         try {
             return IridiumColorAPI.process(HexMotdLine1) + "\n" + IridiumColorAPI.process(HexMotdLine2);
-        }catch (Throwable ignored) {
+        }catch (Throwable throwable) {
             return null;
         }
     }

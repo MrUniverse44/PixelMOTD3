@@ -144,8 +144,9 @@ public class CustomMotdListener extends PacketAdapter {
                     motd = info.getEmergencyHex();
                 }
                 ping.setMotD(motd);
-            }catch (Throwable ignored) {
+            }catch (Throwable throwest) {
                 reportIssue();
+                plugin.getLogs().error(throwest);
                 String motd = info.getEmergencyHex();
                 ping.setMotD(motd);
             }
