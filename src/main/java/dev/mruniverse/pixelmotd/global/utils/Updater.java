@@ -267,7 +267,7 @@ public class Updater {
             if(logger)
                 logs.info("Can't download latest version automatically, download it manually from website.");
                 logs.info(" ");
-            result = Result.UPDATE_FOUND;
+            result = Result.FAILED;
         }
         finally {
             try {
