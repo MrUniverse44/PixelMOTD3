@@ -199,7 +199,7 @@ public class Updater {
                 else if(updateType == UpdateType.DOWNLOAD)
                 {
                     if(logger)
-                        logs.info("Downloading update... version not checked");
+                        logs.info("Trying to download update..");
                     download();
                 }
                 else if(updateType == UpdateType.CHECK_DOWNLOAD)
@@ -266,6 +266,7 @@ public class Updater {
         {
             if(logger)
                 logs.info("Can't download latest version automatically, download it manually from website.");
+                logs.info(" ");
             result = Result.UPDATE_FOUND;
         }
         finally {
