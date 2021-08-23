@@ -1,5 +1,6 @@
 package dev.mruniverse.pixelmotd.spigot.utils;
 
+import dev.mruniverse.pixelmotd.global.GLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class GuardianLogger {
+public class GuardianLogger implements GLogger {
     private final String hidePackage;
     private String pluginName = "PixelMOTD";
     private String containIdentifier = "mruniverse";
@@ -126,7 +127,7 @@ public class GuardianLogger {
      *
      * @param message Provided message
      */
-    private void sendMessage(String message) {
+    public void sendMessage(String message) {
         Bukkit.getServer().getConsoleSender().sendMessage(color(message));
     }
 }

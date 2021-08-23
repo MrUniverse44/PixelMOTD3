@@ -1,5 +1,6 @@
 package dev.mruniverse.pixelmotd.bungeecord.utils;
 
+import dev.mruniverse.pixelmotd.global.GLogger;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class GuardianLogger {
+public class GuardianLogger implements GLogger {
     private final String hidePackage;
     private final Plugin plugin;
     private String pluginName = "PixelMOTD";
@@ -130,7 +131,7 @@ public class GuardianLogger {
      *
      * @param message Provided message
      */
-    private void sendMessage(String message) {
+    public void sendMessage(String message) {
         plugin.getProxy().getConsole().sendMessage(new TextComponent(color(message)));
     }
 }

@@ -12,6 +12,8 @@
 settings:
   # Enable Check update when the plugin load
   update-check: true
+  # Auto Download Updates
+  auto-download-updates: true
   # Update all fileStorage on plugin-reload-command to prevent issues:
   update-file-storage: true
   # Player Name system, usage: %player_<number>% system
