@@ -75,6 +75,37 @@ motds:
         toggle: true
         type: DEFAULT
         values: []
+motds-hex:
+  default:
+    line1: '&aThis motd supports hex colors'
+    line2: '&7Is only for 1.16+ players.'
+    hover:
+      toggle: true
+      lines:
+        - "&7Custom Hover"
+        - "<hasOnline>&8Players Online: &a%online%"
+        - "<hasOnline>%player_1%"
+        - "<hasOnline>%player_2%"
+        - "<hasOnline>%player_3%"
+        - "<hasOnline>%player_4%"
+        - "<hasOnline>%player_5%"
+        - "<hasMoreOnline>&7+&a%more_online% &7players."
+    icons:
+      folder: DEFAULT
+      icon: "test.png"
+    protocol:
+      toggle: true
+      modifier: ALWAYS_POSITIVE
+      message: "PixelMOTD System"
+    players:
+      max:
+        toggle: true
+        type: DEFAULT
+        values: []
+      online:
+        toggle: true
+        type: DEFAULT
+        values: []
 outdated-server:
   default:
     line1: '&aThe server don't support your version'
