@@ -38,7 +38,7 @@ public class MainCommand extends Command {
             ProxiedPlayer player = (ProxiedPlayer)sender;
             check = player.hasPermission(permission);
             if(sendMessage) {
-                String permissionMsg = plugin.getStorage().getStorage().getControl(GuardianFiles.MESSAGES).getColoredString("messages.others.no-perms");
+                String permissionMsg = plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.others.no-perms");
                 if (permissionMsg == null) permissionMsg = "&cYou need permission &7%permission% &cfor this action.";
                 if (!check)
                     sendMessage(player, permissionMsg.replace("%permission%", permission));
@@ -85,18 +85,18 @@ public class MainCommand extends Command {
                     if(hasPermission(sender,"pmotd.admin.use.reload",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         long timeMS = System.currentTimeMillis();
                         try {
-                            plugin.getStorage().getStorage().reloadFile(FileSaveMode.ALL);
+                            plugin.getStorage().getFiles().reloadFile(FileSaveMode.ALL);
 
-                            String lang = plugin.getStorage().getStorage().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
+                            String lang = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
 
-                            plugin.getStorage().getStorage().setMessages(lang);
+                            plugin.getStorage().getFiles().setMessages(lang);
                             
                         }catch (Throwable throwable) {
                             plugin.getStorage().getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");
                             plugin.getStorage().getLogs().error("If you are sure than this isn't your error, please contact the developer.");
                             plugin.getStorage().getLogs().error(throwable);
                         }
-                        String reload = plugin.getStorage().getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.reload","&aThe plugin was reloaded correctly in <ms>ms.");
+                        String reload = plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getString("messages.reload","&aThe plugin was reloaded correctly in <ms>ms.");
                         reload = reload.replace("<ms>", (System.currentTimeMillis() - timeMS) + "");
                         sendMessage(sender,reload);
                     }

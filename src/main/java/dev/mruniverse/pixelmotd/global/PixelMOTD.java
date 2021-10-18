@@ -25,7 +25,7 @@ public abstract class PixelMOTD {
         this.storage = storage;
     }
 
-    public FileStorage getStorage() {
+    public FileStorage getFiles() {
         return storage;
     }
 }
