@@ -1,5 +1,5 @@
-name: PixelMOTD
+name: PixelMOTDBuilder
 version: ${project.version}
-main: dev.mruniverse.pixelmotd.bungeecord.PixelMOTD
+main: dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder
 author: MrUniverse44
 description: Simple MOTD System plugin

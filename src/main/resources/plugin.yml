@@ -1,6 +1,6 @@
-name: PixelMOTD
+name: PixelMOTDBuilder
 version: ${project.version}
-main: dev.mruniverse.pixelmotd.spigot.PixelMOTD
+main: dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder
 depend: [ ProtocolLib ]
 authors: [ MrUniverse44 ]
 description: Simple MOTD System plugin

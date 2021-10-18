@@ -3,8 +3,7 @@ package dev.mruniverse.pixelmotd.spigot.utils.command;
 
 import dev.mruniverse.pixelmotd.global.enums.FileSaveMode;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
-import dev.mruniverse.pixelmotd.spigot.utils.command.sub.*;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,16 +13,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class MainCommand implements CommandExecutor {
 
-    private final PixelMOTD plugin;
+    private final PixelMOTDBuilder plugin;
     private final String cmdPrefix;
-    private final WhitelistCommand whitelist;
-    private final BlacklistCommand blacklist;
 
-    public MainCommand(PixelMOTD plugin, String command) {
+    public MainCommand(PixelMOTDBuilder plugin, String command) {
         this.plugin = plugin;
         this.cmdPrefix = "&e/" + command;
-        blacklist = new BlacklistCommand(plugin,command);
-        whitelist = new WhitelistCommand(plugin,command);
     }
 
     public static void sendMessage(Player player,String message) {
@@ -43,7 +38,7 @@ public class MainCommand implements CommandExecutor {
             Player player = (Player)sender;
             check = player.hasPermission(permission);
             if(sendMessage) {
-                String permissionMsg = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.others.no-perms");
+                String permissionMsg = plugin.getStorage().getStorage().getControl(GuardianFiles.MESSAGES).getColoredString("messages.others.no-perms");
                 if (permissionMsg == null) permissionMsg = "&cYou need permission &7%permission% &cfor this action.";
                 if (!check)
                     sendMessage(player, permissionMsg.replace("%permission%", permission));
@@ -82,27 +77,18 @@ public class MainCommand implements CommandExecutor {
                     if(hasPermission(sender,"pmotd.admin.use.reload",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         long timeMS = System.currentTimeMillis();
                         try {
-                            plugin.getLoader().getMotdListener().update();
-                            plugin.getListener().update(plugin);
+                            plugin.getStorage().getStorage().reloadFile(FileSaveMode.ALL);
 
-                            if(plugin.getStorage().getControl(GuardianFiles.SETTINGS).getBoolean("settings.update-file-storage",true)) {
-                                plugin.getStorage().updateFileManager();
-                            } else {
-                                plugin.getStorage().reloadFile(FileSaveMode.ALL);
-                            }
+                            String lang = plugin.getStorage().getStorage().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
 
-                            String lang = plugin.getStorage().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
-
-                            plugin.getLoader().update();
-
-                            plugin.getStorage().setMessages(lang);
+                            plugin.getStorage().getStorage().setMessages(lang);
 
                         }catch (Throwable throwable) {
-                            plugin.getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");
-                            plugin.getLogs().error("If you are sure than this isn't your error, please contact the developer.");
-                            plugin.getLogs().error(throwable);
+                            plugin.getStorage().getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");
+                            plugin.getStorage().getLogs().error("If you are sure than this isn't your error, please contact the developer.");
+                            plugin.getStorage().getLogs().error(throwable);
                         }
-                        String reload = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.reload","&aThe plugin was reloaded correctly in <ms>ms.");
+                        String reload = plugin.getStorage().getStorage().getControl(GuardianFiles.MESSAGES).getColoredString("messages.reload","&aThe plugin was reloaded correctly in <ms>ms.");
                         reload = reload.replace("<ms>", (System.currentTimeMillis() - timeMS) + "");
                         sendMessage(sender,reload);
                     }
@@ -111,14 +97,18 @@ public class MainCommand implements CommandExecutor {
 
                 if(args[1].equalsIgnoreCase("whitelist")) {
                     if(hasPermission(sender,"pmotd.admin.help.whitelist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
-                        whitelist.usage(sender,getArguments(args));
+                        /*
+                         * WHITELIST
+                         */
 
                     }
                     return true;
                 }
                 if(args[1].equalsIgnoreCase("blacklist")) {
                     if(hasPermission(sender,"pmotd.admin.help.blacklist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
-                        blacklist.usage(sender,getArguments(args));
+                        /*
+                         * BLACKLIST
+                         */
 
                     }
                     return true;
@@ -126,7 +116,7 @@ public class MainCommand implements CommandExecutor {
             }
             return true;
         } catch (Throwable throwable) {
-            plugin.getLogs().error(throwable);
+            plugin.getStorage().getLogs().error(throwable);
         }
         return true;
     }

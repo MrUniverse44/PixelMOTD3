@@ -13,7 +13,7 @@ import java.util.List;
 public class GuardianLogger implements GLogger {
     private final String hidePackage;
     private final Plugin plugin;
-    private String pluginName = "PixelMOTD";
+    private String pluginName = "PixelMOTDBuilder";
     private String containIdentifier = "mruniverse";
 
     /**

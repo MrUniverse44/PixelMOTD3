@@ -50,6 +50,20 @@ public enum MotdType {
         }
     }
 
+    public IconFolders getIconFolder() {
+        switch (this){
+            case WHITELIST:
+                return IconFolders.WHITELIST;
+            case OUTDATED_SERVER:
+                return IconFolders.OUTDATED_SERVER;
+            case OUTDATED_CLIENT:
+                return IconFolders.OUTDATED_CLIENT;
+            default:
+            case NORMAL:
+                return IconFolders.NORMAL;
+        }
+    }
+
     public String getMotdsUsingPath() {
         switch (this){
             case WHITELIST:

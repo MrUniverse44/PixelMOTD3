@@ -39,7 +39,7 @@ public class PixelMOTD {
         this.commandManager = manager;
         this.dataDirectory = dataDirectory;
         this.injector = injector;
-        logger.error("PixelMOTD have been successfully enabled! but isn't finished in Velocity");
+        logger.error("PixelMOTDBuilder have been successfully enabled! but isn't finished in Velocity");
         logger.error("Velocity support isn't finished so commands,features don't work yet");
         logger.error("So the plugin don't have files generated for velocity for now, sorry.");
         logger.error("For now i recommend use another Motd plugin for velocity");

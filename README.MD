@@ -19,23 +19,25 @@
 * Countdown System
 * Customizable Motd Lines
 * Customizable Protocol Version
-* MultiMOTD in normal, outdated-client, outdated-server and whitelist mode.
+* MultiMOTD Support
 * Whitelist Permission Bypass
 * Customizable Motd Hover
 * Customizable Commands
 * Support WaterFall and FlameCord,PaperSpigot & more.
 * Custom Protocol Message
 * Custom Server-Icon
+* Performance Boost
 
 ---
 Config files:
 > - events.yml
-> - events.yml
 > - whitelist.yml
+> - blacklist.yml
 > - settings.yml
 > - motds.yml
-> - messages_en.yml
-> - messages.es.yml
+> - translations/messages_en.yml
+> - translations/messages_es.yml
+> - translations/messages_jp.yml
 
 ---
 

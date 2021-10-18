@@ -38,7 +38,7 @@ settings:
   outdated-client-motd: true
   # Toggle outdated-server motd system
   outdated-server-motd: true
-  # Toggle icon system of PixelMOTD
+  # Toggle icon system of PixelMOTDBuilder
   icon-system: true
   # Config your max-server-protocol and min-server-protocol for the check of the outdated-client and outdated-server.
   # You can see protocols here: https://minecraft.fandom.com/wiki/Protocol_version
