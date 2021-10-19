@@ -12,6 +12,8 @@ public interface FileStorage {
 
     File getIconsFolder(MotdType motdType, String motdName);
 
+    File getMainIcons();
+
     File getFile(GuardianFiles fileToGet);
 
     Control getControl(GuardianFiles file);

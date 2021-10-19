@@ -63,11 +63,12 @@ public class MainCommand implements CommandExecutor {
                     if (hasPermission(sender, "pmotd.admin.help.game", true)) {
                         sender.sendMessage(" ");
                         sendMessage(sender, "&b------------ &aPixelMOTD &b------------");
-                        sendMessage(sender, cmdPrefix + " admin whitelist add [player or uuid] &e- &fAdd player to whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin whitelist remove [player or uuid] &e- &fRemove player from whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin blacklist add [player or uuid] &e- &fAdd player to whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin blacklist remove [player or uuid] &e- &fRemove player from whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin whitelist add (player or uuid) [world] &e- &fAdd player to whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin whitelist remove (player or uuid) [world] &e- &fRemove player from whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin blacklist add (player or uuid) [world] &e- &fAdd player to whitelist.");
+                        sendMessage(sender, cmdPrefix + " admin blacklist remove (player or uuid) [world] &e- &fRemove player from whitelist.");
                         sendMessage(sender, cmdPrefix + " admin reload &e- &fReload the plugin.");
+                        sendMessage(sender, "&b[] &f= &eOPTIONAL &8| &a() &f= &eOBLIGATORY");
                         sendMessage(sender, "&b------------ &a(Page 1&l/1&a) &b------------");
                     }
                     return true;
@@ -82,6 +83,8 @@ public class MainCommand implements CommandExecutor {
                             String lang = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
 
                             plugin.getStorage().getFiles().setMessages(lang);
+
+                            plugin.getPing().update();
 
                         }catch (Throwable throwable) {
                             plugin.getStorage().getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");

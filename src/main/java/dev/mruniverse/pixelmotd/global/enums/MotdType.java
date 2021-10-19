@@ -1,108 +1,203 @@
 package dev.mruniverse.pixelmotd.global.enums;
 
-public enum MotdType {
-    NORMAL,
-    WHITELIST,
-    OUTDATED_SERVER,
-    OUTDATED_CLIENT;
+import dev.mruniverse.pixelmotd.global.Motd;
 
-    public String getMotdPath() {
-        switch (this){
-            case WHITELIST:
-                return "whitelist.motds.";
-            case OUTDATED_SERVER:
-                return "outdated-server.motds.";
-            case OUTDATED_CLIENT:
-                return "outdated-client.motds.";
-            default:
-            case NORMAL:
-                return "normal.motds.";
+public enum MotdType implements Motd {
+    NORMAL{
+        @Override
+        public String getPath(){
+            return "motds.";
         }
-    }
 
-    public String getSettings(MotdSettings settings) {
-        switch (settings) {
-            case CUSTOM_PROTOCOL_VERSION_TOGGLE:
-                return getPath() + "settings.custom-protocol.change-protocol-version.toggle";
-            case CUSTOM_PROTOCOL_TOGGLE:
-                return getPath() + "settings.custom-protocol.enable";
-            case CUSTOM_PROTOCOL_VALUE:
-                return getPath() + "settings.custom-protocol.change-protocol-version.value";
-            case CUSTOM_PROTOCOL_NAME:
-                return getPath() + "settings.custom-protocol.name";
-            default:
-            case ICON_SYSTEM:
-                return getPath() + "settings.icon";
+        @Override
+        public String getSettings(MotdSettings settings){
+            if(hasMotd) return getPath() + motd + settings.getPath();
+            return settings.getPath();
         }
-    }
 
-    public String getEmergencyPath() {
-        switch (this){
-            case WHITELIST:
-                return "emergency.whitelist";
-            case OUTDATED_SERVER:
-                return "emergency.outdatedServer";
-            case OUTDATED_CLIENT:
-                return "emergency.outdatedClient";
-            default:
-            case NORMAL:
-                return "emergency.normal";
+        @Override
+        public String getName() {
+            return "Normal";
         }
-    }
 
-    public IconFolders getIconFolder() {
-        switch (this){
-            case WHITELIST:
-                return IconFolders.WHITELIST;
-            case OUTDATED_SERVER:
-                return IconFolders.OUTDATED_SERVER;
-            case OUTDATED_CLIENT:
-                return IconFolders.OUTDATED_CLIENT;
-            default:
-            case NORMAL:
-                return IconFolders.NORMAL;
+        @Override
+        public IconFolders getIconFolders(){
+            return IconFolders.NORMAL;
         }
-    }
 
-    public String getMotdsUsingPath() {
-        switch (this){
-            case WHITELIST:
-                return "whitelist.motds";
-            case OUTDATED_SERVER:
-                return "outdated-server.motds";
-            case OUTDATED_CLIENT:
-                return "outdated-client.motds";
-            default:
-            case NORMAL:
-                return "normal.motds";
+        @Override
+        public boolean isHexMotd() {
+            return false;
         }
-    }
+    },
+    NORMAL_HEX{
+        @Override
+        public String getPath(){
+            return "motds-hex.";
+        }
 
-    public String getName() {
-        switch (this) {
-            case WHITELIST:
-                return "whitelist";
-            case OUTDATED_CLIENT:
-                return "outdatedClient";
-            case OUTDATED_SERVER:
-                return "outdatedServer";
-            default:
-            case NORMAL:
-                return "normal";
+        @Override
+        public String getName() {
+            return "Normal";
         }
-    }
 
-    public String getPath() {
-        switch (this){
-            case WHITELIST:
-                return "whitelist.";
-            case OUTDATED_SERVER:
-                return "outdated-server.";
-            case OUTDATED_CLIENT:
-                return "outdated-client.";
-            default:
-            case NORMAL:
-                return "normal.";
+        @Override
+        public String getSettings(MotdSettings settings){
+            if(hasMotd) return getPath() + motd + settings.getPath();
+            return settings.getPath();
         }
+
+        @Override
+        public IconFolders getIconFolders(){
+            return IconFolders.NORMAL;
+        }
+
+        @Override
+        public boolean isHexMotd() {
+            return true;
+        }
+    },
+    WHITELIST{
+        @Override
+        public String getPath(){
+            return "whitelist.";
+        }
+
+        @Override
+        public String getSettings(MotdSettings settings){
+            if(hasMotd) return getPath() + motd + settings.getPath();
+            return settings.getPath();
+        }
+
+        @Override
+        public IconFolders getIconFolders(){
+            return IconFolders.NORMAL;
+        }
+
+        @Override
+        public String getName() {
+            return "Whitelist";
+        }
+
+        @Override
+        public boolean isHexMotd() {
+            return false;
+        }
+    },
+    WHITELIST_HEX{
+        @Override
+        public String getPath(){
+            return "whitelist-hex.";
+        }
+
+        @Override
+        public String getSettings(MotdSettings settings){
+            if(hasMotd) return getPath() + motd + settings.getPath();
+            return settings.getPath();
+        }
+
+        @Override
+        public String getName() {
+            return "Whitelist";
+        }
+
+        @Override
+        public IconFolders getIconFolders(){
+            return IconFolders.NORMAL;
+        }
+
+        @Override
+        public boolean isHexMotd() {
+            return true;
+        }
+    },
+    BLACKLIST{
+        @Override
+        public String getPath(){
+            return "blacklist.";
+        }
+
+        @Override
+        public String getSettings(MotdSettings settings){
+            if(hasMotd) return getPath() + motd + settings.getPath();
+            return settings.getPath();
+        }
+
+        @Override
+        public IconFolders getIconFolders(){
+            return IconFolders.NORMAL;
+        }
+
+        @Override
+        public String getName() {
+            return "Blacklist";
+        }
+
+        @Override
+        public boolean isHexMotd() {
+            return false;
+        }
+    },
+    OUTDATED_SERVER{
+        @Override
+        public String getPath(){
+            return "outdated-server.";
+        }
+
+        @Override
+        public String getSettings(MotdSettings settings){
+            if(hasMotd) return getPath() + motd + settings.getPath();
+            return settings.getPath();
+        }
+
+        @Override
+        public String getName() {
+            return "outdatedServer";
+        }
+
+        @Override
+        public IconFolders getIconFolders(){
+            return IconFolders.NORMAL;
+        }
+
+        @Override
+        public boolean isHexMotd() {
+            return false;
+        }
+    },
+    OUTDATED_CLIENT{
+        @Override
+        public String getPath(){
+            return "outdated-client.";
+        }
+
+        @Override
+        public String getName() {
+            return "outdatedClient";
+        }
+
+        @Override
+        public String getSettings(MotdSettings settings){
+            if(hasMotd) return getPath() + motd + settings.getPath();
+            return settings.getPath();
+        }
+
+        @Override
+        public IconFolders getIconFolders(){
+            return IconFolders.NORMAL;
+        }
+
+        @Override
+        public boolean isHexMotd() {
+            return false;
+        }
+    };
+
+    public String motd = "";
+    public boolean hasMotd = false;
+
+    public void setMotd(String motd) {
+        this.motd = motd;
+        hasMotd = true;
     }
 }

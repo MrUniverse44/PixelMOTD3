@@ -59,7 +59,12 @@ public class FileStorageBuilder implements FileStorage {
 
     @Override
     public File getIconsFolder(MotdType motdType) {
-        return folders.get(motdType.getIconFolder());
+        return folders.get(motdType.getIconFolders());
+    }
+
+    @Override
+    public File getMainIcons() {
+        return folders.get(IconFolders.GENERAL);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

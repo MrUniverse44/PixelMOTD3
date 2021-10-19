@@ -5,7 +5,7 @@
 #   | |   | |>  <  __/ | |  | | |__| | | |  | |__| |
 #   |_|   |_/_/\_\___|_|_|  |_|\____/  |_|  |_____/
 #
-#   Using version 9.0.0-SNAPSHOT
+#   Using version 9.1.0-SNAPSHOT
 #   Author: MrUniverse44
 #   SpigotMC Link: https://www.spigotmc.org/resources/37177/
 #
@@ -171,6 +171,37 @@ outdated-client:
 whitelist:
   default:
     line1: '&cThe server is in whitelist.'
+    line2: '&7Wait for us'
+    hover:
+      toggle: true
+      lines:
+        - "&7Custom Hover"
+        - "<hasOnline>&8Staffs Online: &a%online%"
+        - "<hasOnline>%player_1%"
+        - "<hasOnline>%player_2%"
+        - "<hasOnline>%player_3%"
+        - "<hasOnline>%player_4%"
+        - "<hasOnline>%player_5%"
+        - "<hasMoreOnline>&7+&a%more_online% &7players."
+    icons:
+      folder: DEFAULT
+      icon: "test2.png"
+    protocol:
+      toggle: true
+      modifier: ALWAYS_NEGATIVE
+      message: "PixelMOTD System"
+    players:
+      max:
+        toggle: true
+        type: DEFAULT
+        values: []
+      online:
+        toggle: true
+        type: DEFAULT
+        values: []
+whitelist-hex:
+  default:
+    line1: '&dThe server is in whitelist.'
     line2: '&7Wait for us'
     hover:
       toggle: true
