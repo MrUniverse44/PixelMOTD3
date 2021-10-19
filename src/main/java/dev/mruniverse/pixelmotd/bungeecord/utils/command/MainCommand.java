@@ -18,7 +18,7 @@ public class MainCommand extends Command {
     public MainCommand(PixelMOTDBuilder plugin, String command) {
         super(command);
         this.plugin = plugin;
-        this.cmdPrefix = "&e/" + command;;
+        this.cmdPrefix = "&e/" + command;
     }
 
     public static void sendMessage(ProxiedPlayer player, String message) {
