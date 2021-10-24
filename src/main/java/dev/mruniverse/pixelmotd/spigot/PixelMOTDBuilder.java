@@ -39,16 +39,16 @@ public final class PixelMOTDBuilder extends JavaPlugin {
             if(!hasVia) externalLib = new ProtocolLIB();
             storage.getLogs().info("ProtocolAPI will use ProtocolLIB to get the protocol version of the player.");
             ping = new PacketListener(this,Priority.getFromText(priority));
-            return;
         }
-        ping = new PingListener(this,Priority.getFromText(priority));
-        storage.getLogs().info("ProtocolAPI don't find ViaVersion or ProtocolLIB in the server.");
-        storage.getLogs().info("--------------------------------------------------------------");
-        storage.getLogs().info("The outdatedClient and outdatedServer motd will not work.");
-        storage.getLogs().info("The plugin only will be using 'motds' and 'whitelist' path.");
-        storage.getLogs().info("Without ProtocolLIB the plugin will not load hover");
-        storage.getLogs().info("and the ServerPing-Protocol option will not work.");
-
+        if(!hasProtocol && !hasVia) {
+            ping = new PingListener(this, Priority.getFromText(priority));
+            storage.getLogs().info("ProtocolAPI don't find ViaVersion or ProtocolLIB in the server.");
+            storage.getLogs().info("--------------------------------------------------------------");
+            storage.getLogs().info("The outdatedClient and outdatedServer motd will not work.");
+            storage.getLogs().info("The plugin only will be using 'motds' and 'whitelist' path.");
+            storage.getLogs().info("Without ProtocolLIB the plugin will not load hover");
+            storage.getLogs().info("and the ServerPing-Protocol option will not work.");
+        }
     }
 
     public Storage getStorage() {
