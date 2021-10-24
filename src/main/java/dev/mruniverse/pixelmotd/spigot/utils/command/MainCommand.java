@@ -52,24 +52,20 @@ public class MainCommand implements CommandExecutor {
         try {
             if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
                 sender.sendMessage(" ");
-                sendMessage(sender,"&b------------ &aPixelMOTD &b------------");
+                sendMessage(sender,"&b------------ &7PixelMOTD &b------------");
                 sendMessage(sender,"&7&oCreated by MrUniverse44 w/ help from Sebastnchan & SUPREMObenjamin");
-                if(hasPermission(sender,"pmotd.admin.help",false)) sendMessage(sender,cmdPrefix + " admin &e- &fAdmin commands");
-                sendMessage(sender,"&b------------ &aPixelMOTD &b------------");
+                if(hasPermission(sender,"pmotd.admin.help",false)) sendMessage(sender,cmdPrefix + " admin &3- &7Admin commands");
+                sendMessage(sender,"&b------------ &7PixelMOTD &b------------");
                 return true;
             }
             if (args[0].equalsIgnoreCase("admin")) {
                 if(args.length == 1 || args[1].equalsIgnoreCase("1")) {
                     if (hasPermission(sender, "pmotd.admin.help.game", true)) {
                         sender.sendMessage(" ");
-                        sendMessage(sender, "&b------------ &aPixelMOTD &b------------");
-                        sendMessage(sender, cmdPrefix + " admin whitelist add (player or uuid) [world] &e- &fAdd player to whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin whitelist remove (player or uuid) [world] &e- &fRemove player from whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin blacklist add (player or uuid) [world] &e- &fAdd player to whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin blacklist remove (player or uuid) [world] &e- &fRemove player from whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin reload &e- &fReload the plugin.");
+                        sendMessage(sender, "&b------------ &7PixelMOTD &b------------");
+                        sendMessage(sender, cmdPrefix + " admin reload &3- &7Reload the plugin.");
                         sendMessage(sender, "&b[] &f= &eOPTIONAL &8| &a() &f= &eOBLIGATORY");
-                        sendMessage(sender, "&b------------ &a(Page 1&l/1&a) &b------------");
+                        sendMessage(sender, "&b------------ &7(Page &31/1&7) &b------------");
                     }
                     return true;
                 }
@@ -94,25 +90,6 @@ public class MainCommand implements CommandExecutor {
                         String reload = plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.reload","&aThe plugin was reloaded correctly in <ms>ms.");
                         reload = reload.replace("<ms>", (System.currentTimeMillis() - timeMS) + "");
                         sendMessage(sender,reload);
-                    }
-                    return true;
-                }
-
-                if(args[1].equalsIgnoreCase("whitelist")) {
-                    if(hasPermission(sender,"pmotd.admin.help.whitelist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
-                        /*
-                         * WHITELIST
-                         */
-
-                    }
-                    return true;
-                }
-                if(args[1].equalsIgnoreCase("blacklist")) {
-                    if(hasPermission(sender,"pmotd.admin.help.blacklist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
-                        /*
-                         * BLACKLIST
-                         */
-
                     }
                     return true;
                 }

@@ -58,25 +58,20 @@ public class MainCommand extends Command {
         try {
             if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
                 sendMessage(sender," ");
-                sendMessage(sender,"&b------------ &aPixelMOTD &b------------");
+                sendMessage(sender,"&b------------ &7PixelMOTD &b------------");
                 sendMessage(sender,"&7&oCreated by MrUniverse44 w/ help from Sebastnchan & SUPREMObenjamin");
-                if(hasPermission(sender,"pmotd.admin.help",false)) sendMessage(sender,cmdPrefix + " admin &e- &fAdmin commands");
-                sendMessage(sender,"&b------------ &aPixelMOTD &b------------");
+                if(hasPermission(sender,"pmotd.admin.help",false)) sendMessage(sender,cmdPrefix + " admin &3- &7Admin commands");
+                sendMessage(sender,"&b------------ &7PixelMOTD &b------------");
                 return;
             }
             if (args[0].equalsIgnoreCase("admin")) {
                 if(args.length == 1 || args[1].equalsIgnoreCase("1")) {
                     if (hasPermission(sender, "pmotd.admin.help.game", true)) {
                         sendMessage(sender," ");
-                        sendMessage(sender, "&b------------ &aPixelMOTD &b------------");
-                        sendMessage(sender, cmdPrefix + " admin whitelist add [player or uuid] &e- &fAdd player to whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin whitelist remove [player or uuid] &e- &fRemove player from whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin whitelist toggle &e- &fToggle whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin blacklist add [player or uuid] &e- &fAdd player to whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin blacklist remove [player or uuid] &e- &fRemove player from whitelist.");
-                        sendMessage(sender, cmdPrefix + " admin blacklist toggle &e- &fToggle blacklist.");
-                        sendMessage(sender, cmdPrefix + " admin reload &e- &fReload the plugin.");
-                        sendMessage(sender, "&b------------ &a(Page 1&l/1&a) &b------------");
+                        sendMessage(sender, "&b------------ &7PixelMOTD &b------------");
+                        sendMessage(sender, cmdPrefix + " admin reload &3- &7Reload the plugin.");
+                        sendMessage(sender, "&b[] &f= &eOPTIONAL &8| &a() &f= &eOBLIGATORY");
+                        sendMessage(sender, "&b------------ &7(Page &31/1&7) &b------------");
                     }
                     return;
                 }

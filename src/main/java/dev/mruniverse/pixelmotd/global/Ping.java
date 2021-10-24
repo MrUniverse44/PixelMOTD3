@@ -1,4 +1,4 @@
-package dev.mruniverse.pixelmotd.spigot.utils;
+package dev.mruniverse.pixelmotd.global;
 
 public interface Ping {
     void update();

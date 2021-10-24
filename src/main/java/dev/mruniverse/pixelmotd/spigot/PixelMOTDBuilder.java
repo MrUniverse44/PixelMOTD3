@@ -1,6 +1,8 @@
 package dev.mruniverse.pixelmotd.spigot;
 
 import dev.mruniverse.pixelmotd.global.FileStorageBuilder;
+import dev.mruniverse.pixelmotd.global.Ping;
+import dev.mruniverse.pixelmotd.global.Priority;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.shared.SpigotInput;
 import dev.mruniverse.pixelmotd.spigot.listeners.PingListener;

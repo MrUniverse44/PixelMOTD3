@@ -1,12 +1,10 @@
 package dev.mruniverse.pixelmotd.spigot.listeners;
 
-import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.enums.MotdType;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
-import dev.mruniverse.pixelmotd.spigot.utils.Ping;
-import dev.mruniverse.pixelmotd.spigot.utils.Priority;
-import org.bukkit.event.Cancellable;
+import dev.mruniverse.pixelmotd.global.Ping;
+import dev.mruniverse.pixelmotd.global.Priority;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
