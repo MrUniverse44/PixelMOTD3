@@ -114,8 +114,8 @@ motds-hex:
         values: []
 outdated-server:
   default:
-    line1: '&aThe server don't support your version'
-    line2: '&7Please use a lower version'
+    line1: "&aThe server don't support your version"
+    line2: "&7Please use a lower version"
     hover:
       toggle: true
       lines:
@@ -147,8 +147,8 @@ outdated-server:
         values: []
 outdated-client:
   default:
-    line1: '&aThe server don't support your version'
-    line2: '&7Please use a higher version'
+    line1: "&aThe server don't support your version"
+    line2: "&7Please use a higher version"
     hover:
       toggle: true
       lines:
