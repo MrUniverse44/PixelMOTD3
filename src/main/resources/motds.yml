@@ -246,8 +246,8 @@ whitelist-hex:
         values: []
 blacklist:
   default:
-    line1: '&cYou can't join to the server!'
-    line2: '&7You are in black-list'
+    line1: "&cYou can't join to the server!"
+    line2: "&7You are in black-list"
     hover:
       toggle: true
       lines:
