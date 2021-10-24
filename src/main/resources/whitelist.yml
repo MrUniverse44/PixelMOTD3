@@ -1,1 +1,26 @@
-# This file will be reworked
+#   _____ _          _ __  __  ____ _______ _____
+#   |  __ (_)        | |  \/  |/ __ \__   __|  __ \
+#   | |__) |__  _____| | \  / | |  | | | |  | |  | |
+#   |  ___/ \ \/ / _ \ | |\/| | |  | | | |  | |  | |
+#   | |   | |>  <  __/ | |  | | |__| | | |  | |__| |
+#   |_|   |_/_/\_\___|_|_|  |_|\____/  |_|  |_____/
+#
+#   Using version 9.1.0-SNAPSHOT
+#   Author: MrUniverse44
+#   SpigotMC Link: https://www.spigotmc.org/resources/37177/
+#
+whitelist:
+  toggle: false
+  author: Console
+  customConsoleName:
+    toggle: true
+    name: Console
+  kick-message:
+    - " "
+    - "&cYou were removed from the %type%!"
+    - "&cWhitelist Status Enabled by %whitelist_author%"
+    - " "
+  players-name:
+    - "md_5"
+  players-uuid:
+    - "0-0-0-0"

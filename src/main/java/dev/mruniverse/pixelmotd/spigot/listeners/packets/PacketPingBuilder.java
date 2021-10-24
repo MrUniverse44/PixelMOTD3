@@ -1,30 +1,35 @@
 package dev.mruniverse.pixelmotd.spigot.listeners.packets;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
-import com.google.common.io.Files;
 import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.global.enums.MotdSettings;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
+import dev.mruniverse.pixelmotd.global.Extras;
+import dev.mruniverse.pixelmotd.global.enums.*;
 import dev.mruniverse.pixelmotd.global.iridiumcolorapi.IridiumColorAPI;
+import dev.mruniverse.pixelmotd.global.shared.SpigotExtras;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
-import javax.imageio.ImageIO;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 public class PacketPingBuilder {
     private final PixelMOTDBuilder plugin;
 
-    private final Random random = new Random();
+    private final PacketMotdBuilder builder;
+
+    private final Extras extras;
 
     private Control control;
 
     public PacketPingBuilder(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
+        this.builder = new PacketMotdBuilder(plugin.getStorage().getLogs());
+        this.extras = new SpigotExtras(plugin);
         load();
     }
 
@@ -36,95 +41,87 @@ public class PacketPingBuilder {
 
     private String getMotd(MotdType type) {
         List<String> motds = control.getContent(type.getPath().replace(".",""),false);
-        return motds.get(random.nextInt(motds.size()));
+        return motds.get(control.getRandom().nextInt(motds.size()));
     }
 
-    @SuppressWarnings("UnstableApiUsage")
-    public void execute(MotdType motdType, WrappedServerPing ping) {
+    public void execute(MotdType motdType, WrappedServerPing ping,final Player player) {
         String motd = getMotd(motdType);
         String line1,line2,completed;
+        int online,max;
 
         motdType.setMotd(motd);
+
+        if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
+            File motdFolder = IconFolders.getIconFolderFromText(plugin.getStorage().getFiles(), motdType.getSettings(MotdSettings.ICONS_FOLDER), motdType, motd);
+            File[] icons = motdFolder.listFiles();
+            WrappedServerPing.CompressedImage img = builder.getIcon(icons, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)), motdFolder);
+            if(img != null) ping.setFavicon(img);
+        }
+
+        if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
+            MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TYPE)));
+            online = mode.execute(control,motdType,MotdSettings.getValuePath(mode,false),ping.getPlayersOnline());
+        } else {
+            online = ping.getPlayersOnline();
+        }
+
+        if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {
+            MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_MAX_TYPE)));
+            if(mode != MotdPlayersMode.EQUALS) {
+                max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), ping.getPlayersMaximum());
+            } else {
+                max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), online);
+            }
+        } else {
+            max = ping.getPlayersMaximum();
+        }
+
+        if(control.getStatus(motdType.getSettings(MotdSettings.HOVER_TOGGLE))) {
+            ping.setPlayers(getHover(motdType,online,max));
+        }
+
+        if (control.getStatus(motdType.getSettings(MotdSettings.PROTOCOL_TOGGLE))) {
+            MotdProtocol protocol = MotdProtocol.getFromText(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MODIFIER)));
+            if(protocol == MotdProtocol.ALWAYS_POSITIVE) {
+                ping.setVersionProtocol(ProtocolLibrary.getProtocolManager().getProtocolVersion(player));
+            } else if (protocol == MotdProtocol.ALWAYS_NEGATIVE) {
+                ping.setVersionProtocol(-1);
+            }
+            String result;
+            if(!motdType.isHexMotd()) {
+                result = ChatColor.translateAlternateColorCodes('&', extras.getVariables(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)), online, max));
+            } else {
+                result = IridiumColorAPI.process(extras.getVariables(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)), online, max));
+            }
+            ping.setVersionName(result);
+        }
 
         if(!motdType.isHexMotd()) {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getColoredString(motdType.getSettings(MotdSettings.LINE2));
-            completed = line1 + "\n" + line2;
+            completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
         } else {
             line1 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
             try {
-                completed = IridiumColorAPI.process(line1) + "\n" + IridiumColorAPI.process(line2);
+                completed = IridiumColorAPI.process(extras.getVariables(line1,online,max)) + "\n" + IridiumColorAPI.process(extras.getVariables(line2,online,max));
             }catch (Throwable ignored) {
-                completed = ChatColor.translateAlternateColorCodes('&',line1) + "\n" + ChatColor.translateAlternateColorCodes('&',line2);
+                completed = ChatColor.translateAlternateColorCodes('&',extras.getVariables(line1,online,max)) + "\n" + ChatColor.translateAlternateColorCodes('&',extras.getVariables(line2,online,max));
             }
         }
 
         ping.setMotD(completed);
+        ping.setPlayersOnline(online);
+        ping.setPlayersMaximum(max);
 
-        if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
-            File[] icons;
-            File motdFolder;
-            String iconFormat = motdType.getSettings(MotdSettings.ICONS_FOLDER);
-            String icon = control.getString(motdType.getSettings(MotdSettings.ICONS_ICON));
-            if(!iconFormat.equalsIgnoreCase("DEFAULT") && !iconFormat.equalsIgnoreCase("MAIN_FOLDER")) {
-                motdFolder = plugin.getStorage().getFiles().getIconsFolder(motdType,motd);
-            } else {
-                if(iconFormat.equalsIgnoreCase("MAIN_FOLDER")) {
-                    motdFolder = plugin.getStorage().getFiles().getIconsFolder(motdType);
-                } else {
-                    motdFolder = plugin.getStorage().getFiles().getMainIcons();
-                }
-            }
+    }
 
-            icons = motdFolder.listFiles();
-            if (icons != null && icons.length != 0) {
-
-                List<File> validIcons = new ArrayList<>();
-
-                if(icon.equalsIgnoreCase("RANDOM")) {
-                    for (File image : icons) {
-                        if (Files.getFileExtension(image.getPath()).equals("png")) {
-                            validIcons.add(image);
-                        }
-                    }
-
-                } else {
-
-                    File finding = new File(motdFolder,icon);
-
-                    if(!finding.exists()) {
-                        plugin.getStorage().getLogs().error("File " + icon + " doesn't exists");
-                    } else {
-
-                        if (Files.getFileExtension(finding.getPath()).equals("png")) {
-                            validIcons.add(finding);
-                        } else {
-                            plugin.getStorage().getLogs().error("This image " + icon + " need be (.png) 64x64, this image isn't (.png) format");
-                        }
-                    }
-                }
-
-                if (validIcons.size() != 0) {
-                    WrappedServerPing.CompressedImage image = getCompressedImage(validIcons.get(random.nextInt(validIcons.size())));
-                    if (image != null) ping.setFavicon(image);
-                }
-
-            }
+    public List<WrappedGameProfile> getHover(MotdType motdType, int online, int max) {
+        List<WrappedGameProfile> result = new ArrayList<>();
+        for(String line : control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES))) {
+            result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line,online,max)));
         }
-
+        return result;
     }
 
-    private WrappedServerPing.CompressedImage getCompressedImage(File file) {
-        try {
-            return WrappedServerPing.CompressedImage.fromPng(ImageIO.read(file));
-        } catch(Throwable ignored) {
-            reportBadImage(file.getPath());
-            return null;
-        }
-    }
-
-    private void reportBadImage(String filePath) {
-        plugin.getStorage().getLogs().warn("Can't read image: &b" + filePath + "&f. Please check image size: 64x64 or check if the image isn't corrupted.");
-    }
 }

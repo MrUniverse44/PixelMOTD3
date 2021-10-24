@@ -17,7 +17,7 @@
 #  # <- modifiers: ALWAYS_POSITIVE,ALWAYS_NEGATIVE,DEFAULT
 #  # <- message: "This will be the replacement for the protocol to don't your your protocol,example of a protocol: BungeeCord 1.8-1.16"
 #  # players:
-#  # <- type: DEFAULT,ADD,REMOVE,VALUES
+#  # <- type: DEFAULT,SINGLE_VALUE,ADD,REMOVE,VALUES,ADD_MIDDLE,REMOVE_MIDDLE
 #
 # <mode>:
 #   <motdName>:
@@ -38,10 +38,12 @@
 #       max:
 #         toggle: true
 #         type: DEFAULT
+#         single-value: 2
 #         values: []
 #       online:
 #         toggle: true
 #         type: DEFAULT
+#         single-value: 1
 #         values: []
 #
 motds:
@@ -70,10 +72,12 @@ motds:
       max:
         toggle: true
         type: DEFAULT
+        single-value: 2
         values: []
       online:
         toggle: true
         type: DEFAULT
+        single-value: 1
         values: []
 motds-hex:
   default:
@@ -101,10 +105,12 @@ motds-hex:
       max:
         toggle: true
         type: DEFAULT
+        single-value: 2
         values: []
       online:
         toggle: true
         type: DEFAULT
+        single-value: 1
         values: []
 outdated-server:
   default:
@@ -132,10 +138,12 @@ outdated-server:
       max:
         toggle: true
         type: DEFAULT
+        single-value: 2
         values: []
       online:
         toggle: true
         type: DEFAULT
+        single-value: 1
         values: []
 outdated-client:
   default:
@@ -163,10 +171,12 @@ outdated-client:
       max:
         toggle: true
         type: DEFAULT
+        single-value: 2
         values: []
       online:
         toggle: true
         type: DEFAULT
+        single-value: 1
         values: []
 whitelist:
   default:
@@ -194,10 +204,12 @@ whitelist:
       max:
         toggle: true
         type: DEFAULT
+        single-value: 2
         values: []
       online:
         toggle: true
         type: DEFAULT
+        single-value: 1
         values: []
 whitelist-hex:
   default:
@@ -225,10 +237,12 @@ whitelist-hex:
       max:
         toggle: true
         type: DEFAULT
+        single-value: 2
         values: []
       online:
         toggle: true
         type: DEFAULT
+        single-value: 1
         values: []
 blacklist:
   default:
@@ -256,8 +270,10 @@ blacklist:
       max:
         toggle: true
         type: DEFAULT
+        single-value: 2
         values: []
       online:
         toggle: true
         type: DEFAULT
+        single-value: 1
         values: []

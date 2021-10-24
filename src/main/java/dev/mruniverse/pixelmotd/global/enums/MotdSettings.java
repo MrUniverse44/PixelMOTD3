@@ -75,6 +75,12 @@ public enum MotdSettings implements Settings {
             return ".players.max.values";
         }
     },
+    PLAYERS_MAX_SINGLE_VALUE{
+        @Override
+        public String getPath() {
+            return ".players.max.single-value";
+        }
+    },
     PLAYERS_ONLINE_TOGGLE{
         @Override
         public String getPath() {
@@ -92,5 +98,20 @@ public enum MotdSettings implements Settings {
         public String getPath() {
             return ".players.online.values";
         }
+    },
+    PLAYERS_ONLINE_SINGLE_VALUE{
+        @Override
+        public String getPath() {
+            return ".players.online.single-value";
+        }
     };
+
+    public static MotdSettings getValuePath(MotdPlayersMode mode,boolean isMaxPlayerPath) {
+        if(isMaxPlayerPath) {
+            if (mode.equals(MotdPlayersMode.VALUES)) return PLAYERS_MAX_VALUES;
+            return PLAYERS_MAX_SINGLE_VALUE;
+        }
+        if (mode.equals(MotdPlayersMode.VALUES)) return PLAYERS_ONLINE_VALUES;
+        return PLAYERS_ONLINE_SINGLE_VALUE;
+    }
 }

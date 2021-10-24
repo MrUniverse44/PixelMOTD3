@@ -2,8 +2,11 @@ package dev.mruniverse.pixelmotd.global;
 
 import java.io.File;
 import java.util.List;
+import java.util.Random;
 
 public interface Control {
+
+    Random getRandom();
 
     List<?> getList(String path);
 

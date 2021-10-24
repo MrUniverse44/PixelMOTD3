@@ -24,11 +24,19 @@ events:
     endMessage: '&cThe event finished.'
 # Time Option
 timer:
-  weeks: weeks
-  week: week
-  days: days
-  day: day
-  minutes: minutes
-  minute: minute
-  seconds: seconds
-  second: second
+  weeks: "weeks"
+  week: "week"
+  w: "w"
+  days: "days"
+  day: "day"
+  d: "d"
+  hours: "hours"
+  hour: "hour"
+  h: "h"
+  minutes: "minutes"
+  minute: "minute"
+  m: "m"
+  seconds: seconds"
+  second: "second"
+  s: "s"
+  separator: ","

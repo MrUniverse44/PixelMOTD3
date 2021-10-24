@@ -61,26 +61,26 @@ public class PacketListener extends PacketAdapter implements Ping {
 
         if(isWhitelisted) {
             if(protocol >= 735) {
-                pingBuilder.execute(MotdType.WHITELIST_HEX,ping);
+                pingBuilder.execute(MotdType.WHITELIST_HEX,ping,event.getPlayer());
                 return;
             }
-            pingBuilder.execute(MotdType.WHITELIST,ping);
+            pingBuilder.execute(MotdType.WHITELIST,ping,event.getPlayer());
             return;
         }
         if(!hasOutdatedClient && !hasOutdatedServer || protocol >= MIN_PROTOCOL && protocol <= MAX_PROTOCOL) {
             if(protocol >= 735) {
-                pingBuilder.execute(MotdType.NORMAL_HEX,ping);
+                pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
                 return;
             }
-            pingBuilder.execute(MotdType.NORMAL,ping);
+            pingBuilder.execute(MotdType.NORMAL,ping,event.getPlayer());
             return;
         }
         if(MAX_PROTOCOL < protocol && hasOutdatedServer) {
-            pingBuilder.execute(MotdType.OUTDATED_SERVER,ping);
+            pingBuilder.execute(MotdType.OUTDATED_SERVER,ping,event.getPlayer());
             return;
         }
         if(MIN_PROTOCOL > protocol && hasOutdatedClient) {
-            pingBuilder.execute(MotdType.OUTDATED_CLIENT,ping);
+            pingBuilder.execute(MotdType.OUTDATED_CLIENT,ping,event.getPlayer());
         }
 
 
