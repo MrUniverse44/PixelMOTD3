@@ -20,8 +20,8 @@ public class PixelMOTDBuilder extends Plugin {
         instance = this;
         storage = new Storage(this);
         storage.setInputManager(new BungeeInput(this));
-        storage.setStorage(new FileStorageBuilder(storage.getLogs(),getDataFolder(),storage.getInputManager()));
         storage.setLogs(new GuardianLogger(this,"PixelMOTD", "dev.mruniverse.pixelmotd."));
+        storage.setStorage(new FileStorageBuilder(storage.getLogs(),getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
         if(storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.server-status.toggle",false)) {
