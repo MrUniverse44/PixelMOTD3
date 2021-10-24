@@ -77,13 +77,12 @@ public class FileStorageBuilder implements FileStorage {
     }
 
     private void loadIconFolder() {
+        folders.put(IconFolders.GENERAL,new File(dataFolder,IconFolders.GENERAL.getName()));
         File general = folders.get(IconFolders.GENERAL);
         for(IconFolders folder : IconFolders.values()) {
             if(folder != IconFolders.GENERAL) {
                 folders.put(folder,new File(general,folder.getName()));
-                continue;
             }
-            folders.put(folder,new File(dataFolder,folder.getName()));
         }
     }
 
