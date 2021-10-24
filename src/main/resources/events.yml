@@ -36,7 +36,7 @@ timer:
   minutes: "minutes"
   minute: "minute"
   m: "m"
-  seconds: seconds"
+  seconds: "seconds"
   second: "second"
   s: "s"
   separator: ","
