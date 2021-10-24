@@ -23,8 +23,8 @@ public final class PixelMOTDBuilder extends JavaPlugin {
     public void onEnable() {
         storage = new Storage(this);
         storage.setInputManager(new SpigotInput(this));
-        storage.setStorage(new FileStorageBuilder(storage.getLogs(),getDataFolder(),storage.getInputManager()));
         storage.setLogs(new GuardianLogger("PixelMOTD","PixelMOTD", "dev.mruniverse.pixelmotd."));
+        storage.setStorage(new FileStorageBuilder(storage.getLogs(),getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
         boolean hasVia = getServer().getPluginManager().isPluginEnabled("ViaVersion");

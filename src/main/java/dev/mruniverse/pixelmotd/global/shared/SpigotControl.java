@@ -104,15 +104,14 @@ public class SpigotControl implements Control {
 
     public void saveConfig(File fileToSave) {
         if (!fileToSave.getParentFile().exists()) {
-            boolean createFile = fileToSave.mkdir();
+            boolean createFile = fileToSave.getParentFile().mkdirs();
             if(createFile) logs.info("&7Folder created!!");
         }
 
         if (!fileToSave.exists()) {
+            if(resource == null) return;
             try (InputStream in = resource) {
-                if(in != null) {
-                    Files.copy(in, fileToSave.toPath());
-                }
+                Files.copy(in, fileToSave.toPath());
             } catch (Throwable throwable) {
                 logs.error(String.format("A error occurred while copying the config %s to the plugin data folder. Error: %s", fileToSave.getName(), throwable));
                 logs.error(throwable);

@@ -1,4 +1,4 @@
-name: PixelMOTDBuilder
+name: PixelMOTD
 version: ${project.version}
 main: dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder
 depend: [ ProtocolLib ]
