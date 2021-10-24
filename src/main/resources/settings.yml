@@ -24,6 +24,17 @@ settings:
   # messages_en.yml | code: en | language: en
   # messages_es.yml | code: es | language: es
   language: en
+  # This option is only for bungeecord!
+  # Don't work in spigot version.
+  # Variable: %status_<server>%
+  server-status:
+    toggle: false
+    online: "&a&lONLINE"
+    offline: "&c&lOFFLINE"
+    intervals:
+      online: 10
+      offline: 10
+      timeout: 500
   # Customize your event priority level, priorities: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST (This option don't work on BungeeCord)
   event-priority: HIGH
   # Customize your event priority level for blacklist & whitelist check: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST

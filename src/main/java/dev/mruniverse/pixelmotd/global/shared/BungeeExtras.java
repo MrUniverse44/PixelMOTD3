@@ -31,7 +31,7 @@ public class BungeeExtras implements Extras {
 
     @Override
     public String getVariables(String message,int customOnline,int customMax) {
-        return getWorlds(message).replace("%online%","" + plugin.getProxy().getOnlineCount())
+        return getServers(message).replace("%online%","" + plugin.getProxy().getOnlineCount())
                 .replace("%max%","" + max)
                 .replace("%fake_online%","" + customOnline)
                 .replace("%plugin_author%","MrUniverse44")
@@ -98,10 +98,11 @@ public class BungeeExtras implements Extras {
         }
     }
 
-    private String getWorlds(String message){
-        if(message.contains("%online_")) {
+    private String getServers(String message){
+        if(message.contains("%online_") || message.contains("%status_")) {
             for (ServerInfo info : plugin.getProxy().getServers().values()) {
                 message = message.replace("%online_" + info.getName() + "%", info.getPlayers().size() + "");
+                if(plugin.getChecker() != null) message = message.replace("%status_" + info.getName() + "%",plugin.getChecker().getServerStatus(info.getName()));
             }
         }
         return getEvents(message);
