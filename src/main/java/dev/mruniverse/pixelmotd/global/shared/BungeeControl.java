@@ -99,7 +99,7 @@ public class BungeeControl implements Control {
 
     public void saveConfig(File fileToSave) {
         if (!fileToSave.getParentFile().exists()) {
-            boolean createFile = fileToSave.mkdir();
+            boolean createFile = fileToSave.getParentFile().mkdirs();
             if(createFile) logs.info("&7Folder created!!");
         }
 

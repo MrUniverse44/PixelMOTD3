@@ -112,9 +112,6 @@ public class SpigotControl implements Control {
             try (InputStream in = resource) {
                 if(in != null) {
                     Files.copy(in, fileToSave.toPath());
-                    logs.info("Input is not null");
-                } else {
-                    logs.info("Input is null");
                 }
             } catch (Throwable throwable) {
                 logs.error(String.format("A error occurred while copying the config %s to the plugin data folder. Error: %s", fileToSave.getName(), throwable));
