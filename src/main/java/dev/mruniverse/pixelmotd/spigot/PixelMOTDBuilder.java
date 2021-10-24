@@ -35,8 +35,8 @@ public final class PixelMOTDBuilder extends JavaPlugin {
 
         }
         String priority = storage.getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.extras-event-priority","HIGH");
-        if(hasProtocol && !hasVia) {
-            externalLib = new ProtocolLIB();
+        if(hasProtocol) {
+            if(!hasVia) externalLib = new ProtocolLIB();
             storage.getLogs().info("ProtocolAPI will use ProtocolLIB to get the protocol version of the player.");
             ping = new PacketListener(this,Priority.getFromText(priority));
             return;
