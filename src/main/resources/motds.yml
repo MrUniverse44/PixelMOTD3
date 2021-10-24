@@ -25,6 +25,7 @@
 #     line2: 'here your line 2'
 #     hover:
 #       toggle: true
+#       hasMoreOnline: 6
 #       lines:
 #         - "Here you hover"
 #     icons:
@@ -52,6 +53,7 @@ motds:
     line2: '&7You can modify it from motds.yml'
     hover:
       toggle: true
+      hasMoreOnline: 6
       lines:
         - "&7Custom Hover"
         - "<hasOnline>&8Players Online: &a%online%"
@@ -85,6 +87,7 @@ motds-hex:
     line2: '&7Is only for 1.16+ players.'
     hover:
       toggle: true
+      hasMoreOnline: 6
       lines:
         - "&7Custom Hover"
         - "<hasOnline>&8Players Online: &a%online%"
@@ -118,6 +121,7 @@ outdated-server:
     line2: "&7Please use a lower version"
     hover:
       toggle: true
+      hasMoreOnline: 6
       lines:
         - "&7Custom Hover"
         - "<hasOnline>&8Players Online: &a%online%"
@@ -151,6 +155,7 @@ outdated-client:
     line2: "&7Please use a higher version"
     hover:
       toggle: true
+      hasMoreOnline: 6
       lines:
         - "&7Custom Hover"
         - "<hasOnline>&8Players Online: &a%online%"
@@ -184,6 +189,7 @@ whitelist:
     line2: '&7Wait for us'
     hover:
       toggle: true
+      hasMoreOnline: 6
       lines:
         - "&7Custom Hover"
         - "<hasOnline>&8Staffs Online: &a%online%"
@@ -217,6 +223,7 @@ whitelist-hex:
     line2: '&7Wait for us'
     hover:
       toggle: true
+      hasMoreOnline: 6
       lines:
         - "&7Custom Hover"
         - "<hasOnline>&8Staffs Online: &a%online%"
@@ -250,6 +257,7 @@ blacklist:
     line2: "&7You are in black-list"
     hover:
       toggle: true
+      hasMoreOnline: 6
       lines:
         - "&7Custom Hover"
         - "<hasOnline>&8Staffs Online: &a%online%"

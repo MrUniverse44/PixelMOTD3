@@ -24,6 +24,8 @@ public class PacketPingBuilder {
 
     private final Extras extras;
 
+    private boolean playerSystem;
+
     private Control control;
 
     public PacketPingBuilder(PixelMOTDBuilder plugin) {
@@ -36,6 +38,7 @@ public class PacketPingBuilder {
     public void update() { load(); }
 
     private void load() {
+        playerSystem = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.player-system.toggle",true);
         control = plugin.getStorage().getFiles().getControl(GuardianFiles.MOTDS);
     }
 
@@ -118,8 +121,14 @@ public class PacketPingBuilder {
 
     public List<WrappedGameProfile> getHover(MotdType motdType, int online, int max) {
         List<WrappedGameProfile> result = new ArrayList<>();
-        for(String line : control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES))) {
-            result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line,online,max)));
+        if(playerSystem) {
+            for (String line : extras.getConvertedLines(control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES)), control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)))) {
+                result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line, online, max)));
+            }
+        } else {
+            for (String line : control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES))) {
+                result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line, online, max)));
+            }
         }
         return result;
     }

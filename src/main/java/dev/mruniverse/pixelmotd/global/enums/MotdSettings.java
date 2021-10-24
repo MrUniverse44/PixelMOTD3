@@ -21,6 +21,12 @@ public enum MotdSettings implements Settings {
             return ".hover.toggle";
         }
     },
+    HOVER_MORE_PLAYERS{
+        @Override
+        public String getPath() {
+            return ".hover.hasMoreOnline";
+        }
+    },
     HOVER_LINES{
         @Override
         public String getPath() {

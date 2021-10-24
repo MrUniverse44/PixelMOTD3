@@ -18,11 +18,8 @@ settings:
   player-system:
     # Toggle this option
     toggle: true
-    # The system will stop the call the variable to this max (Recommended a low number)
-    # The max number will be the maximum, for example:
-    # -  If the max is 10, the variable only will work to %player_10%, if you use
-    # -  %player_11% this line will not be showed.
-    max: 10
+    # This is for %player_<number>% variables, if you disable this variables will not work but the motd will load more faster.
+    # But if you wanna use this, here is the system, They asked me to add this system and it is because it is here.
   # Plugin language file, if you want add your custom lang file you need put the name ("messages_<code>.yml") and in the language you put the code, example:
   # messages_en.yml | code: en | language: en
   # messages_es.yml | code: es | language: es

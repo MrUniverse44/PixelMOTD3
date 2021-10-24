@@ -7,19 +7,23 @@ import dev.mruniverse.pixelmotd.global.enums.MotdEventFormat;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.checkerframework.checker.regex.qual.Regex;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.StringJoiner;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SpigotExtras implements Extras {
 
     private final PixelMOTDBuilder plugin;
 
     private final int max;
+
+    private final Pattern varRegex = Pattern.compile("%player_([0-9]+)%");
 
     public SpigotExtras(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
@@ -36,6 +40,52 @@ public class SpigotExtras implements Extras {
                 .replace("%whitelist_author%", getWhitelistAuthor())
                 .replace("%plugin_version%", plugin.getDescription().getVersion())
                 .replace("%fake_max%","" + customMax);
+    }
+
+    @Override
+    public List<String> getConvertedLines(List<String> lines,int more) {
+        List<String> array = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("<hasOnline>") || line.contains("<hasMoreOnline>")) {
+                if (line.contains("<hasOnline>")) {
+                    line = line.replace("<hasOnline>", "");
+                    String replaceOnlineVariable = replaceOnlineVariable(line);
+                    if(!replaceOnlineVariable.contains("%canNotFindX02_")) {
+                        array.add(replaceOnlineVariable);
+                    }
+                    continue;
+                }
+                int size = Bukkit.getOnlinePlayers().size();
+                if(size >= more) {
+                    more--;
+                    int fixedSize = size - more;
+                    line = line.replace("<hasMoreOnline>","")
+                            .replace("%more_online%","" + fixedSize);
+                    array.add(line);
+                }
+                continue;
+            }
+            array.add(line);
+        }
+        return array;
+    }
+
+    private String replaceOnlineVariable(String text) {
+        Matcher matcher = varRegex.matcher(text);
+        List<? extends Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        if(players.size() >= 1) {
+            while (matcher.find()) {
+                int number = Integer.parseInt(matcher.group(1));
+                if (players.size() >= number && number != 0) {
+                    text = text.replace("%player_" + number + "%", players.get(number - 1).getName());
+                } else {
+                    text = text.replace("%player_","%canNotFindX02_");
+                }
+            }
+        } else {
+            text = text.replace("%player_","%canNotFindX02_");
+        }
+        return text;
     }
 
     private String getWhitelistAuthor() {

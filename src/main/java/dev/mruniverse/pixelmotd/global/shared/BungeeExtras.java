@@ -3,6 +3,8 @@ package dev.mruniverse.pixelmotd.global.shared;
 import dev.mruniverse.pixelmotd.global.Extras;
 import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
 
+import java.util.List;
+
 public class BungeeExtras implements Extras {
 
     private final PixelMOTDBuilder plugin;
@@ -31,5 +33,10 @@ public class BungeeExtras implements Extras {
     @Override
     public String getCentered(String message) {
         return message;
+    }
+
+    @Override
+    public List<String> getConvertedLines(List<String> lines, int more) {
+        return lines;
     }
 }
