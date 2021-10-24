@@ -1,6 +1,7 @@
 package dev.mruniverse.pixelmotd.spigot.listeners.packets;
 
 import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
@@ -29,6 +30,7 @@ public class PacketListener extends PacketAdapter implements Ping {
         super(plugin,get(priority), PacketType.Status.Server.SERVER_INFO);
         this.plugin = plugin;
         this.pingBuilder = new PacketPingBuilder(plugin);
+        ProtocolLibrary.getProtocolManager().addPacketListener(this);
         load();
     }
 
