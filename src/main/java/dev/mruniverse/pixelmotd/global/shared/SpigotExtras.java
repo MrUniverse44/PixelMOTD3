@@ -8,7 +8,6 @@ import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.regex.qual.Regex;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +46,8 @@ public class SpigotExtras implements Extras {
         List<String> array = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("<hasOnline>") || line.contains("<hasMoreOnline>")) {
-                if (line.contains("<hasOnline>")) {
+                int size = Bukkit.getOnlinePlayers().size();
+                if (line.contains("<hasOnline>") && size >= 1) {
                     line = line.replace("<hasOnline>", "");
                     String replaceOnlineVariable = replaceOnlineVariable(line);
                     if(!replaceOnlineVariable.contains("%canNotFindX02_")) {
@@ -55,7 +55,6 @@ public class SpigotExtras implements Extras {
                     }
                     continue;
                 }
-                int size = Bukkit.getOnlinePlayers().size();
                 if(size >= more) {
                     more--;
                     int fixedSize = size - more;
