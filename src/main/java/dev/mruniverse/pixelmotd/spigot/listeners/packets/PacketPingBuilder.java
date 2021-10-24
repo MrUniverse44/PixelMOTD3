@@ -122,11 +122,11 @@ public class PacketPingBuilder {
     public List<WrappedGameProfile> getHover(MotdType motdType, int online, int max) {
         List<WrappedGameProfile> result = new ArrayList<>();
         if(playerSystem) {
-            for (String line : extras.getConvertedLines(control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES)), control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)))) {
+            for (String line : extras.getConvertedLines(control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)), control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)))) {
                 result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line, online, max)));
             }
         } else {
-            for (String line : control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES))) {
+            for (String line : control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES))) {
                 result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line, online, max)));
             }
         }
