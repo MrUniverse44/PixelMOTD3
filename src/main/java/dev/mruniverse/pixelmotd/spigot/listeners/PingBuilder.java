@@ -89,6 +89,7 @@ public class PingBuilder {
         }
 
         ping.setMotd(completed);
+        ping.setMaxPlayers(max);
 
     }
 }
