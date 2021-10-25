@@ -63,6 +63,12 @@ public enum MotdPlayersMode implements Players {
             return control.getInt(motdType.getSettings(path));
         }
     },
+    DEFAULT{
+        @Override
+        public int execute(Control control,MotdType motdType, MotdSettings path, int value) {
+            return value;
+        }
+    },
     EQUALS{
         @Override
         public int execute(Control control,MotdType motdType, MotdSettings path, int value) {
@@ -72,7 +78,8 @@ public enum MotdPlayersMode implements Players {
 
     public static MotdPlayersMode getModeFromText(String paramText) {
         paramText = paramText.toUpperCase();
-        if(paramText.contains("EQUAL") || paramText.contains("DEFAULT")) return MotdPlayersMode.EQUALS;
+        if(paramText.contains("EQUAL")) return MotdPlayersMode.EQUALS;
+        if(paramText.contains("DEFAULT")) return MotdPlayersMode.DEFAULT;
         if(paramText.equalsIgnoreCase("ADD_MIDDLE")) return MotdPlayersMode.ADD_MIDDLE;
         if(paramText.equalsIgnoreCase("REMOVE_MIDDLE")) return MotdPlayersMode.REMOVE_MIDDLE;
         if(paramText.equalsIgnoreCase("ADD_DOUBLE")) return MotdPlayersMode.ADD_DOUBLE;
