@@ -8,4 +8,4 @@ commands:
   pmotd:
     description: Main command of the plugin
   pixelmotd:
-    description: Main command of the pluginsss
+    description: Main command of the plugin
