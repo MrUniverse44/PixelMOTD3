@@ -36,6 +36,8 @@ public final class PixelMOTDBuilder extends JavaPlugin {
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
+                Metrics bukkitMetrics = new Metrics(instance, 8509);
+                storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
                 boolean hasVia = getServer().getPluginManager().isPluginEnabled("ViaVersion");
                 boolean hasProtocol = getServer().getPluginManager().isPluginEnabled("ProtocolLib");
                 if (hasVia) {

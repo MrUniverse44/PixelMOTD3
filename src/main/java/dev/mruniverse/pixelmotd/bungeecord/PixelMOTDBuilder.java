@@ -3,6 +3,7 @@ package dev.mruniverse.pixelmotd.bungeecord;
 import dev.mruniverse.pixelmotd.bungeecord.listeners.PingListener;
 import dev.mruniverse.pixelmotd.bungeecord.storage.Storage;
 import dev.mruniverse.pixelmotd.bungeecord.utils.GuardianLogger;
+import dev.mruniverse.pixelmotd.bungeecord.utils.Metrics;
 import dev.mruniverse.pixelmotd.bungeecord.utils.ServerStatusChecker;
 import dev.mruniverse.pixelmotd.global.FileStorageBuilder;
 import dev.mruniverse.pixelmotd.global.Ping;
@@ -29,6 +30,8 @@ public class PixelMOTDBuilder extends Plugin {
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
         ping = new PingListener(this);
+        Metrics bukkitMetrics = new Metrics(instance, 8509);
+        storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
         if(storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.server-status.toggle",false)) {
             checker = new ServerStatusChecker(this);
             checker.start();
