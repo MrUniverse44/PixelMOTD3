@@ -82,6 +82,8 @@ public class MainCommand implements CommandExecutor {
 
                             plugin.getPing().update();
 
+                            plugin.update(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS));
+
                         }catch (Throwable throwable) {
                             plugin.getStorage().getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");
                             plugin.getStorage().getLogs().error("If you are sure than this isn't your error, please contact the developer.");

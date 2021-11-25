@@ -12,12 +12,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings("unused")
 public class BungeeControl implements Control {
-
-    private final Random random = new Random();
 
     private final InputStream resource;
 
@@ -35,9 +32,6 @@ public class BungeeControl implements Control {
         this.resource = resource;
         load();
     }
-
-    @Override
-    public Random getRandom() { return random; }
 
     public BungeeControl(GLogger logs,File file) {
         this.file = file;

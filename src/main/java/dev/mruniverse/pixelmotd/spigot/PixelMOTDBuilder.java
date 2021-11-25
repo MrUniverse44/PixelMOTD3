@@ -1,9 +1,11 @@
 package dev.mruniverse.pixelmotd.spigot;
 
+import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.FileStorageBuilder;
 import dev.mruniverse.pixelmotd.global.Ping;
 import dev.mruniverse.pixelmotd.global.Priority;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.global.shared.ConfigVersion;
 import dev.mruniverse.pixelmotd.global.shared.SpigotInput;
 import dev.mruniverse.pixelmotd.spigot.listeners.PingListener;
 import dev.mruniverse.pixelmotd.spigot.listeners.packets.PacketListener;
@@ -24,6 +26,8 @@ public final class PixelMOTDBuilder extends JavaPlugin {
 
     private Ping ping;
 
+    private ConfigVersion configVersion;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -37,9 +41,16 @@ public final class PixelMOTDBuilder extends JavaPlugin {
             @Override
             public void run() {
                 Metrics bukkitMetrics = new Metrics(instance, 8509);
+                configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));
                 storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
                 boolean hasProtocol = getServer().getPluginManager().isPluginEnabled("ProtocolLib");
                 String priority = storage.getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.extras-event-priority", "HIGH");
+                if(configVersion.isUpdated()) {
+                    storage.getLogs().info("Your configuration is updated!");
+                } else {
+                    storage.getLogs().info("Your configuration is outdated!");
+                    configVersion.setWork(false);
+                }
                 if (hasProtocol) {
                     externalLib = new ProtocolLIB();
                     storage.getLogs().info("ProtocolAPI will use ProtocolLIB to get the protocol version of the player.");
@@ -65,6 +76,14 @@ public final class PixelMOTDBuilder extends JavaPlugin {
 
     public Storage getStorage() {
         return storage;
+    }
+
+    public void update(Control control) {
+        this.configVersion.setControl(control);
+    }
+
+    public ConfigVersion getConfigVersion() {
+        return configVersion;
     }
 
     public Ping getPing() {

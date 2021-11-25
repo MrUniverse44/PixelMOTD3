@@ -5,10 +5,12 @@ import dev.mruniverse.pixelmotd.bungeecord.storage.Storage;
 import dev.mruniverse.pixelmotd.bungeecord.utils.GuardianLogger;
 import dev.mruniverse.pixelmotd.bungeecord.utils.Metrics;
 import dev.mruniverse.pixelmotd.bungeecord.utils.ServerStatusChecker;
+import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.FileStorageBuilder;
 import dev.mruniverse.pixelmotd.global.Ping;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.shared.BungeeInput;
+import dev.mruniverse.pixelmotd.global.shared.ConfigVersion;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class PixelMOTDBuilder extends Plugin {
@@ -20,6 +22,8 @@ public class PixelMOTDBuilder extends Plugin {
 
     private Storage storage;
 
+    private ConfigVersion configVersion;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -29,13 +33,28 @@ public class PixelMOTDBuilder extends Plugin {
         storage.setStorage(new FileStorageBuilder(storage.getLogs(),getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
+        configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));
         ping = new PingListener(this);
         Metrics bukkitMetrics = new Metrics(instance, 8509);
+        if(configVersion.isUpdated()) {
+            storage.getLogs().info("Your configuration is updated!");
+        } else {
+            storage.getLogs().info("Your configuration is outdated!");
+            configVersion.setWork(false);
+        }
         storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
         if(storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.server-status.toggle",false)) {
             checker = new ServerStatusChecker(this);
             checker.start();
         }
+    }
+
+    public void update(Control control) {
+        this.configVersion.setControl(control);
+    }
+
+    public ConfigVersion getConfigVersion() {
+        return configVersion;
     }
 
     public Ping getPing() {

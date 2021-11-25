@@ -6,7 +6,11 @@ import java.util.Random;
 
 public interface Control {
 
-    Random getRandom();
+    Random RANDOM = new Random();
+
+    default Random getRandom() {
+        return RANDOM;
+    }
 
     List<?> getList(String path);
 

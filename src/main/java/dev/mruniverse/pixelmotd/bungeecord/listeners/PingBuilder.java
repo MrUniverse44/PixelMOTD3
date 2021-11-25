@@ -45,7 +45,19 @@ public class PingBuilder {
     }
 
     public void execute(MotdType motdType, ServerPing ping,int code) {
-        String motd = getMotd(motdType);
+        if(!plugin.getConfigVersion().isWork()) {
+            plugin.getStorage().getLogs().info("Your configuration is outdated,please check your config for missing paths, paths issues or update the plugin for new paths!");
+            plugin.getStorage().getLogs().info("You can backup your plugin files and let the plugin create new files to fix the issue");
+            plugin.getStorage().getLogs().info("Or apply manually file changes and update the config-version of the settings.yml to the latest config-version.");
+            return;
+        }
+        String motd;
+        try {
+            motd = getMotd(motdType);
+        } catch (Throwable ignored) {
+            plugin.getStorage().getLogs().error("This file isn't updated to the latest file or the motd-path is incorrect, can't find motds for MotdType: " + motdType.getName());
+            return;
+        }
         String line1,line2,completed;
         int online,max;
 

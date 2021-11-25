@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings("unused")
 public class SpigotControl implements Control {
@@ -20,8 +19,6 @@ public class SpigotControl implements Control {
     private final InputStream resource;
 
     private final GLogger logs;
-
-    private final Random random = new Random();
 
     private final File file;
 
@@ -36,8 +33,6 @@ public class SpigotControl implements Control {
         load();
     }
 
-    @Override
-    public Random getRandom() { return random; }
 
     @Override
     public File getFile() {

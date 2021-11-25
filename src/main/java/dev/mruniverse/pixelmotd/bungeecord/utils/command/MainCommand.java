@@ -87,6 +87,8 @@ public class MainCommand extends Command {
                             String lang = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
 
                             plugin.getStorage().getFiles().setMessages(lang);
+
+                            plugin.update(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS));
                             
                         }catch (Throwable throwable) {
                             plugin.getStorage().getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");

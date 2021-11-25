@@ -10,6 +10,8 @@
 #   SpigotMC Link: https://www.spigotmc.org/resources/37177/
 #
 settings:
+  # File Config Version, this prevents issues
+  config-version: 1
   # Enable Check update when the plugin load
   update-check: true
   # Auto Download Updates
