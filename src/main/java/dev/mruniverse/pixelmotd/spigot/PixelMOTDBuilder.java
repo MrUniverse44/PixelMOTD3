@@ -38,22 +38,16 @@ public final class PixelMOTDBuilder extends JavaPlugin {
             public void run() {
                 Metrics bukkitMetrics = new Metrics(instance, 8509);
                 storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
-                boolean hasVia = getServer().getPluginManager().isPluginEnabled("ViaVersion");
                 boolean hasProtocol = getServer().getPluginManager().isPluginEnabled("ProtocolLib");
-                if (hasVia) {
-                    storage.getLogs().info("ProtocolAPI will use ViaVersionAPI to get the protocol version of the player.");
-                    externalLib = new ViaVersion();
-
-                }
                 String priority = storage.getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.extras-event-priority", "HIGH");
                 if (hasProtocol) {
-                    if (!hasVia) externalLib = new ProtocolLIB();
+                    externalLib = new ProtocolLIB();
                     storage.getLogs().info("ProtocolAPI will use ProtocolLIB to get the protocol version of the player.");
                     ping = new PacketListener(instance, Priority.getFromText(priority));
                 }
-                if (!hasProtocol && !hasVia) {
+                if (!hasProtocol) {
                     ping = new PingListener(instance, Priority.getFromText(priority));
-                    storage.getLogs().info("ProtocolAPI don't find ViaVersion or ProtocolLIB in the server.");
+                    storage.getLogs().info("ProtocolAPI don't find ProtocolLIB in the server.");
                     storage.getLogs().info("--------------------------------------------------------------");
                     storage.getLogs().info("The outdatedClient and outdatedServer motd will not work.");
                     storage.getLogs().info("The plugin only will be using 'motds' and 'whitelist' path.");
