@@ -77,12 +77,12 @@ blacklist:
     reason: ""
     kick-message:
       - "&c&lYOU HAS BEEN REMOVED FROM THE SERVER"
-        - " "
-        - "&7Blacklist Author &8: &f%author%"
-        - "&7Blacklist Reason &8: &f%reason%"
-        - " "
-        - "&7Blacklist applied in the world&8:&f worldName"
-        - "&6mc.spigotmc.org"
+      - " "
+      - "&7Blacklist Author &8: &f%author%"
+      - "&7Blacklist Reason &8: &f%reason%"
+      - " "
+      - "&7Blacklist applied in the world&8:&f worldName"
+      - "&6mc.spigotmc.org"
 
 players:
   global:

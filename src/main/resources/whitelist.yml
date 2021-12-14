@@ -78,12 +78,12 @@ whitelist:
     reason: ""
     kick-message:
       - "&c&lYOU HAS BEEN REMOVED FROM THE SERVER"
-        - " "
-        - "&7Whitelist Author &8: &f%author%"
-        - "&7Whitelist Reason &8: &f%reason%"
-        - " "
-        - "&7Whitelist applied in the world&8:&f worldName"
-        - "&6mc.spigotmc.org"
+      - " "
+      - "&7Whitelist Author &8: &f%author%"
+      - "&7Whitelist Reason &8: &f%reason%"
+      - " "
+      - "&7Whitelist applied in the world&8:&f worldName"
+      - "&6mc.spigotmc.org"
 
 players:
   global:
