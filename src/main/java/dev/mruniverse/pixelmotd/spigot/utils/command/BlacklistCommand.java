@@ -65,7 +65,7 @@ public class BlacklistCommand {
                                 .replace("<type>",type.getName())
                                 .replace("<player>",value)
                 );
-                plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).set(path,value);
+                plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).set(path,list);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).reload();
                 return;
@@ -181,7 +181,7 @@ public class BlacklistCommand {
                                 .replace("<type>",type.getName())
                                 .replace("<player>",value)
                 );
-                plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).set(path,value);
+                plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).set(path,list);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).reload();
                 return;
