@@ -23,7 +23,7 @@ public class MainCommand implements CommandExecutor {
 
     public MainCommand(PixelMOTDBuilder plugin, String command) {
         this.plugin = plugin;
-        this.cmdPrefix = "&e/" + command;
+        this.cmdPrefix = "&8» &a/" + command;
         blacklistCommand = new BlacklistCommand(plugin,command);
         whitelistCommand = new WhitelistCommand(plugin,command);
     }

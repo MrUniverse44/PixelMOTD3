@@ -17,7 +17,7 @@ public class WhitelistCommand {
 
     public WhitelistCommand(PixelMOTDBuilder plugin, String command) {
         this.plugin = plugin;
-        this.cmdPrefix = "&8» &7/" + command;
+        this.cmdPrefix = "&8» &a/" + command;
     }
 
     public void usage(CommandSender sender, String[] arguments) {

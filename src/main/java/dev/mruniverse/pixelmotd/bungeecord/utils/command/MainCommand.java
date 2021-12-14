@@ -23,7 +23,7 @@ public class MainCommand extends Command {
     public MainCommand(PixelMOTDBuilder plugin, String command) {
         super(command);
         this.plugin = plugin;
-        this.cmdPrefix = "&8» &7/" + command;
+        this.cmdPrefix = "&8» &a/" + command;
         this.whitelist = new WhitelistCommand(plugin,command);
         this.blacklist = new BlacklistCommand(plugin,command);
     }
