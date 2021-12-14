@@ -127,6 +127,11 @@ public class FileStorageBuilder implements FileStorage {
                 files.put(GuardianFiles.MESSAGES,files.get(GuardianFiles.MESSAGES_ES));
                 return;
             }
+            if(code.equalsIgnoreCase("pl") || code.equalsIgnoreCase("polish")) {
+                logs.info("Plugin now is using language-file code: '" + code + "'.");
+                files.put(GuardianFiles.MESSAGES,files.get(GuardianFiles.MESSAGES_PL));
+                return;
+            }
             if(code.equalsIgnoreCase("jp") || code.equalsIgnoreCase("japanese")) {
                 logs.info("Plugin now is using language-file code: '" + code + "'.");
                 files.put(GuardianFiles.MESSAGES,files.get(GuardianFiles.MESSAGES_JP));
@@ -166,6 +171,8 @@ public class FileStorageBuilder implements FileStorage {
             case MESSAGES_ES:
                 files.get(GuardianFiles.MESSAGES_ES).reload();
                 break;
+            case MESSAGES_PL:
+                files.get(GuardianFiles.MESSAGES_PL).save();
             case MESSAGES_JP:
                 files.get(GuardianFiles.MESSAGES_JP).reload();
                 break;
@@ -201,6 +208,9 @@ public class FileStorageBuilder implements FileStorage {
                 break;
             case MESSAGES_EN:
                 files.get(GuardianFiles.MESSAGES_EN).save();
+                break;
+            case MESSAGES_PL:
+                files.get(GuardianFiles.MESSAGES_PL).save();
                 break;
             case MESSAGES_ES:
                 files.get(GuardianFiles.MESSAGES_ES).save();

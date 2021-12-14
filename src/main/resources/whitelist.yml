@@ -9,18 +9,95 @@
 #   Author: MrUniverse44
 #   SpigotMC Link: https://www.spigotmc.org/resources/37177/
 #
+# Console Name: If the console use the whitelist command, the %author% will show the Console-Name
+# Whitelist-Permission: This permission is verified to execute the whitelist command
+# %value% will be replaced with the server/world name or with "global" for all the network.
+#
+# Add a new server or world to the whitelist adding:
+# <serverName>/<worldName>:
+#    Enabled: false
+#    author: ""
+#    reason: ""
+#    kick-message:
+#      - "&c&lYOU HAS BEEN REMOVED FROM THE SERVER"
+#      - " "
+#      - "&7Whitelist Author &8: &f%author%"
+#      - "&7Whitelist Reason &8: &f%reason%"
+#      - " "
+#      - "&7Whitelist applied in the <world/server>&8:&f Name"
+#      - "&6mc.spigotmc.org"
+# and add the players in "players" path.
+#
+# players:
+#  <serverName>/<worldName>:
+#    by-name:
+#      - "md_5"
+#    by-uuid:
+#      - "0-0-0-0"
+#
+settings:
+  console-name: "Console"
+  default-reason: "The server will be updated!"
+  default-kick-message:
+    - "&c&lYOU HAS BEEN REMOVED FROM THE SERVER"
+    - " "
+    - "&7Whitelist Author &8: &f%author%"
+    - "&7Whitelist Reason &8: &f%reason%"
+    - " "
+    - "&7Whitelist applied in &f%server%"
+    - "&6mc.spigotmc.org"
+
 whitelist:
-  toggle: false
-  author: Console
-  customConsoleName:
-    toggle: true
-    name: Console
-  kick-message:
-    - " "
-    - "&cYou were removed from the %type%!"
-    - "&cWhitelist Status Enabled by %whitelist_author%"
-    - " "
-  players-name:
-    - "md_5"
-  players-uuid:
-    - "0-0-0-0"
+  global:
+    Enabled: false
+    author: ""
+    reason: ""
+    kick-message:
+      - "&c&lYOU HAS BEEN REMOVED FROM THE SERVER"
+      - " "
+      - "&7Whitelist Author &8: &f%author%"
+      - "&7Whitelist Reason &8: &f%reason%"
+      - " "
+      - "&7Whitelist applied in all Network"
+      - "&6mc.spigotmc.org"
+  serverName:
+    Enabled: false
+    author: ""
+    reason: ""
+    kick-message:
+      - "&c&lYOU HAS BEEN REMOVED FROM THE SERVER"
+      - " "
+      - "&7Whitelist Author &8: &f%author%"
+      - "&7Whitelist Reason &8: &f%reason%"
+      - " "
+      - "&7Whitelist applied in the server&8:&f serverName"
+      - "&6mc.spigotmc.org"
+  worldName:
+    Enabled: false
+    author: ""
+    reason: ""
+    kick-message:
+      - "&c&lYOU HAS BEEN REMOVED FROM THE SERVER"
+        - " "
+        - "&7Whitelist Author &8: &f%author%"
+        - "&7Whitelist Reason &8: &f%reason%"
+        - " "
+        - "&7Whitelist applied in the world&8:&f worldName"
+        - "&6mc.spigotmc.org"
+
+players:
+  global:
+    by-name:
+      - "md_5"
+    by-uuid:
+      - "0-0-0-0"
+  serverName:
+    by-name:
+      - "md_5"
+    by-uuid:
+      - "0-0-0-0"
+  worldName:
+    by-name:
+      - "md_5"
+    by-uuid:
+      - "0-0-0-0"

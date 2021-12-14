@@ -225,9 +225,8 @@ public class Updater {
                 }
             }
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+        catch (Throwable throwable) {
+            logs.error("Can't find for updates :(");
         }
     }
 
@@ -261,6 +260,9 @@ public class Updater {
             while ((count = in.read(data, 0, 4096)) != -1) {
                 fout.write(data, 0, count);
             }
+
+
+
         }
         catch (Throwable ignored)
         {

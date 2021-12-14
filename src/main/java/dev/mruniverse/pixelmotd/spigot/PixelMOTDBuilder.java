@@ -7,11 +7,17 @@ import dev.mruniverse.pixelmotd.global.Priority;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.shared.ConfigVersion;
 import dev.mruniverse.pixelmotd.global.shared.SpigotInput;
+import dev.mruniverse.pixelmotd.global.utils.Updater;
 import dev.mruniverse.pixelmotd.spigot.listeners.PingListener;
 import dev.mruniverse.pixelmotd.spigot.listeners.packets.PacketListener;
+import dev.mruniverse.pixelmotd.spigot.listeners.whitelist.AbstractWhitelistListener;
+import dev.mruniverse.pixelmotd.spigot.listeners.whitelist.type.ListenerBuilder;
 import dev.mruniverse.pixelmotd.spigot.storage.Storage;
 import dev.mruniverse.pixelmotd.spigot.utils.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -19,6 +25,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class PixelMOTDBuilder extends JavaPlugin {
 
     private static PixelMOTDBuilder instance;
+
+    private AbstractWhitelistListener abstractWhitelistListener;
 
     private Storage storage;
 
@@ -51,13 +59,25 @@ public final class PixelMOTDBuilder extends JavaPlugin {
                     storage.getLogs().info("Your configuration is outdated!");
                     configVersion.setWork(false);
                 }
+                abstractWhitelistListener = new ListenerBuilder(instance);
+
+                if(storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.update-check")) {
+                    if (storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.auto-download-updates")) {
+                        new Updater(storage.getLogs(), getDescription().getVersion(), 37177, getDataFolder(), Updater.UpdateType.CHECK_DOWNLOAD);
+                    } else {
+                        new Updater(storage.getLogs(), getDescription().getVersion(), 37177, getDataFolder(), Updater.UpdateType.VERSION_CHECK);
+                    }
+
+                }
+
+                Priority listenerPriority = Priority.getFromText(priority);
                 if (hasProtocol) {
                     externalLib = new ProtocolLIB();
                     storage.getLogs().info("ProtocolAPI will use ProtocolLIB to get the protocol version of the player.");
-                    ping = new PacketListener(instance, Priority.getFromText(priority));
+                    ping = new PacketListener(instance, listenerPriority);
                 }
                 if (!hasProtocol) {
-                    ping = new PingListener(instance, Priority.getFromText(priority));
+                    ping = new PingListener(instance, listenerPriority);
                     storage.getLogs().info("ProtocolAPI don't find ProtocolLIB in the server.");
                     storage.getLogs().info("--------------------------------------------------------------");
                     storage.getLogs().info("The outdatedClient and outdatedServer motd will not work.");
@@ -65,6 +85,9 @@ public final class PixelMOTDBuilder extends JavaPlugin {
                     storage.getLogs().info("Without ProtocolLIB the plugin will not load hover");
                     storage.getLogs().info("and the ServerPing-Protocol option will not work.");
                 }
+
+                getServer().getPluginManager().registerEvent(PlayerLoginEvent.class,abstractWhitelistListener,get(listenerPriority),abstractWhitelistListener,instance,true);
+                getServer().getPluginManager().registerEvent(PlayerTeleportEvent.class,abstractWhitelistListener,get(listenerPriority),abstractWhitelistListener,instance,true);
             }
         };
         runnable.runTaskLater(this,1L);
@@ -82,6 +105,10 @@ public final class PixelMOTDBuilder extends JavaPlugin {
         this.configVersion.setControl(control);
     }
 
+    public AbstractWhitelistListener getWhitelist() {
+        return abstractWhitelistListener;
+    }
+
     public ConfigVersion getConfigVersion() {
         return configVersion;
     }
@@ -92,6 +119,24 @@ public final class PixelMOTDBuilder extends JavaPlugin {
 
     public int getProtocolVersion(final Player player) {
         return externalLib.getProtocol(player);
+    }
+
+    public static EventPriority get(Priority priority) {
+        switch (priority) {
+            case HIGHEST:
+                return EventPriority.HIGHEST;
+            case NORMAL:
+                return EventPriority.NORMAL;
+            default:
+            case HIGH:
+                return EventPriority.HIGH;
+            case LOWEST:
+                return EventPriority.LOWEST;
+            case LOW:
+                return EventPriority.LOW;
+            case MONITOR:
+                return EventPriority.MONITOR;
+        }
     }
 
 

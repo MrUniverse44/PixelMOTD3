@@ -14,11 +14,18 @@ import org.jetbrains.annotations.NotNull;
 public class MainCommand implements CommandExecutor {
 
     private final PixelMOTDBuilder plugin;
+
     private final String cmdPrefix;
+
+    private final BlacklistCommand blacklistCommand;
+
+    private final WhitelistCommand whitelistCommand;
 
     public MainCommand(PixelMOTDBuilder plugin, String command) {
         this.plugin = plugin;
         this.cmdPrefix = "&e/" + command;
+        blacklistCommand = new BlacklistCommand(plugin,command);
+        whitelistCommand = new WhitelistCommand(plugin,command);
     }
 
     public static void sendMessage(Player player,String message) {
@@ -51,21 +58,23 @@ public class MainCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         try {
             if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
-                sender.sendMessage(" ");
-                sendMessage(sender,"&b------------ &7PixelMOTD &b------------");
-                sendMessage(sender,"&7&oCreated by MrUniverse44 w/ help from Sebastnchan & SUPREMObenjamin");
-                if(hasPermission(sender,"pmotd.admin.help",false)) sendMessage(sender,cmdPrefix + " admin &3- &7Admin commands");
-                sendMessage(sender,"&b------------ &7PixelMOTD &b------------");
+                sendMessage(sender," ");
+                sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
+                sendMessage(sender,"&8Created by MrUniverse44 w/ help from Sebastnchan & SUPREMObenjamin");
+                if(hasPermission(sender,"pmotd.admin.help",false)) sendMessage(sender,cmdPrefix + " admin &8- &7Admin commands");
+                sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
                 return true;
             }
             if (args[0].equalsIgnoreCase("admin")) {
                 if(args.length == 1 || args[1].equalsIgnoreCase("1")) {
                     if (hasPermission(sender, "pmotd.admin.help.game", true)) {
-                        sender.sendMessage(" ");
-                        sendMessage(sender, "&b------------ &7PixelMOTD &b------------");
-                        sendMessage(sender, cmdPrefix + " admin reload &3- &7Reload the plugin.");
-                        sendMessage(sender, "&b[] &f= &eOPTIONAL &8| &a() &f= &eOBLIGATORY");
-                        sendMessage(sender, "&b------------ &7(Page &31/1&7) &b------------");
+                        sendMessage(sender," ");
+                        sendMessage(sender, "&a&l────── PIXEL MOTD ──────");
+                        sendMessage(sender, cmdPrefix + " admin whitelist &8- &7Whitelist Commands.");
+                        sendMessage(sender, cmdPrefix + " admin blacklist &8- &7Blacklist Commands.");
+                        sendMessage(sender, cmdPrefix + " admin reload &8- &7Reload the plugin.");
+                        sendMessage(sender, "&8[] &f= &bOPTIONAL &8| &8() &f= &bOBLIGATORY");
+                        sendMessage(sender, "&a&l────── PIXEL MOTD ──────");
                     }
                     return true;
                 }
@@ -84,6 +93,8 @@ public class MainCommand implements CommandExecutor {
 
                             plugin.update(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS));
 
+                            plugin.getWhitelist().update(plugin);
+
                         }catch (Throwable throwable) {
                             plugin.getStorage().getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");
                             plugin.getStorage().getLogs().error("If you are sure than this isn't your error, please contact the developer.");
@@ -94,6 +105,18 @@ public class MainCommand implements CommandExecutor {
                         sendMessage(sender,reload);
                     }
                     return true;
+                }
+
+                if(args[1].equalsIgnoreCase("whitelist")) {
+                    if(hasPermission(sender,"pmotd.admin.help.whitelist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
+                        whitelistCommand.usage(sender,getArguments(args));
+                    }
+                    return true;
+                }
+                if(args[1].equalsIgnoreCase("blacklist")) {
+                    if(hasPermission(sender,"pmotd.admin.help.blacklist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
+                        blacklistCommand.usage(sender,getArguments(args));
+                    }
                 }
             }
             return true;

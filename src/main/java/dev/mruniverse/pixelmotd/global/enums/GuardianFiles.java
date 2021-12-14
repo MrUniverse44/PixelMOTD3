@@ -101,6 +101,20 @@ public enum GuardianFiles implements GuardianFile {
             return true;
         }
     },
+    MESSAGES_PL{
+        @Override
+        public String getFileName() {
+            return "messages_pl.yml";
+        }
+        @Override
+        public String getFolderName() {
+            return "translations";
+        }
+        @Override
+        public boolean isInDifferentFolder() {
+            return true;
+        }
+    },
     MESSAGES_JP {
         @Override
         public String getFileName() {

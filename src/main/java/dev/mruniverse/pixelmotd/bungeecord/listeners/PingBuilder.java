@@ -107,22 +107,29 @@ public class PingBuilder {
             }
             ping.getVersion().setName(result);
         }
-
+        TextComponent result = new TextComponent("");
         if(!motdType.isHexMotd()) {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getColoredString(motdType.getSettings(MotdSettings.LINE2));
             completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
+            result.addExtra(completed);
         } else {
             line1 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
             try {
-                completed = IridiumColorAPI.process(extras.getVariables(line1,online,max)) + "\n" + IridiumColorAPI.process(extras.getVariables(line2,online,max));
-            }catch (Throwable ignored) {
+                TextComponent firstLine = new TextComponent(IridiumColorAPI.process(extras.getVariables(line1,online,max) + "&f"));
+                TextComponent secondLine = new TextComponent(IridiumColorAPI.process(extras.getVariables(line2,online,max)  + "&f"));
+                result.addExtra(firstLine);
+                result.addExtra("\n");
+                result.addExtra(secondLine);
+            }catch (Throwable throwable) {
+                plugin.getStorage().getLogs().error(throwable);
                 completed = ChatColor.translateAlternateColorCodes('&',extras.getVariables(line1,online,max)) + "\n" + ChatColor.translateAlternateColorCodes('&',extras.getVariables(line2,online,max));
+                result.addExtra(completed);
             }
         }
 
-        ping.setDescriptionComponent(new TextComponent(completed));
+        ping.setDescriptionComponent(result);
         ping.getPlayers().setOnline(online);
         ping.getPlayers().setMax(max);
 
