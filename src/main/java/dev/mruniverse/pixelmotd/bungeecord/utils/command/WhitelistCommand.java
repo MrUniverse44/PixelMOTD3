@@ -89,7 +89,6 @@ public class WhitelistCommand {
                             Arrays.asList(getArguments(arguments))
                     );
                 } else {
-                    server = "global";
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getString("settings.default-reason","The server will be updated!");
                 }
                 if(!plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).contains("whitelist." + server + ".kick-message")) {
@@ -122,7 +121,6 @@ public class WhitelistCommand {
                             Arrays.asList(getArguments(arguments))
                     );
                 } else {
-                    server = "global";
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getString("settings.default-reason","The server will be updated!");
                 }
                 if(!plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).contains("whitelist." + server + ".kick-message")) {

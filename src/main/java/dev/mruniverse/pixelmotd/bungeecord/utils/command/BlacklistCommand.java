@@ -90,7 +90,6 @@ public class BlacklistCommand {
                             Arrays.asList(getArguments(arguments))
                     );
                 } else {
-                    server = "global";
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).getString("settings.default-reason","The server will be updated!");
                 }
                 if(!plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).contains("blacklist." + server + ".kick-message")) {
@@ -123,7 +122,6 @@ public class BlacklistCommand {
                             Arrays.asList(getArguments(arguments))
                     );
                 } else {
-                    server = "global";
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).getString("settings.default-reason","You are blocked from this server!");
                 }
                 if(!plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).contains("blacklist." + server + ".kick-message")) {
