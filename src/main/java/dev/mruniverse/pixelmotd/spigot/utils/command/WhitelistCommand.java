@@ -100,7 +100,7 @@ public class WhitelistCommand {
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set("whitelist." + server + ".author",author);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).reload();
-                sendMessage(sender,plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.blacklist-enabled"));
+                sendMessage(sender,plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.whitelist-enabled"));
                 return;
             }
             argumentsIssue(sender);
@@ -133,7 +133,7 @@ public class WhitelistCommand {
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set("whitelist." + server + ".author",author);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).reload();
-                sendMessage(sender,plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.blacklist-disabled"));
+                sendMessage(sender,plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.whitelist-disabled"));
                 return;
             }
             argumentsIssue(sender);

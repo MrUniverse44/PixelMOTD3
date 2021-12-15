@@ -264,7 +264,7 @@ public class Updater {
 
 
         }
-        catch (Throwable ignored)
+        catch (Throwable throwable)
         {
             if(logger)
                 logs.info("Can't download latest version automatically, download it manually from website.");
