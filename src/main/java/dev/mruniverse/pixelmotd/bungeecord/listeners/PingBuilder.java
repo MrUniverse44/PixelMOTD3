@@ -5,6 +5,7 @@ import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.Extras;
 import dev.mruniverse.pixelmotd.global.enums.*;
 import dev.mruniverse.pixelmotd.global.iridiumcolorapi.IridiumColorAPI;
+import dev.mruniverse.pixelmotd.global.minedown.MineDown;
 import dev.mruniverse.pixelmotd.global.shared.BungeeExtras;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.Favicon;
@@ -117,11 +118,16 @@ public class PingBuilder {
             line1 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
             try {
-                TextComponent firstLine = new TextComponent(IridiumColorAPI.process(extras.getVariables(line1,online,max) + "&f"));
-                TextComponent secondLine = new TextComponent(IridiumColorAPI.process(extras.getVariables(line2,online,max)  + "&f"));
-                result.addExtra(firstLine);
-                result.addExtra("\n");
-                result.addExtra(secondLine);
+                if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.hex-system-process","IRIDIUMCOLORAPI").equalsIgnoreCase("IRIDIUMCOLORAPI")) {
+                    TextComponent firstLine = new TextComponent(IridiumColorAPI.process(extras.getVariables(line1, online, max) + "&f"));
+                    TextComponent secondLine = new TextComponent(IridiumColorAPI.process(extras.getVariables(line2, online, max) + "&f"));
+                    result.addExtra(firstLine);
+                    result.addExtra("\n");
+                    result.addExtra(secondLine);
+                } else {
+                    completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
+                    result = new TextComponent(new MineDown(completed.replace('§', '&')).urlDetection(false).toComponent());
+                }
             }catch (Throwable throwable) {
                 plugin.getStorage().getLogs().error(throwable);
                 completed = ChatColor.translateAlternateColorCodes('&',extras.getVariables(line1,online,max)) + "\n" + ChatColor.translateAlternateColorCodes('&',extras.getVariables(line2,online,max));
