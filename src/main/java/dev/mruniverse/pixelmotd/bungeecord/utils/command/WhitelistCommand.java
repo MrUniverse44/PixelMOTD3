@@ -10,7 +10,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WhitelistCommand {
     private final PixelMOTDBuilder plugin;
@@ -66,6 +68,7 @@ public class WhitelistCommand {
                                 .replace("<type>",type.getName())
                                 .replace("<player>",value)
                 );
+                plugin.getWhitelist().update(plugin);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set(path,list);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).reload();
@@ -93,6 +96,13 @@ public class WhitelistCommand {
                 }
                 if(!plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).contains("whitelist." + server + ".kick-message")) {
                     List<String> defaultKick = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStringList("settings.default-kick-message");
+                    Map<String,String> replacements = new HashMap<>();
+                    if(server.equalsIgnoreCase("global")) {
+                        replacements.put("%server%", server);
+                    } else {
+                        replacements.put("%server%", "the Network");
+                    }
+                    defaultKick = Converter.listReplacer(defaultKick,replacements);
                     plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set("whitelist." + server + ".kick-message",defaultKick);
                 }
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set("whitelist." + server + ".reason",reason);
@@ -178,6 +188,7 @@ public class WhitelistCommand {
                                 .replace("<type>",type.getName())
                                 .replace("<player>",value)
                 );
+                plugin.getWhitelist().update(plugin);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set(path,list);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).reload();
@@ -218,10 +229,10 @@ public class WhitelistCommand {
         sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
         sendMessage(sender,"&8Admin - Whitelist Commands:");
         sendMessage(sender,cmdPrefix + " admin whitelist list &8- &7List of players,uuids in the whitelist");
-        sendMessage(sender,cmdPrefix + " admin whitelist add (player) [global/<server>/<world>] &8- &7Add a player to the whitelist");
-        sendMessage(sender,cmdPrefix + " admin whitelist remove (player) [global/<server>/<world>] &8- &7Remove a player from whitelist");
-        sendMessage(sender,cmdPrefix + " admin whitelist on [global/<server>/<world>] [reason] &8- &7Turn on the Whitelist");
-        sendMessage(sender,cmdPrefix + " admin whitelist off [global/<server>/<world>] [reason] &8- &7Turn off the Whitelist");
+        sendMessage(sender,cmdPrefix + " admin whitelist add (player) [global/<server|world>] &8- &7Add a player to the whitelist");
+        sendMessage(sender,cmdPrefix + " admin whitelist remove (player) [global/<server|world>] &8- &7Remove a player from whitelist");
+        sendMessage(sender,cmdPrefix + " admin whitelist on [global/<server|world>] [reason] &8- &7Turn on the Whitelist");
+        sendMessage(sender,cmdPrefix + " admin whitelist off [global/<server|world>] [reason] &8- &7Turn off the Whitelist");
         sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
     }
 

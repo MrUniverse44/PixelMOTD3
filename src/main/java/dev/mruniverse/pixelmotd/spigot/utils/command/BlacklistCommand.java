@@ -9,7 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlacklistCommand {
     private final PixelMOTDBuilder plugin;
@@ -125,6 +127,13 @@ public class BlacklistCommand {
                 }
                 if(!plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).contains("blacklist." + server + ".kick-message")) {
                     List<String> defaultKick = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).getStringList("settings.default-kick-message");
+                    Map<String,String> replacements = new HashMap<>();
+                    if(server.equalsIgnoreCase("global")) {
+                        replacements.put("%server%", server);
+                    } else {
+                        replacements.put("%server%", "the Network");
+                    }
+                    defaultKick = Converter.listReplacer(defaultKick,replacements);
                     plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).set("blacklist." + server + ".kick-message",defaultKick);
                 }
                 plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).set("blacklist." + server + ".reason",reason);
@@ -219,10 +228,10 @@ public class BlacklistCommand {
         sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
         sendMessage(sender,"&8Admin - Blacklist Commands:");
         sendMessage(sender,cmdPrefix + " admin blacklist list &8- &7List of players,uuids in the whitelist");
-        sendMessage(sender,cmdPrefix + " admin blacklist add (player) [global/<server>/<world>] &8- &7Add a player to the blacklist");
-        sendMessage(sender,cmdPrefix + " admin blacklist remove (player) [global/<server>/<world>] &8- &7Remove a player from blacklist");
-        sendMessage(sender,cmdPrefix + " admin blacklist on [global/<server>/<world>] [reason] &8- &7Turn on the Blacklist");
-        sendMessage(sender,cmdPrefix + " admin blacklist off [global/<server>/<world>] [reason] &8- &7Turn off the Blacklist");
+        sendMessage(sender,cmdPrefix + " admin blacklist add (player) [global/<server|world>] &8- &7Add a player to the blacklist");
+        sendMessage(sender,cmdPrefix + " admin blacklist remove (player) [global/<server|world>] &8- &7Remove a player from blacklist");
+        sendMessage(sender,cmdPrefix + " admin blacklist on [global/<server|world>] [reason] &8- &7Turn on the Blacklist");
+        sendMessage(sender,cmdPrefix + " admin blacklist off [global/<server|world>] [reason] &8- &7Turn off the Blacklist");
         sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
     }
 

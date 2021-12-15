@@ -27,7 +27,7 @@ public class PingListener implements Listener, Ping {
     }
 
     private void load() {
-        isWhitelisted = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStatus("whitelist.toggle");
+        isWhitelisted = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
         pingBuilder.update();
     }
 
