@@ -4,13 +4,13 @@ import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
 import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.Converter;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
-import org.bukkit.ChatColor;
 
 public abstract class AbstractWhitelistListener implements Listener {
 
