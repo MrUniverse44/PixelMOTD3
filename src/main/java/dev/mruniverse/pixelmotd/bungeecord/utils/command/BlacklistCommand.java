@@ -7,7 +7,7 @@ import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 import java.util.Arrays;
 import java.util.HashMap;
