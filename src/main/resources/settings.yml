@@ -26,9 +26,9 @@ settings:
   player-system:
     # Toggle this option
     toggle: true
-    # This is for %player_<number>% variables, if you disable this variables will not work but the motd will load more faster.
-    # But if you wanna use this, here is the system, They asked me to add this system and it is because it is here.
-  # Plugin language file, if you want add your custom lang file you need put the name ("messages_<code>.yml") and in the language you put the code, example:
+    # This is for %player_<number>% variables, if you disable this variables will not work but the motd will load faster.
+    # But if you want to use this, here is the system, They asked me to add this system, and it is because it is here.
+  # Plugin language file, if you want to add your custom lang file you need put the name ("messages_<code>.yml") and in the language you put the code, example:
   # messages_en.yml | code: en | language: en
   # messages_es.yml | code: es | language: es
   language: en
@@ -55,8 +55,8 @@ settings:
   icon-system: true
   # Config your max-server-protocol and min-server-protocol for the check of the outdated-client and outdated-server.
   # You can see protocols here: https://minecraft.fandom.com/wiki/Protocol_version
-  # Default protocol versions are 1.8 to 1.17
-  max-server-protocol: 756
+  # Default protocol versions are 1.8 to 1.18
+  max-server-protocol: 757
   min-server-protocol: 47
   # Toggle update-check for Alpha and Beta Versions
   check-alpha-updates: false
