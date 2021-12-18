@@ -43,7 +43,7 @@ public abstract class AbstractWhitelistListener implements Listener {
         final String user = loginEvent.getConnection().getName();
         final String uuid = loginEvent.getConnection().getUniqueId().toString();
         if(whitelist.getStatus("whitelist.global.Enabled")) {
-            if(!whitelist.getStringList("players.global.by-name").contains(user) || !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {
+            if(!whitelist.getStringList("players.global.by-name").contains(user) && !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist.global.kick-message"));
                 loginEvent.setCancelReason(
                         new TextComponent(
@@ -92,7 +92,7 @@ public abstract class AbstractWhitelistListener implements Listener {
         final String uuid = player.getUniqueId().toString();
         final String server = event.getTarget().getName();
         if(whitelist.getStatus("whitelist." + server + ".Enabled")) {
-            if(!whitelist.getStringList("players." + server + ".by-name").contains(user) || !whitelist.getStringList("players." + server + ".by-uuid").contains(uuid)) {
+            if(!whitelist.getStringList("players." + server + ".by-name").contains(user) && !whitelist.getStringList("players." + server + ".by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist." + server + ".kick-message"));
                 player.sendMessage(
                         new TextComponent(

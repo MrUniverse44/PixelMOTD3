@@ -47,6 +47,8 @@ settings:
   event-priority: HIGH
   # Customize your event priority level for blacklist & whitelist check: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST
   extras-event-priority: HIGH
+  # Toggle the 1.16+ motd
+  different-motd-for-116-or-higher: true
   # Toggle outdated-client motd system
   outdated-client-motd: true
   # Toggle outdated-server motd system

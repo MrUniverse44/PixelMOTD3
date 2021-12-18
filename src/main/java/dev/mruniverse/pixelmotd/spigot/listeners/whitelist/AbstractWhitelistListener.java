@@ -35,7 +35,7 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
         final String user = player.getName();
         final String uuid = player.getUniqueId().toString();
         if(whitelist.getStatus("whitelist.global.Enabled")) {
-            if(!whitelist.getStringList("players.global.by-name").contains(user) || !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {
+            if(!whitelist.getStringList("players.global.by-name").contains(user) && !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist.global.kick-message"));
                 loginEvent.disallow(
                         PlayerLoginEvent.Result.KICK_WHITELIST,
@@ -79,7 +79,7 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
         if(nextWorld == null) nextWorld = actualWorld;
         final String target = nextWorld.getName();
         if(whitelist.getStatus("whitelist." + target + ".Enabled")) {
-            if(!whitelist.getStringList("players." + target + ".by-name").contains(user) || !whitelist.getStringList("players." + target + ".by-uuid").contains(uuid)) {
+            if(!whitelist.getStringList("players." + target + ".by-name").contains(user) && !whitelist.getStringList("players." + target + ".by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist." + target + ".kick-message"));
                 player.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',

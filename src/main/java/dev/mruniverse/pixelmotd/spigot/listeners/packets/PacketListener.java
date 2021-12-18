@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
 import dev.mruniverse.pixelmotd.global.Control;
+import dev.mruniverse.pixelmotd.global.GLogger;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.enums.MotdType;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
@@ -41,6 +42,11 @@ public class PacketListener extends PacketAdapter implements Ping {
         hasOutdatedServer = control.getStatus("settings.outdated-server-motd",true);
         MAX_PROTOCOL = control.getInt("settings.max-server-protocol",756);
         MIN_PROTOCOL = control.getInt("settings.min-server-protocol",47);
+        GLogger logs = plugin.getStorage().getLogs();
+        logs.info("Outdated Client Motd: " + hasOutdatedClient);
+        logs.info("Outdated Server Motd: " + hasOutdatedServer);
+        logs.info("Min Protocol: " + MIN_PROTOCOL);
+        logs.info("Max Protocol: " + MAX_PROTOCOL);
     }
 
     @Override
@@ -70,24 +76,36 @@ public class PacketListener extends PacketAdapter implements Ping {
             pingBuilder.execute(MotdType.WHITELIST,ping,event.getPlayer());
             return;
         }
-        if(!hasOutdatedClient && !hasOutdatedServer || protocol >= MIN_PROTOCOL && protocol <= MAX_PROTOCOL) {
-            if(protocol >= 735) {
-                pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
-                return;
+
+        if(MAX_PROTOCOL < protocol) {
+            if(hasOutdatedServer) {
+                pingBuilder.execute(MotdType.OUTDATED_SERVER,ping,event.getPlayer());
+            } else {
+                if(protocol >= 735) {
+                    pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
+                }
+                pingBuilder.execute(MotdType.NORMAL,ping,event.getPlayer());
             }
-            pingBuilder.execute(MotdType.NORMAL,ping,event.getPlayer());
             return;
         }
-        if(MAX_PROTOCOL < protocol && hasOutdatedServer) {
-            pingBuilder.execute(MotdType.OUTDATED_SERVER,ping,event.getPlayer());
+        if(MIN_PROTOCOL > protocol) {
+            if(hasOutdatedClient) {
+                pingBuilder.execute(MotdType.OUTDATED_CLIENT, ping, event.getPlayer());
+            } else {
+                if(protocol >= 735) {
+                    pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
+                }
+                pingBuilder.execute(MotdType.NORMAL,ping,event.getPlayer());
+            }
+
             return;
         }
-        if(MIN_PROTOCOL > protocol && hasOutdatedClient) {
-            pingBuilder.execute(MotdType.OUTDATED_CLIENT,ping,event.getPlayer());
+
+        if(protocol >= 735) {
+            pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
+        } else {
+            pingBuilder.execute(MotdType.NORMAL, ping, event.getPlayer());
         }
-
-
-
     }
 
     public static ListenerPriority get(Priority priority) {
