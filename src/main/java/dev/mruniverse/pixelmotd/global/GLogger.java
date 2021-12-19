@@ -1,7 +1,6 @@
 package dev.mruniverse.pixelmotd.global;
 
 public interface GLogger {
-    String color(String message);
 
     void error(String message);
 

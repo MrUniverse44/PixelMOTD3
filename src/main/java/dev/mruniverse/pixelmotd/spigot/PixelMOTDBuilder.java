@@ -5,6 +5,7 @@ import dev.mruniverse.pixelmotd.global.FileStorageBuilder;
 import dev.mruniverse.pixelmotd.global.Ping;
 import dev.mruniverse.pixelmotd.global.Priority;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.global.enums.InitialMode;
 import dev.mruniverse.pixelmotd.global.shared.ConfigVersion;
 import dev.mruniverse.pixelmotd.global.shared.SpigotInput;
 import dev.mruniverse.pixelmotd.global.utils.Updater;
@@ -41,8 +42,8 @@ public final class PixelMOTDBuilder extends JavaPlugin {
         instance = this;
         storage = new Storage(this);
         storage.setInputManager(new SpigotInput(this));
-        storage.setLogs(new GuardianLogger("PixelMOTD","PixelMOTD", "dev.mruniverse.pixelmotd."));
-        storage.setStorage(new FileStorageBuilder(storage.getLogs(),getDataFolder(),storage.getInputManager()));
+        storage.setLogs(new GuardianLogger("PixelMOTDBuilder","PixelMOTDBuilder", "dev.mruniverse.pixelmotd."));
+        storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.SPIGOT,getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
         BukkitRunnable runnable = new BukkitRunnable() {

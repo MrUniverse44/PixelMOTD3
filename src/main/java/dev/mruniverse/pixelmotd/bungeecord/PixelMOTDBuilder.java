@@ -9,6 +9,7 @@ import dev.mruniverse.pixelmotd.bungeecord.utils.Metrics;
 import dev.mruniverse.pixelmotd.bungeecord.utils.ServerStatusChecker;
 import dev.mruniverse.pixelmotd.global.*;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.global.enums.InitialMode;
 import dev.mruniverse.pixelmotd.global.shared.BungeeInput;
 import dev.mruniverse.pixelmotd.global.shared.ConfigVersion;
 import dev.mruniverse.pixelmotd.global.utils.Updater;
@@ -34,8 +35,8 @@ public class PixelMOTDBuilder extends Plugin {
 
         storage = new Storage(this);
         storage.setInputManager(new BungeeInput(this));
-        storage.setLogs(new GuardianLogger(this,"PixelMOTD", "dev.mruniverse.pixelmotd."));
-        storage.setStorage(new FileStorageBuilder(storage.getLogs(),getDataFolder(),storage.getInputManager()));
+        storage.setLogs(new GuardianLogger(this,"PixelMOTDBuilder", "dev.mruniverse.pixelmotd."));
+        storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.BUNGEECORD,getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
         configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));

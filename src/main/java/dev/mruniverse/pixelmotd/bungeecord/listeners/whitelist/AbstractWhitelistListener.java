@@ -14,7 +14,7 @@ import net.md_5.bungee.api.plugin.Listener;
 
 public abstract class AbstractWhitelistListener implements Listener {
 
-    private final String security = ChatColor.translateAlternateColorCodes('&',"&cWarning PixelMOTD detected a Null IP from player: &6");
+    private final String security = ChatColor.translateAlternateColorCodes('&',"&cWarning PixelMOTDBuilder detected a Null IP from player: &6");
 
     private final TextComponent suggest = new TextComponent(ChatColor.translateAlternateColorCodes('&',"&cIf you want a Block-Null-IPs features suggest it to me and i will add this feature."));
 

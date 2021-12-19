@@ -1,11 +1,9 @@
 package dev.mruniverse.pixelmotd.global;
 
-import dev.mruniverse.pixelmotd.global.enums.FileSaveMode;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.global.enums.IconFolders;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
+import dev.mruniverse.pixelmotd.global.enums.*;
 import dev.mruniverse.pixelmotd.global.shared.BungeeControl;
 import dev.mruniverse.pixelmotd.global.shared.SpigotControl;
+import dev.mruniverse.pixelmotd.global.shared.VelocityControl;
 
 import java.io.File;
 import java.util.HashMap;
@@ -24,10 +22,13 @@ public class FileStorageBuilder implements FileStorage {
 
     private final InputManager inputManager;
 
+    private final InitialMode initialMode;
+
     private final boolean isBungee;
 
-    public FileStorageBuilder(GLogger logs,File dataFolder,InputManager inputManager) {
+    public FileStorageBuilder(GLogger logs, InitialMode mode, File dataFolder, InputManager inputManager) {
         this.dataFolder = dataFolder;
+        this.initialMode = mode;
         this.logs = logs;
         this.inputManager = inputManager;
         this.isBungee = inputManager.isBungee();
@@ -49,10 +50,17 @@ public class FileStorageBuilder implements FileStorage {
                         inputManager.getInputStream(guardianFiles.getFileName())
                 ));
             } else {
-                files.put(guardianFiles, new SpigotControl(logs,
-                        new File(mainFolder, guardianFiles.getFileName()),
-                        inputManager.getInputStream(guardianFiles.getFileName())
-                ));
+                if(initialMode.equals(InitialMode.SPIGOT)) {
+                    files.put(guardianFiles, new SpigotControl(logs,
+                            new File(mainFolder, guardianFiles.getFileName()),
+                            inputManager.getInputStream(guardianFiles.getFileName())
+                    ));
+                } else if(initialMode.equals(InitialMode.VELOCITY)) {
+                    files.put(guardianFiles, new VelocityControl(logs,
+                            new File(mainFolder, guardianFiles.getFileName()),
+                            inputManager.getInputStream(guardianFiles.getFileName())
+                    ));
+                }
             }
         }
     }

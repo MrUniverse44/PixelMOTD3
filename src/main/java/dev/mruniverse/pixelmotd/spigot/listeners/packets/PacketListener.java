@@ -37,7 +37,7 @@ public class PacketListener extends PacketAdapter implements Ping {
 
     private void load() {
         final Control control = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS);
-        isWhitelisted = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStatus("whitelist.toggle");
+        isWhitelisted = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
         hasOutdatedClient = control.getStatus("settings.outdated-client-motd",true);
         hasOutdatedServer = control.getStatus("settings.outdated-server-motd",true);
         MAX_PROTOCOL = control.getInt("settings.max-server-protocol",756);
@@ -83,6 +83,7 @@ public class PacketListener extends PacketAdapter implements Ping {
             } else {
                 if(protocol >= 735) {
                     pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
+                    return;
                 }
                 pingBuilder.execute(MotdType.NORMAL,ping,event.getPlayer());
             }
@@ -94,6 +95,7 @@ public class PacketListener extends PacketAdapter implements Ping {
             } else {
                 if(protocol >= 735) {
                     pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
+                    return;
                 }
                 pingBuilder.execute(MotdType.NORMAL,ping,event.getPlayer());
             }

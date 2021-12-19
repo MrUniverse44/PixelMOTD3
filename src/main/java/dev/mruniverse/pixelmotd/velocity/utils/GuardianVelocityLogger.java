@@ -1,18 +1,17 @@
-package dev.mruniverse.pixelmotd.bungeecord.utils;
+package dev.mruniverse.pixelmotd.velocity.utils;
 
+
+import com.velocitypowered.api.proxy.ProxyServer;
 import dev.mruniverse.pixelmotd.global.GLogger;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.plugin.Plugin;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class GuardianLogger implements GLogger {
+public class GuardianVelocityLogger implements GLogger {
     private final String hidePackage;
-    private final Plugin plugin;
+    private final ProxyServer server;
     private String pluginName = "PixelMOTDBuilder";
     private String containIdentifier = "mruniverse";
 
@@ -22,9 +21,9 @@ public class GuardianLogger implements GLogger {
      * @param pluginName this is the name of your plugin.
      * @param hidePackage hide package example: dev.mruniverse.guardianrftb.
      */
-    public GuardianLogger(Plugin plugin, String pluginName, String hidePackage) {
+    public GuardianVelocityLogger(ProxyServer server, String pluginName, String hidePackage) {
         this.hidePackage = hidePackage;
-        this.plugin = plugin;
+        this.server = server;
         if(pluginName != null) this.pluginName = pluginName;
     }
 
@@ -35,22 +34,12 @@ public class GuardianLogger implements GLogger {
      * @param hidePackage hide package example: dev.mruniverse.guardianrftb.
      * @param containIdentifier when a package contain this word this package will show in Internal - StackTrace
      */
-    public GuardianLogger(Plugin plugin,String pluginName,String hidePackage, String containIdentifier) {
+    public GuardianVelocityLogger(ProxyServer server,String pluginName,String hidePackage, String containIdentifier) {
         this.hidePackage = hidePackage;
-        this.plugin = plugin;
+        this.server = server;
         if(pluginName != null) this.pluginName = pluginName;
         if(containIdentifier == null) return;
         this.containIdentifier = containIdentifier;
-    }
-
-    /**
-     * Colorize a string provided to method
-     *
-     * @param message Message to transform.
-     * @return transformed message with colors.
-     */
-    public String color(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     /**
@@ -61,7 +50,7 @@ public class GuardianLogger implements GLogger {
         sendMessage("&f[&cERROR &7| &f" + pluginName + "] " + message);
     }
     /**
-     * Send a error message to console.
+     * Send an error message to console.
      * @param throwable throwable to send.
      */
     public void error(Throwable throwable) {
@@ -91,7 +80,7 @@ public class GuardianLogger implements GLogger {
     }
 
     /**
-     * Send a warn message to console.
+     * Send a warm message to console.
      * @param message message to send.
      */
     public void warn(String message) {
@@ -107,22 +96,13 @@ public class GuardianLogger implements GLogger {
     }
 
     /**
-     * Send a info message to console.
+     * Send an info message to console.
      * @param message message to send.
      */
     public void info(String message) {
         sendMessage("&f[&bINFO &7| &f" + pluginName + "] " + message);
     }
 
-    /**
-     * Sends a message to a Bungee command sender.
-     *
-     * @param sender Bukkit CommandSender
-     * @param message Message to send.
-     */
-    public void sendMessage(CommandSender sender, String message) {
-        sender.sendMessage(new TextComponent(color(message)));
-    }
 
 
     /**
@@ -132,7 +112,6 @@ public class GuardianLogger implements GLogger {
      * @param message Provided message
      */
     public void sendMessage(String message) {
-        plugin.getProxy().getConsole().sendMessage(new TextComponent(color(message)));
+        server.getConsoleCommandSource().sendMessage(LegacyComponentSerializer.builder().character('&').build().deserialize(message));
     }
 }
-

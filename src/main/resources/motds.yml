@@ -34,15 +34,15 @@
 #     protocol:
 #       toggle: true
 #       modifier: ALWAYS_POSITIVE
-#       message: "PixelMOTD System"
+#       message: "PixelMOTDBuilder System"
 #     players:
 #       max:
-#         toggle: true
+#         toggle: false
 #         type: DEFAULT
 #         single-value: 2
 #         values: []
 #       online:
-#         toggle: true
+#         toggle: false
 #         type: DEFAULT
 #         single-value: 1
 #         values: []
@@ -69,15 +69,15 @@ motds:
     protocol:
       toggle: true
       modifier: ALWAYS_POSITIVE
-      message: "PixelMOTD System"
+      message: "PixelMOTDBuilder System"
     players:
       max:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 2
         values: []
       online:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 1
         values: []
@@ -103,15 +103,15 @@ motds-hex:
     protocol:
       toggle: true
       modifier: ALWAYS_POSITIVE
-      message: "PixelMOTD System"
+      message: "PixelMOTDBuilder System"
     players:
       max:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 2
         values: []
       online:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 1
         values: []
@@ -137,15 +137,15 @@ outdated-server:
     protocol:
       toggle: true
       modifier: ALWAYS_POSITIVE
-      message: "PixelMOTD System"
+      message: "PixelMOTDBuilder System"
     players:
       max:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 2
         values: []
       online:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 1
         values: []
@@ -171,15 +171,15 @@ outdated-client:
     protocol:
       toggle: true
       modifier: ALWAYS_POSITIVE
-      message: "PixelMOTD System"
+      message: "PixelMOTDBuilder System"
     players:
       max:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 2
         values: []
       online:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 1
         values: []
@@ -205,15 +205,15 @@ whitelist:
     protocol:
       toggle: true
       modifier: ALWAYS_NEGATIVE
-      message: "PixelMOTD System"
+      message: "PixelMOTDBuilder System"
     players:
       max:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 2
         values: []
       online:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 1
         values: []
@@ -239,15 +239,15 @@ whitelist-hex:
     protocol:
       toggle: true
       modifier: ALWAYS_NEGATIVE
-      message: "PixelMOTD System"
+      message: "PixelMOTDBuilder System"
     players:
       max:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 2
         values: []
       online:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 1
         values: []
@@ -273,15 +273,15 @@ blacklist:
     protocol:
       toggle: true
       modifier: ALWAYS_NEGATIVE
-      message: "PixelMOTD System"
+      message: "PixelMOTDBuilder System"
     players:
       max:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 2
         values: []
       online:
-        toggle: true
+        toggle: false
         type: DEFAULT
         single-value: 1
         values: []
