@@ -42,7 +42,7 @@ public final class PixelMOTDBuilder extends JavaPlugin {
         instance = this;
         storage = new Storage(this);
         storage.setInputManager(new SpigotInput(this));
-        storage.setLogs(new GuardianLogger("PixelMOTDBuilder","PixelMOTDBuilder", "dev.mruniverse.pixelmotd."));
+        storage.setLogs(new GuardianLogger("PixelMOTD","dev.mruniverse.pixelmotd.", "dev.mruniverse.pixelmotd."));
         storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.SPIGOT,getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");

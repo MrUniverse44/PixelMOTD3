@@ -35,7 +35,7 @@ public class PixelMOTDBuilder extends Plugin {
 
         storage = new Storage(this);
         storage.setInputManager(new BungeeInput(this));
-        storage.setLogs(new GuardianLogger(this,"PixelMOTDBuilder", "dev.mruniverse.pixelmotd."));
+        storage.setLogs(new GuardianLogger(this,"PixelMOTD", "dev.mruniverse.pixelmotd."));
         storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.BUNGEECORD,getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
