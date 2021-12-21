@@ -34,7 +34,7 @@
 #     protocol:
 #       toggle: true
 #       modifier: ALWAYS_POSITIVE
-#       message: "PixelMOTDBuilder System"
+#       message: "PixelMOTD System"
 #     players:
 #       max:
 #         toggle: false
@@ -69,7 +69,7 @@ motds:
     protocol:
       toggle: true
       modifier: ALWAYS_POSITIVE
-      message: "PixelMOTDBuilder System"
+      message: "PixelMOTD System"
     players:
       max:
         toggle: false
@@ -103,7 +103,7 @@ motds-hex:
     protocol:
       toggle: true
       modifier: ALWAYS_POSITIVE
-      message: "PixelMOTDBuilder System"
+      message: "PixelMOTD System"
     players:
       max:
         toggle: false
@@ -137,7 +137,7 @@ outdated-server:
     protocol:
       toggle: true
       modifier: ALWAYS_POSITIVE
-      message: "PixelMOTDBuilder System"
+      message: "PixelMOTD System"
     players:
       max:
         toggle: false
@@ -171,7 +171,7 @@ outdated-client:
     protocol:
       toggle: true
       modifier: ALWAYS_POSITIVE
-      message: "PixelMOTDBuilder System"
+      message: "PixelMOTD System"
     players:
       max:
         toggle: false
@@ -205,7 +205,7 @@ whitelist:
     protocol:
       toggle: true
       modifier: ALWAYS_NEGATIVE
-      message: "PixelMOTDBuilder System"
+      message: "PixelMOTD System"
     players:
       max:
         toggle: false
@@ -239,7 +239,7 @@ whitelist-hex:
     protocol:
       toggle: true
       modifier: ALWAYS_NEGATIVE
-      message: "PixelMOTDBuilder System"
+      message: "PixelMOTD System"
     players:
       max:
         toggle: false
@@ -273,7 +273,7 @@ blacklist:
     protocol:
       toggle: true
       modifier: ALWAYS_NEGATIVE
-      message: "PixelMOTDBuilder System"
+      message: "PixelMOTD System"
     players:
       max:
         toggle: false

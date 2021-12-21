@@ -9,6 +9,7 @@ import dev.mruniverse.pixelmotd.global.minedown.MineDown;
 import dev.mruniverse.pixelmotd.global.shared.BungeeExtras;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.Favicon;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -73,9 +74,9 @@ public class PingBuilder {
 
         if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
             MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TYPE)));
-            online = mode.execute(control,motdType,MotdSettings.getValuePath(mode,false),ping.getPlayers().getOnline());
+            online = mode.execute(control,motdType,MotdSettings.getValuePath(mode,false),ProxyServer.getInstance().getOnlineCount());
         } else {
-            online = ping.getPlayers().getOnline();
+            online = ProxyServer.getInstance().getOnlineCount();
         }
 
         if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {

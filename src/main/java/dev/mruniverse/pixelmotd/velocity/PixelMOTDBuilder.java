@@ -73,7 +73,7 @@ public class PixelMOTDBuilder {
 
         logger.debug("Spigot metrics has been enabled (True)");
 
-        logger.error("PixelMOTDBuilder have been successfully enabled! but isn't finished in Velocity");
+        logger.error("PixelMOTD have been successfully enabled! but isn't finished in Velocity");
         logger.error("Velocity support isn't finished so commands,features don't work yet");
         logger.error("So the plugin don't have files generated for velocity for now, sorry.");
         logger.error("For now i recommend use another Motd plugin for velocity");
