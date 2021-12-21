@@ -6,8 +6,11 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.FileStorageBuilder;
+import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.enums.InitialMode;
+import dev.mruniverse.pixelmotd.global.shared.ConfigVersion;
 import dev.mruniverse.pixelmotd.global.shared.VelocityInput;
 import dev.mruniverse.pixelmotd.velocity.listeners.MotdBuilder;
 
@@ -36,6 +39,8 @@ public class PixelMOTDBuilder {
 
     private final Storage storage;
 
+    private final ConfigVersion configVersion;
+
     // path of the plugin
     @Inject
     private @DataDirectory
@@ -54,6 +59,15 @@ public class PixelMOTDBuilder {
         storage.setInputManager(new VelocityInput(this));
         storage.setLogs(new GuardianVelocityLogger(server,"PixelMOTD", "dev.mruniverse.pixelmotd."));
         storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.VELOCITY,dataDirectory.toFile(),storage.getInputManager()));
+
+        configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));
+
+        if(configVersion.isUpdated()) {
+            storage.getLogs().info("Your configuration is updated!");
+        } else {
+            storage.getLogs().info("Your configuration is outdated!");
+            configVersion.setWork(false);
+        }
     }
 
     public Storage getStorage() {
@@ -64,10 +78,18 @@ public class PixelMOTDBuilder {
         return server;
     }
 
+    public void update(Control control) {
+        this.configVersion.setControl(control);
+    }
+
+    public ConfigVersion getConfigVersion() {
+        return configVersion;
+    }
+
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
 
-        server.getEventManager().register(this,new MotdBuilder());
+        server.getEventManager().register(this,new MotdBuilder(getStorage().getLogs()));
 
         Metrics metrics = metricsFactory.make(this,8509);
 

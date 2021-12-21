@@ -22,6 +22,7 @@ package dev.mruniverse.pixelmotd.global.minedown;
  * SOFTWARE.
  */
 
+import dev.mruniverse.pixelmotd.global.minedown.Velocity.VelocityConvert;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -138,6 +139,25 @@ public class MineDown {
             }
         }
         return baseComponents();
+    }
+
+    /**
+     * Parse and convert the message to the component
+     * @return The parsed component message
+     */
+    public VelocityConvert velocity() {
+        if (baseComponents() == null) {
+            if (replaceFirst()) {
+                Replacer componentReplacer = new Replacer();
+                for (Map.Entry<String, BaseComponent[]> entry : replacer().componentReplacements().entrySet()) {
+                    componentReplacer.replace(entry.getKey(), stringify(entry.getValue()));
+                }
+                baseComponents = parser().parse(componentReplacer.replaceIn(replacer().replaceIn(message()))).create();
+            } else {
+                baseComponents = replacer().replaceIn(parser().parse(message()).create());
+            }
+        }
+        return new VelocityConvert(baseComponents(),message(),replaceFirst(),replacer(),parser());
     }
 
     /**
