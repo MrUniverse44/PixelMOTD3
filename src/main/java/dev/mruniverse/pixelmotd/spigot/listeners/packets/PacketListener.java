@@ -42,11 +42,6 @@ public class PacketListener extends PacketAdapter implements Ping {
         hasOutdatedServer = control.getStatus("settings.outdated-server-motd",true);
         MAX_PROTOCOL = control.getInt("settings.max-server-protocol",756);
         MIN_PROTOCOL = control.getInt("settings.min-server-protocol",47);
-        GLogger logs = plugin.getStorage().getLogs();
-        logs.info("Outdated Client Motd: " + hasOutdatedClient);
-        logs.info("Outdated Server Motd: " + hasOutdatedServer);
-        logs.info("Min Protocol: " + MIN_PROTOCOL);
-        logs.info("Max Protocol: " + MAX_PROTOCOL);
     }
 
     @Override
