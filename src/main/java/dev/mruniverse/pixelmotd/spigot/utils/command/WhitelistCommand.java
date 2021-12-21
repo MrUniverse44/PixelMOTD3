@@ -109,6 +109,7 @@ public class WhitelistCommand {
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set("whitelist." + server + ".author",author);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).reload();
+                plugin.getPing().setWhitelist(true);
                 sendMessage(sender,plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.whitelist-enabled"));
                 return;
             }
@@ -141,6 +142,7 @@ public class WhitelistCommand {
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set("whitelist." + server + ".author",author);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).reload();
+                plugin.getPing().setWhitelist(false);
                 sendMessage(sender,plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.whitelist-disabled"));
                 return;
             }
