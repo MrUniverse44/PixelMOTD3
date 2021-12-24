@@ -3,18 +3,16 @@ package dev.mruniverse.pixelmotd.global.enums;
 import dev.mruniverse.pixelmotd.global.utils.Config;
 
 public enum PluginVersion implements Config {
-    OLDER{
-        @Override
-        public int getVersionID() {
-            return 0;
-        }
-    },
-    V9_1_0 {
-        @Override
-        public int getVersionID() {
-            return 1;
-        }
-    };
+    OLDER(0),
+    V9_1_0(1),
+    V9_2_0(2),
+    V9_2_1(2);
+
+    private final int version;
+
+    PluginVersion(int versionID) {
+        this.version = versionID;
+    }
 
     private int code = 1;
 
@@ -34,5 +32,10 @@ public enum PluginVersion implements Config {
 
     public boolean isNewest(int currentCode) {
         return (code >= currentCode);
+    }
+
+    @Override
+    public int getVersionID() {
+        return this.version;
     }
 }

@@ -1,7 +1,5 @@
 package dev.mruniverse.pixelmotd.bungeecord.utils.command;
 
-import dev.mruniverse.pixelmotd.global.enums.ListPath;
-
 public enum PlayerType {
     PLAYER,
     UNKNOWN,
@@ -29,25 +27,6 @@ public enum PlayerType {
                 return "Player";
 
         }
-    }
-
-    public ListPath getListPath() {
-        switch (this) {
-            case ID:
-                return ListPath.UUIDS;
-            default:
-            case UNKNOWN:
-            case PLAYER:
-                return ListPath.PLAYERS;
-
-        }
-    }
-
-    public String getUnknownType(String paramString) {
-        if(paramString.contains("-")) {
-            return "UUID";
-        }
-        return "Player";
     }
 
     public static PlayerType fromUnknown(String paramString) {

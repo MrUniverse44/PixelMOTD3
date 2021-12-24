@@ -3,195 +3,25 @@ package dev.mruniverse.pixelmotd.global.enums;
 import dev.mruniverse.pixelmotd.global.Motd;
 
 public enum MotdType implements Motd {
-    NORMAL{
-        @Override
-        public String getPath(){
-            return "motds.";
-        }
+    NORMAL("motds.","Normal",IconFolders.NORMAL,false),
+    NORMAL_HEX("motds-hex.","Normal",IconFolders.NORMAL,true),
+    WHITELIST("whitelist.","Whitelist",IconFolders.WHITELIST,false),
+    WHITELIST_HEX("whitelist-hex.","Whitelist",IconFolders.WHITELIST,true),
+    BLACKLIST("blacklist.","Blacklist",IconFolders.GENERAL,false),
+    OUTDATED_SERVER("outdated-server.","outdatedServer",IconFolders.OUTDATED_SERVER,false),
+    OUTDATED_CLIENT("outdated-client.","outdatedClient",IconFolders.OUTDATED_CLIENT,false);
 
-        @Override
-        public String getSettings(MotdSettings settings){
-            if(hasMotd) return getPath() + motd + settings.getPath();
-            return settings.getPath();
-        }
+    private final String path;
+    private final String name;
+    private final IconFolders folder;
+    private final boolean isHexMotd;
 
-        @Override
-        public String getName() {
-            return "Normal";
-        }
-
-        @Override
-        public IconFolders getIconFolders(){
-            return IconFolders.NORMAL;
-        }
-
-        @Override
-        public boolean isHexMotd() {
-            return false;
-        }
-    },
-    NORMAL_HEX{
-        @Override
-        public String getPath(){
-            return "motds-hex.";
-        }
-
-        @Override
-        public String getName() {
-            return "Normal";
-        }
-
-        @Override
-        public String getSettings(MotdSettings settings){
-            if(hasMotd) return getPath() + motd + settings.getPath();
-            return settings.getPath();
-        }
-
-        @Override
-        public IconFolders getIconFolders(){
-            return IconFolders.NORMAL;
-        }
-
-        @Override
-        public boolean isHexMotd() {
-            return true;
-        }
-    },
-    WHITELIST{
-        @Override
-        public String getPath(){
-            return "whitelist.";
-        }
-
-        @Override
-        public String getSettings(MotdSettings settings){
-            if(hasMotd) return getPath() + motd + settings.getPath();
-            return settings.getPath();
-        }
-
-        @Override
-        public IconFolders getIconFolders(){
-            return IconFolders.NORMAL;
-        }
-
-        @Override
-        public String getName() {
-            return "Whitelist";
-        }
-
-        @Override
-        public boolean isHexMotd() {
-            return false;
-        }
-    },
-    WHITELIST_HEX{
-        @Override
-        public String getPath(){
-            return "whitelist-hex.";
-        }
-
-        @Override
-        public String getSettings(MotdSettings settings){
-            if(hasMotd) return getPath() + motd + settings.getPath();
-            return settings.getPath();
-        }
-
-        @Override
-        public String getName() {
-            return "Whitelist";
-        }
-
-        @Override
-        public IconFolders getIconFolders(){
-            return IconFolders.NORMAL;
-        }
-
-        @Override
-        public boolean isHexMotd() {
-            return true;
-        }
-    },
-    BLACKLIST{
-        @Override
-        public String getPath(){
-            return "blacklist.";
-        }
-
-        @Override
-        public String getSettings(MotdSettings settings){
-            if(hasMotd) return getPath() + motd + settings.getPath();
-            return settings.getPath();
-        }
-
-        @Override
-        public IconFolders getIconFolders(){
-            return IconFolders.NORMAL;
-        }
-
-        @Override
-        public String getName() {
-            return "Blacklist";
-        }
-
-        @Override
-        public boolean isHexMotd() {
-            return false;
-        }
-    },
-    OUTDATED_SERVER{
-        @Override
-        public String getPath(){
-            return "outdated-server.";
-        }
-
-        @Override
-        public String getSettings(MotdSettings settings){
-            if(hasMotd) return getPath() + motd + settings.getPath();
-            return settings.getPath();
-        }
-
-        @Override
-        public String getName() {
-            return "outdatedServer";
-        }
-
-        @Override
-        public IconFolders getIconFolders(){
-            return IconFolders.NORMAL;
-        }
-
-        @Override
-        public boolean isHexMotd() {
-            return false;
-        }
-    },
-    OUTDATED_CLIENT{
-        @Override
-        public String getPath(){
-            return "outdated-client.";
-        }
-
-        @Override
-        public String getName() {
-            return "outdatedClient";
-        }
-
-        @Override
-        public String getSettings(MotdSettings settings){
-            if(hasMotd) return getPath() + motd + settings.getPath();
-            return settings.getPath();
-        }
-
-        @Override
-        public IconFolders getIconFolders(){
-            return IconFolders.NORMAL;
-        }
-
-        @Override
-        public boolean isHexMotd() {
-            return false;
-        }
-    };
+    MotdType(String path,String name,IconFolders folder,boolean isHexMotd) {
+        this.path = path;
+        this.name = name;
+        this.folder = folder;
+        this.isHexMotd = isHexMotd;
+    }
 
     public String motd = "";
     public boolean hasMotd = false;
@@ -199,5 +29,31 @@ public enum MotdType implements Motd {
     public void setMotd(String motd) {
         this.motd = motd;
         hasMotd = true;
+    }
+
+    @Override
+    public String getPath() {
+        return this.path;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String getSettings(MotdSettings settings){
+        if(hasMotd) return getPath() + motd + settings.getPath();
+        return settings.getPath();
+    }
+
+    @Override
+    public IconFolders getIconFolders() {
+        return this.folder;
+    }
+
+    @Override
+    public boolean isHexMotd() {
+        return this.isHexMotd;
     }
 }

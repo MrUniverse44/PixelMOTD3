@@ -3,114 +3,35 @@ package dev.mruniverse.pixelmotd.global.enums;
 import dev.mruniverse.pixelmotd.global.Settings;
 
 public enum MotdSettings implements Settings {
-    LINE1{
-        @Override
-        public String getPath() {
-            return ".line1";
-        }
-    },
-    LINE2{
-        @Override
-        public String getPath() {
-            return ".line2";
-        }
-    },
-    HOVER_TOGGLE{
-        @Override
-        public String getPath() {
-            return ".hover.toggle";
-        }
-    },
-    HOVER_MORE_PLAYERS{
-        @Override
-        public String getPath() {
-            return ".hover.hasMoreOnline";
-        }
-    },
-    HOVER_LINES{
-        @Override
-        public String getPath() {
-            return ".hover.lines";
-        }
-    },
-    ICONS_FOLDER{
-        @Override
-        public String getPath() {
-            return ".icons.folder";
-        }
-    },
-    ICONS_ICON{
-        @Override
-        public String getPath() {
-            return ".icons.icon";
-        }
-    },
-    PROTOCOL_TOGGLE{
-        @Override
-        public String getPath() {
-            return ".protocol.toggle";
-        }
-    },
-    PROTOCOL_MODIFIER{
-        @Override
-        public String getPath() {
-            return ".protocol.modifier";
-        }
-    },
-    PROTOCOL_MESSAGE{
-        @Override
-        public String getPath() {
-            return ".protocol.message";
-        }
-    },
-    PLAYERS_MAX_TOGGLE{
-        @Override
-        public String getPath() {
-            return ".players.max.toggle";
-        }
-    },
-    PLAYERS_MAX_TYPE{
-        @Override
-        public String getPath() {
-            return ".players.max.type";
-        }
-    },
-    PLAYERS_MAX_VALUES{
-        @Override
-        public String getPath() {
-            return ".players.max.values";
-        }
-    },
-    PLAYERS_MAX_SINGLE_VALUE{
-        @Override
-        public String getPath() {
-            return ".players.max.single-value";
-        }
-    },
-    PLAYERS_ONLINE_TOGGLE{
-        @Override
-        public String getPath() {
-            return ".players.online.toggle";
-        }
-    },
-    PLAYERS_ONLINE_TYPE{
-        @Override
-        public String getPath() {
-            return ".players.online.type";
-        }
-    },
-    PLAYERS_ONLINE_VALUES{
-        @Override
-        public String getPath() {
-            return ".players.online.values";
-        }
-    },
-    PLAYERS_ONLINE_SINGLE_VALUE{
-        @Override
-        public String getPath() {
-            return ".players.online.single-value";
-        }
-    };
+    LINE1(".line1"),
+    LINE2(".line2"),
+    HOVER_TOGGLE(".hover.toggle"),
+    HOVER_MORE_PLAYERS(".hover.hasMoreOnline"),
+    HOVER_LINES(".hover.lines"),
+    ICONS_FOLDER(".icons.folder"),
+    ICONS_ICON(".icons.icon"),
+    PROTOCOL_TOGGLE(".protocol.toggle"),
+    PROTOCOL_MODIFIER(".protocol.modifier"),
+    PROTOCOL_MESSAGE(".protocol.message"),
+    PLAYERS_MAX_TOGGLE(".players.max.toggle"),
+    PLAYERS_MAX_TYPE(".players.max.type"),
+    PLAYERS_MAX_VALUES(".players.max.values"),
+    PLAYERS_MAX_SINGLE_VALUE(".players.max.single-value"),
+    PLAYERS_ONLINE_TOGGLE(".players.online.toggle"),
+    PLAYERS_ONLINE_TYPE(".players.online.type"),
+    PLAYERS_ONLINE_VALUES(".players.online.values"),
+    PLAYERS_ONLINE_SINGLE_VALUE(".players.online.single-value");
+
+    private final String path;
+
+    MotdSettings(String path){
+        this.path = path;
+    }
+
+    @Override
+    public String getPath() {
+        return path;
+    }
 
     public static MotdSettings getValuePath(MotdPlayersMode mode,boolean isMaxPlayerPath) {
         if(isMaxPlayerPath) {
