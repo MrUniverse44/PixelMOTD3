@@ -6,6 +6,7 @@ import dev.mruniverse.pixelmotd.global.enums.*;
 import dev.mruniverse.pixelmotd.global.iridiumcolorapi.IridiumColorAPI;
 import dev.mruniverse.pixelmotd.global.shared.SpigotExtras;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.spigot.utils.PlaceholderParser;
 import org.bukkit.ChatColor;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.util.CachedServerIcon;
@@ -98,6 +99,9 @@ public class PingBuilder {
             }catch (Throwable ignored) {
                 completed = ChatColor.translateAlternateColorCodes('&',extras.getVariables(line1,online,max)) + "\n" + ChatColor.translateAlternateColorCodes('&',extras.getVariables(line2,online,max));
             }
+        }
+        if(plugin.hasPAPI()) {
+            completed = PlaceholderParser.parse(plugin.getStorage().getLogs(),completed);
         }
 
         ping.setMotd(completed);

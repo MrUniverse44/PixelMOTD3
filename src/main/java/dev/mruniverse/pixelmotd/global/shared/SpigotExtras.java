@@ -33,9 +33,6 @@ public class SpigotExtras implements Extras {
 
     @Override
     public String getVariables(String message,int customOnline,int customMax) {
-        if(plugin.hasPAPI()) {
-            message = PlaceholderParser.parse(plugin.getStorage().getLogs(),message);
-        }
         return getWorlds(message).replace("%online%","" + Bukkit.getOnlinePlayers().size())
                 .replace("%max%","" + max)
                 .replace("%fake_online%","" + customOnline)
