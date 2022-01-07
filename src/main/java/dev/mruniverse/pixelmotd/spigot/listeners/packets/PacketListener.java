@@ -7,12 +7,12 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
 import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.GLogger;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
 import dev.mruniverse.pixelmotd.global.Ping;
 import dev.mruniverse.pixelmotd.global.Priority;
+import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.global.enums.MotdType;
+import dev.mruniverse.pixelmotd.global.enums.Type;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
 
 public class PacketListener extends PacketAdapter implements Ping {
 
@@ -68,7 +68,7 @@ public class PacketListener extends PacketAdapter implements Ping {
                 pingBuilder.execute(MotdType.WHITELIST_HEX,ping,event.getPlayer());
                 return;
             }
-            pingBuilder.execute(MotdType.WHITELIST,ping,event.getPlayer());
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED),ping,event.getPlayer());
             return;
         }
 
@@ -80,7 +80,7 @@ public class PacketListener extends PacketAdapter implements Ping {
                     pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
                     return;
                 }
-                pingBuilder.execute(MotdType.NORMAL,ping,event.getPlayer());
+                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping,event.getPlayer());
             }
             return;
         }
@@ -92,7 +92,7 @@ public class PacketListener extends PacketAdapter implements Ping {
                     pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
                     return;
                 }
-                pingBuilder.execute(MotdType.NORMAL,ping,event.getPlayer());
+                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping,event.getPlayer());
             }
 
             return;
@@ -101,7 +101,7 @@ public class PacketListener extends PacketAdapter implements Ping {
         if(protocol >= 735) {
             pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
         } else {
-            pingBuilder.execute(MotdType.NORMAL, ping, event.getPlayer());
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, event.getPlayer());
         }
     }
 

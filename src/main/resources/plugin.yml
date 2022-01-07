@@ -1,7 +1,7 @@
 name: PixelMOTD
 version: ${project.version}
 main: dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder
-softdepend: [ProtocolLib, ViaVersion]
+softdepend: [ProtocolLib, ViaVersion, PlaceholderAPI]
 authors: [ MrUniverse44 ]
 description: Simple MOTD System plugin
 commands:

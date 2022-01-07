@@ -1,10 +1,10 @@
 package dev.mruniverse.pixelmotd.spigot.listeners;
 
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
 import dev.mruniverse.pixelmotd.global.Ping;
 import dev.mruniverse.pixelmotd.global.Priority;
+import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.global.enums.Type;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,7 +18,7 @@ public class PingListener implements Listener, Ping {
 
     private boolean isWhitelisted;
 
-    public PingListener(PixelMOTDBuilder plugin, Priority priority) {
+    public PingListener(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
         this.pingBuilder = new PingBuilder(plugin);
         plugin.getStorage().getLogs().info("Custom Priority Don't Affect without ProtocolLIB");
@@ -40,10 +40,10 @@ public class PingListener implements Listener, Ping {
     public void onMotd(ServerListPingEvent event) {
 
         if(isWhitelisted) {
-            pingBuilder.execute(MotdType.WHITELIST,event);
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED),event);
             return;
         }
-        pingBuilder.execute(MotdType.NORMAL,event);
+        pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),event);
     }
 
     @Override

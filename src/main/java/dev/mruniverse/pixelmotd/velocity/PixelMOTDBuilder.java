@@ -59,7 +59,7 @@ public class PixelMOTDBuilder {
         storage.setInputManager(new VelocityInput(this));
         storage.setLogs(new GuardianVelocityLogger(server,"PixelMOTD", "dev.mruniverse.pixelmotd."));
         storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.VELOCITY,dataDirectory.toFile(),storage.getInputManager()));
-
+        storage.updatePriority();
         configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));
 
         if(configVersion.isUpdated()) {

@@ -255,7 +255,7 @@ public class BungeeExtras implements Extras {
     }
 
     public Date getEventDate(Control control,String eventName) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat(control.getString("pattern","MM/dd/yy HH:mm:ss"));
         format.setTimeZone(TimeZone.getTimeZone(control.getString("events." + eventName + ".TimeZone")));
         return format.parse(control.getString("events." + eventName + ".eventDate"));
     }

@@ -5,6 +5,7 @@ import dev.mruniverse.pixelmotd.global.Extras;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.enums.MotdEventFormat;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.spigot.utils.PlaceholderParser;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -32,6 +33,9 @@ public class SpigotExtras implements Extras {
 
     @Override
     public String getVariables(String message,int customOnline,int customMax) {
+        if(plugin.hasPAPI()) {
+            message = PlaceholderParser.parse(plugin.getStorage().getLogs(),message);
+        }
         return getWorlds(message).replace("%online%","" + Bukkit.getOnlinePlayers().size())
                 .replace("%max%","" + max)
                 .replace("%fake_online%","" + customOnline)
@@ -110,11 +114,10 @@ public class SpigotExtras implements Extras {
 
     @Override
     public String getEvents(String message) {
-        Control events = plugin.getStorage().getFiles().getControl(GuardianFiles.EVENTS);
-        if(events.getStatus("events-toggle")) {
-            if(message.contains("%event_")) {
-                Date CurrentDate;
-                CurrentDate = new Date();
+        if(message.contains("%event_")) {
+            Control events = plugin.getStorage().getFiles().getControl(GuardianFiles.EVENTS);
+            if(events.getStatus("events-toggle")) {
+                Date CurrentDate = new Date();
                 for (String event : events.getContent("events", false)) {
                     try {
                         String timeLeft;
@@ -255,7 +258,7 @@ public class SpigotExtras implements Extras {
     }
 
     public Date getEventDate(Control control,String eventName) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat(control.getString("pattern","MM/dd/yy HH:mm:ss"));
         format.setTimeZone(TimeZone.getTimeZone(control.getString("events." + eventName + ".TimeZone")));
         return format.parse(control.getString("events." + eventName + ".eventDate"));
     }

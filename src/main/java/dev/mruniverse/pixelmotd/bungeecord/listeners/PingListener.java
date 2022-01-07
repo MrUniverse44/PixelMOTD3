@@ -5,6 +5,7 @@ import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.Ping;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.global.enums.MotdType;
+import dev.mruniverse.pixelmotd.global.enums.Type;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.ProxyPingEvent;
@@ -67,7 +68,7 @@ public class PingListener implements Listener,Ping {
                 pingBuilder.execute(MotdType.WHITELIST_HEX,ping,protocol);
                 return;
             }
-            pingBuilder.execute(MotdType.WHITELIST,ping,protocol);
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED), ping,protocol);
             return;
         }
         if(!hasOutdatedClient && !hasOutdatedServer || protocol >= MIN_PROTOCOL && protocol <= MAX_PROTOCOL) {
@@ -75,7 +76,7 @@ public class PingListener implements Listener,Ping {
                 pingBuilder.execute(MotdType.NORMAL_HEX,ping,protocol);
                 return;
             }
-            pingBuilder.execute(MotdType.NORMAL,ping,protocol);
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping,protocol);
             return;
         }
         if(MAX_PROTOCOL < protocol && hasOutdatedServer) {

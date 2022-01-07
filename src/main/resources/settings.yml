@@ -5,7 +5,7 @@
 #   | |   | |>  <  __/ | |  | | |__| | | |  | |__| |
 #   |_|   |_/_/\_\___|_|_|  |_|\____/  |_|  |_____/
 #
-#   Using version 9.2.1-SNAPSHOT
+#   Using version 9.2.2-SNAPSHOT
 #   Author: MrUniverse44
 #   SpigotMC Link: https://www.spigotmc.org/resources/37177/
 #
@@ -16,8 +16,13 @@ settings:
   # - MineDown: https://github.com/Phoenix616/MineDown/
   # - IridiumColorAPI: https://github.com/Iridium-Development/IridiumColorAPI
   hex-system-process: IRIDIUMCOLORAPI
+  # This motd will appear when:
+  #   - You don't have installed ProtocolLib
+  #   - The player is running in a version before 1.16
+  # values: DEFAULT, HEX
+  default-priority-motd: "DEFAULT"
   # File Config Version, this prevents issues
-  config-version: 2
+  config-version: 3
   # Enable Check update when the plugin load
   update-check: true
   # Auto Download Updates
@@ -31,6 +36,8 @@ settings:
   # Plugin language file, if you want to add your custom lang file you need put the name ("messages_<code>.yml") and in the language you put the code, example:
   # messages_en.yml | code: en | language: en
   # messages_es.yml | code: es | language: es
+  # messages_jp.yml | code: jp | language: jp
+  # messages_pl.yml | code: pl | language: pl
   language: en
   # This option is only for bungeecord!
   # Don't work in spigot version.

@@ -6,7 +6,8 @@ public enum PluginVersion implements Config {
     OLDER(0),
     V9_1_0(1),
     V9_2_0(2),
-    V9_2_1(2);
+    V9_2_1(2),
+    V9_2_2(3);
 
     private final int version;
 
@@ -14,7 +15,7 @@ public enum PluginVersion implements Config {
         this.version = versionID;
     }
 
-    private int code = 1;
+    private int code = 3;
 
     public static PluginVersion getFromCode(int code) {
         for(PluginVersion value : PluginVersion.values()) {

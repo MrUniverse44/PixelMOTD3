@@ -40,6 +40,7 @@ public class PixelMOTDBuilder extends Plugin {
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
         configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));
+        storage.updatePriority();
         ping = new PingListener(this);
 
         loadWhitelist();

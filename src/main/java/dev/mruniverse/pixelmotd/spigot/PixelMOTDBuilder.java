@@ -37,6 +37,8 @@ public final class PixelMOTDBuilder extends JavaPlugin {
 
     private ConfigVersion configVersion;
 
+    private boolean papi;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -46,6 +48,8 @@ public final class PixelMOTDBuilder extends JavaPlugin {
         storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.SPIGOT,getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
+        papi = getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
+        storage.updatePriority();
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
@@ -78,7 +82,7 @@ public final class PixelMOTDBuilder extends JavaPlugin {
                     ping = new PacketListener(instance, listenerPriority);
                 }
                 if (!hasProtocol) {
-                    ping = new PingListener(instance, listenerPriority);
+                    ping = new PingListener(instance);
                     storage.getLogs().info("ProtocolAPI don't find ProtocolLIB in the server.");
                     storage.getLogs().info("--------------------------------------------------------------");
                     storage.getLogs().info("The outdatedClient and outdatedServer motd will not work.");
@@ -96,6 +100,10 @@ public final class PixelMOTDBuilder extends JavaPlugin {
 
     public static PixelMOTDBuilder getInstance() {
         return instance;
+    }
+
+    public boolean hasPAPI() {
+        return papi;
     }
 
     public Storage getStorage() {

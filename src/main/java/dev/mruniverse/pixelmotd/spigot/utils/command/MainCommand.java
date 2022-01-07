@@ -61,13 +61,13 @@ public class MainCommand implements CommandExecutor {
                 sendMessage(sender," ");
                 sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
                 sendMessage(sender,"&8Created by MrUniverse44 w/ help from Sebastnchan & SUPREMObenjamin");
-                if(hasPermission(sender,"pmotd.admin.help",false)) sendMessage(sender,cmdPrefix + " admin &8- &7Admin commands");
+                if(hasPermission(sender,"pmotd.admin.help",false) || hasPermission(sender,"pmotd.admin.help.*",false)) sendMessage(sender,cmdPrefix + " admin &8- &7Admin commands");
                 sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
                 return true;
             }
             if (args[0].equalsIgnoreCase("admin")) {
                 if(args.length == 1 || args[1].equalsIgnoreCase("1")) {
-                    if (hasPermission(sender, "pmotd.admin.help.game", true)) {
+                    if (hasPermission(sender, "pmotd.admin.help", true)) {
                         sendMessage(sender," ");
                         sendMessage(sender, "&a&l────── PIXEL MOTD ──────");
                         sendMessage(sender, cmdPrefix + " admin whitelist &8- &7Whitelist Commands.");
@@ -92,6 +92,8 @@ public class MainCommand implements CommandExecutor {
                             plugin.getPing().update();
 
                             plugin.update(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS));
+
+                            plugin.getStorage().updatePriority();
 
                             plugin.getWhitelist().update(plugin);
 

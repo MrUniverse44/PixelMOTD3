@@ -5,7 +5,7 @@ import dev.mruniverse.pixelmotd.global.enums.PluginVersion;
 
 public class ConfigVersion {
 
-    public static int CURRENT_CODE = 2;
+    public static int CURRENT_CODE = 3;
 
     private PluginVersion currentVersion;
 
