@@ -30,7 +30,10 @@ public class PingBuilder {
         load();
     }
 
-    public void update() { load(); }
+    public void update() {
+        load();
+        extras.update();
+    }
 
     private void load() {
         control = plugin.getStorage().getFiles().getControl(GuardianFiles.MOTDS);

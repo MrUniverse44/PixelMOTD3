@@ -33,7 +33,10 @@ public class PingBuilder {
         load();
     }
 
-    public void update() { load(); }
+    public void update() {
+        load();
+        extras.update();
+    }
 
     private void load() {
         playerSystem = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.player-system.toggle",true);

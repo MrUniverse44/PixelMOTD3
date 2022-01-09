@@ -67,6 +67,10 @@ public class VelocityExtras implements Extras {
         return array;
     }
 
+    public void update() {
+        //TODO
+    }
+
     private String replaceOnlineVariable(String text) {
         Matcher matcher = varRegex.matcher(text);
         List<? extends Player> players = new ArrayList<>(plugin.getServer().getAllPlayers());
