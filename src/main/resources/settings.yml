@@ -50,7 +50,7 @@ settings:
       online: 10
       offline: 10
       timeout: 500
-  # Customize your event priority level, priorities: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST (This option don't work on BungeeCord)
+  # Customize your event priority level, priorities: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST, Now on bungeecord!
   event-priority: HIGH
   # Customize your event priority level for blacklist & whitelist check: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST
   extras-event-priority: HIGH

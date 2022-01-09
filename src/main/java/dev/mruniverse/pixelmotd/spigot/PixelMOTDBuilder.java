@@ -54,10 +54,13 @@ public final class PixelMOTDBuilder extends JavaPlugin {
             @Override
             public void run() {
                 Metrics bukkitMetrics = new Metrics(instance, 8509);
-                configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));
+                Control settings = storage.getFiles().getControl(GuardianFiles.SETTINGS);
+                configVersion = new ConfigVersion(settings);
                 storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
                 boolean hasProtocol = getServer().getPluginManager().isPluginEnabled("ProtocolLib");
-                String priority = storage.getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.extras-event-priority", "HIGH");
+                String priority = settings.getString("settings.extras-event-priority", "HIGH");
+                String event = settings.getString("settings.event-priority", "HIGH");
+
                 if(configVersion.isUpdated()) {
                     storage.getLogs().info("Your configuration is updated!");
                 } else {
@@ -66,8 +69,8 @@ public final class PixelMOTDBuilder extends JavaPlugin {
                 }
                 abstractWhitelistListener = new ListenerBuilder(instance);
 
-                if(storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.update-check")) {
-                    if (storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.auto-download-updates")) {
+                if(settings.getStatus("settings.update-check",true)) {
+                    if (settings.getStatus("settings.auto-download-updates",true)) {
                         new Updater(storage.getLogs(), getDescription().getVersion(), 37177, getDataFolder(), Updater.UpdateType.CHECK_DOWNLOAD);
                     } else {
                         new Updater(storage.getLogs(), getDescription().getVersion(), 37177, getDataFolder(), Updater.UpdateType.VERSION_CHECK);
@@ -76,10 +79,11 @@ public final class PixelMOTDBuilder extends JavaPlugin {
                 }
 
                 Priority listenerPriority = Priority.getFromText(priority);
+                Priority eventPriority = Priority.getFromText(event);
                 if (hasProtocol) {
                     externalLib = new ProtocolLIB();
                     storage.getLogs().info("ProtocolAPI will use ProtocolLIB to get the protocol version of the player.");
-                    ping = new PacketListener(instance, listenerPriority);
+                    ping = new PacketListener(instance, eventPriority);
                 }
                 if (!hasProtocol) {
                     ping = new PingListener(instance);

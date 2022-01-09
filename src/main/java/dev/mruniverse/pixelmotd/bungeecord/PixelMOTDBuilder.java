@@ -1,6 +1,6 @@
 package dev.mruniverse.pixelmotd.bungeecord;
 
-import dev.mruniverse.pixelmotd.bungeecord.listeners.PingListener;
+import dev.mruniverse.pixelmotd.bungeecord.listeners.ping.*;
 import dev.mruniverse.pixelmotd.bungeecord.listeners.whitelist.AbstractWhitelistListener;
 import dev.mruniverse.pixelmotd.bungeecord.listeners.whitelist.type.*;
 import dev.mruniverse.pixelmotd.bungeecord.storage.Storage;
@@ -39,16 +39,39 @@ public class PixelMOTDBuilder extends Plugin {
         storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.BUNGEECORD,getDataFolder(),storage.getInputManager()));
         storage.loadCommand("pmotd");
         storage.loadCommand("pixelmotd");
-        configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));
-        storage.updatePriority();
-        ping = new PingListener(this);
 
-        loadWhitelist();
+        Control settings = storage.getFiles().getControl(GuardianFiles.SETTINGS);
+        configVersion = new ConfigVersion(settings);
+        storage.updatePriority();
+
+        Priority listener = Priority.getFromText(settings.getString("settings.event-priority", "HIGH"));
+        ping = new PingListenerHighest(this);
+        switch (listener) {
+            default:
+            case HIGHEST:
+                ping = new PingListenerHighest(this);
+                break;
+            case HIGH:
+                ping = new PingListenerHigh(this);
+                break;
+            case MONITOR:
+            case NORMAL:
+                ping = new PingListenerNormal(this);
+                break;
+            case LOW:
+                ping = new PingListenerLow(this);
+                break;
+            case LOWEST:
+                ping = new PingListenerLowest(this);
+                break;
+        }
+
+        loadWhitelist(settings);
 
         Metrics bukkitMetrics = new Metrics(instance, 8509);
 
-        if(storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.update-check")) {
-            if (storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.auto-download-updates")) {
+        if(settings.getStatus("settings.update-check",true)) {
+            if (settings.getStatus("settings.auto-download-updates",true)) {
                 new Updater(storage.getLogs(), getDescription().getVersion(), 37177, getDataFolder(), Updater.UpdateType.CHECK_DOWNLOAD);
             } else {
                 new Updater(storage.getLogs(), getDescription().getVersion(), 37177, getDataFolder(), Updater.UpdateType.VERSION_CHECK);
@@ -63,14 +86,14 @@ public class PixelMOTDBuilder extends Plugin {
             configVersion.setWork(false);
         }
         storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
-        if(storage.getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.server-status.toggle",false)) {
+        if(settings.getStatus("settings.server-status.toggle",false)) {
             checker = new ServerStatusChecker(this);
             checker.start();
         }
     }
 
-    private void loadWhitelist() {
-        String value = storage.getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.extras-event-priority", "HIGH");
+    private void loadWhitelist(Control control) {
+        String value = control.getString("settings.extras-event-priority", "HIGH");
         Priority priority = Priority.getFromText(value);
         switch (priority) {
             case LOW:

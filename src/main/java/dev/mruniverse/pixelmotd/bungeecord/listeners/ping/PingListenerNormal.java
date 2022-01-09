@@ -1,6 +1,7 @@
-package dev.mruniverse.pixelmotd.bungeecord.listeners;
+package dev.mruniverse.pixelmotd.bungeecord.listeners.ping;
 
 import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.bungeecord.listeners.PingBuilder;
 import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.Ping;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
@@ -12,8 +13,9 @@ import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Cancellable;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import net.md_5.bungee.event.EventPriority;
 
-public class PingListener implements Listener,Ping {
+public class PingListenerNormal implements Listener, Ping {
 
     private final PixelMOTDBuilder plugin;
     private final PingBuilder pingBuilder;
@@ -26,7 +28,7 @@ public class PingListener implements Listener,Ping {
 
     private int MAX_PROTOCOL;
 
-    public PingListener(PixelMOTDBuilder plugin) {
+    public PingListenerNormal(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
         this.pingBuilder = new PingBuilder(plugin);
         plugin.getProxy().getPluginManager().registerListener(plugin, this);
@@ -51,7 +53,7 @@ public class PingListener implements Listener,Ping {
     @Override
     public void setWhitelist(boolean status) { isWhitelisted = status; }
 
-    @EventHandler(priority = 64)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPing(final ProxyPingEvent event) {
         final ServerPing ping = event.getResponse();
 
@@ -86,8 +88,5 @@ public class PingListener implements Listener,Ping {
         if(MIN_PROTOCOL > protocol && hasOutdatedClient) {
             pingBuilder.execute(MotdType.OUTDATED_CLIENT,ping,protocol);
         }
-
-
-
     }
 }
