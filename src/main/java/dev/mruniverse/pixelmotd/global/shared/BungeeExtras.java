@@ -4,6 +4,7 @@ import dev.mruniverse.pixelmotd.global.Control;
 import dev.mruniverse.pixelmotd.global.Extras;
 import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
 import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.global.enums.ListMode;
 import dev.mruniverse.pixelmotd.global.enums.MotdEventFormat;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -23,9 +24,23 @@ public class BungeeExtras implements Extras {
 
     private final Pattern varRegex = Pattern.compile("%player_([0-9]+)%");
 
+    private final Map<ListMode,List<String>> variables = new HashMap<>();
+
     public BungeeExtras(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
         this.max = plugin.getProxy().getConfigurationAdapter().getListeners().iterator().next().getMaxPlayers();
+        update();
+    }
+
+    public void update() {
+        variables.clear();
+        Control settings = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS);
+        String path = "settings.online-variables";
+        for(String key : settings.getContent(path,false)) {
+            ListMode mode = ListMode.getFromText(key,settings.getString(path + "." + key + ".mode"));
+            List<String> values = settings.getStringList(path + "." + key + ".values");
+            variables.put(mode,values);
+        }
     }
 
 
@@ -99,6 +114,19 @@ public class BungeeExtras implements Extras {
     }
 
     private String getServers(String message){
+        if(message.contains("%variable_")) {
+            for(Map.Entry<ListMode,List<String>> entry : variables.entrySet()) {
+                int online = 0;
+                switch (entry.getKey()) {
+                    case NAMES:
+                        online = getOnlineByNames(entry.getValue());
+                        break;
+                    case CONTAINS:
+                        online = getOnlineByContains(entry.getValue());
+                }
+                message = message.replace("%variable_" + entry.getKey().getKey() + "%","" + online);
+            }
+        }
         if(message.contains("%online_") || message.contains("%status_")) {
             for (ServerInfo info : plugin.getProxy().getServers().values()) {
                 message = message.replace("%online_" + info.getName() + "%", info.getPlayers().size() + "");
@@ -106,6 +134,35 @@ public class BungeeExtras implements Extras {
             }
         }
         return getEvents(message);
+    }
+
+
+    private int getOnlineByNames(List<String> values) {
+        int count = 0;
+        for(ServerInfo server : plugin.getProxy().getServers().values()) {
+            if(values.contains(server.getName())) {
+                count = count + server.getPlayers().size();
+            }
+        }
+        return count;
+    }
+
+    private int getOnlineByContains(List<String> values) {
+        int count = 0;
+        for(ServerInfo server : plugin.getProxy().getServers().values()) {
+            count = count + contain(server,values);
+        }
+        return count;
+    }
+
+    private int contain(ServerInfo server,List<String> values) {
+        int number = 0;
+        for(String value :  values) {
+            if(server.getName().contains(value)) {
+                return server.getPlayers().size();
+            }
+        }
+        return number;
     }
 
     @Override

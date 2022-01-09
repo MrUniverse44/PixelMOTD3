@@ -22,11 +22,34 @@ settings:
   # values: DEFAULT, HEX
   default-priority-motd: "DEFAULT"
   # File Config Version, this prevents issues
-  config-version: 3
+  config-version: 4
   # Enable Check update when the plugin load
   update-check: true
   # Auto Download Updates
   auto-download-updates: true
+  # Online servers w/ sub-servers system.
+  # Usage: %variable_<key>%
+  # Example: %variable_exampleName%
+  online-variables:
+    # Here you have two examples for CONTAINS mode and NAMES mode.
+    # Modes: NAMES,CONTAINS
+    exampleName:
+      # Name: Name will check the name of all servers, if your list contains the name of X servers, size of all players
+      # In these servers will be added to the online count of this variable.
+      mode: NAMES
+      values:
+        - "hub1"
+        - "hub2"
+        - "hub3"
+    exampleContains:
+      # CONTAINS (Example): You have sub-servers for SkyWars minigame, all servers contains "swmap" in the name.
+      # Example: swmap1,swmap2,swmap3,swmap4 and you want to get the online players count of these servers
+      # Including the lobby players-count (swlobby1,swlobby2). This mode will check the name of all servers
+      # with your values to get the online-size.
+      mode: CONTAINS
+      values:
+        - "swmap"
+        - "swlobby1"
   # Player Name system, usage: %player_<number>% system
   player-system:
     # Toggle this option
