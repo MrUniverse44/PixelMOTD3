@@ -11,7 +11,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class GuardianLogger implements GLogger {
     private final String hidePackage;
-    private String pluginName = "PixelMOTDBuilder";
+    private String pluginName = "PixelMOTD";
     private String containIdentifier = "mruniverse";
 
     /**

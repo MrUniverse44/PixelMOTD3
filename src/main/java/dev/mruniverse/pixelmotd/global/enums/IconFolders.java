@@ -23,10 +23,7 @@ public enum IconFolders implements Folder {
         return name;
     }
 
-    public static File getIconFolderFromText(FileStorage storage, String text,MotdType motdType,String motd) {
-        if(!text.equalsIgnoreCase("DEFAULT") && !text.equalsIgnoreCase("MAIN_FOLDER")) return storage.getIconsFolder(motdType,motd);
-        if(text.equalsIgnoreCase("DEFAULT")) return storage.getIconsFolder(motdType);
-        return storage.getMainIcons();
+    public static File fromText(FileStorage storage,MotdType motdType) {
+        return storage.getIconsFolder(motdType);
     }
-
 }

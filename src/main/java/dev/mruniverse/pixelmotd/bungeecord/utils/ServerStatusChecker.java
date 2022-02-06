@@ -6,6 +6,7 @@ import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.*;
@@ -129,7 +130,7 @@ public class ServerStatusChecker {
             socket.connect(address, pingTimeout);
             socket.close();
             return true;
-        } catch(Throwable ignored) {
+        } catch(IOException ignored) {
             return false;
         }
     }

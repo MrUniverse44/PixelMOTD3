@@ -11,7 +11,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.util.CachedServerIcon;
 
-import java.io.File;
 import java.util.List;
 
 public class PingBuilder {
@@ -24,14 +23,15 @@ public class PingBuilder {
     private Control control;
 
     public PingBuilder(PixelMOTDBuilder plugin) {
-        this.plugin = plugin;
-        this.builder = new MotdBuilder(plugin.getStorage().getLogs());
-        this.extras = new SpigotExtras(plugin);
+        this.plugin  = plugin;
+        this.builder = new MotdBuilder(plugin, plugin.getStorage().getLogs());
+        this.extras  = new SpigotExtras(plugin);
         load();
     }
 
     public void update() {
         load();
+        builder.update();
         extras.update();
     }
 
@@ -54,7 +54,7 @@ public class PingBuilder {
         String motd;
         try {
             motd = getMotd(motdType);
-        } catch (Throwable ignored) {
+        } catch (Exception ignored) {
             plugin.getStorage().getLogs().error("This file isn't updated to the latest file or the motd-path is incorrect, can't find motds for MotdType: " + motdType.getName());
             return;
         }
@@ -66,9 +66,7 @@ public class PingBuilder {
 
 
         if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
-            File motdFolder = IconFolders.getIconFolderFromText(plugin.getStorage().getFiles(), motdType.getSettings(MotdSettings.ICONS_FOLDER), motdType, motd);
-            File[] icons = motdFolder.listFiles();
-            CachedServerIcon img = builder.getIcon(icons, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)), motdFolder);
+            CachedServerIcon img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
             if(img != null) ping.setServerIcon(img);
         }
 
@@ -99,7 +97,7 @@ public class PingBuilder {
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
             try {
                 completed = IridiumColorAPI.process(extras.getVariables(line1,online,max)) + "\n" + IridiumColorAPI.process(extras.getVariables(line2,online,max));
-            }catch (Throwable ignored) {
+            }catch (Exception exception) {
                 completed = ChatColor.translateAlternateColorCodes('&',extras.getVariables(line1,online,max)) + "\n" + ChatColor.translateAlternateColorCodes('&',extras.getVariables(line2,online,max));
             }
         }

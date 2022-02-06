@@ -185,7 +185,7 @@ public class BungeeExtras implements Extras {
                         message = message.replace("%event_" + event + "_name%", events.getString("events." + event + ".eventName"))
                                 .replace("%event_" + event + "_TimeZone%", events.getString("events." + event + ".TimeZone"))
                                 .replace("%event_" + event + "_TimeLeft%", timeLeft);
-                    }catch (Throwable ignored) {
+                    }catch (Exception ignored) {
                         plugin.getStorage().getLogs().info("Can't load event info of " + event);
                     }
                 }

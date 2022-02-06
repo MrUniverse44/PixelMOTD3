@@ -13,8 +13,8 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.TextComponent;
 
-import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 public class PingBuilder {
     private final PixelMOTDBuilder plugin;
@@ -29,13 +29,14 @@ public class PingBuilder {
 
     public PingBuilder(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
-        this.builder = new MotdBuilder(plugin.getStorage().getLogs());
+        this.builder = new MotdBuilder(plugin, plugin.getStorage().getLogs());
         this.extras = new BungeeExtras(plugin);
         load();
     }
 
     public void update() {
         load();
+        builder.update();
         extras.update();
     }
 
@@ -59,7 +60,7 @@ public class PingBuilder {
         String motd;
         try {
             motd = getMotd(motdType);
-        } catch (Throwable ignored) {
+        } catch (Exception ignored) {
             plugin.getStorage().getLogs().error("This file isn't updated to the latest file or the motd-path is incorrect, can't find motds for MotdType: " + motdType.getName());
             return;
         }
@@ -69,9 +70,7 @@ public class PingBuilder {
         motdType.setMotd(motd);
 
         if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
-            File motdFolder = IconFolders.getIconFolderFromText(plugin.getStorage().getFiles(), motdType.getSettings(MotdSettings.ICONS_FOLDER), motdType, motd);
-            File[] icons = motdFolder.listFiles();
-            Favicon img = builder.getIcon(icons, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)), motdFolder);
+            Favicon img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
             if(img != null) ping.setFavicon(img);
         }
 
@@ -98,12 +97,15 @@ public class PingBuilder {
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PROTOCOL_TOGGLE))) {
-            MotdProtocol protocol = MotdProtocol.getFromText(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MODIFIER)));
-            if(protocol == MotdProtocol.ALWAYS_POSITIVE) {
-                ping.getVersion().setProtocol(code);
-            } else if (protocol == MotdProtocol.ALWAYS_NEGATIVE) {
-                ping.getVersion().setProtocol(-1);
+            MotdProtocol protocol = MotdProtocol.getFromText(
+                    control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MODIFIER)),
+                    code
+            );
+
+            if(protocol == MotdProtocol.ALWAYS_POSITIVE || protocol == MotdProtocol.ALWAYS_NEGATIVE) {
+                ping.getVersion().setProtocol(protocol.getCode());
             }
+
             String result;
             if(!motdType.isHexMotd()) {
                 result = ChatColor.translateAlternateColorCodes('&', extras.getVariables(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)), online, max));
@@ -112,6 +114,7 @@ public class PingBuilder {
             }
             ping.getVersion().setName(result);
         }
+
         TextComponent result = new TextComponent("");
         if(!motdType.isHexMotd()) {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
@@ -132,8 +135,8 @@ public class PingBuilder {
                     completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
                     result = new TextComponent(new MineDown(completed.replace('§', '&')).urlDetection(false).toComponent());
                 }
-            }catch (Throwable throwable) {
-                plugin.getStorage().getLogs().error(throwable);
+            }catch (Exception exception) {
+                plugin.getStorage().getLogs().error(exception);
                 completed = ChatColor.translateAlternateColorCodes('&',extras.getVariables(line1,online,max)) + "\n" + ChatColor.translateAlternateColorCodes('&',extras.getVariables(line2,online,max));
                 result.addExtra(completed);
             }
@@ -146,21 +149,23 @@ public class PingBuilder {
     }
 
     public ServerPing.PlayerInfo[] getHover(MotdType motdType, int online,int max) {
-        int ids = 0;
         ServerPing.PlayerInfo[] hoverToShow = new ServerPing.PlayerInfo[0];
         List<String> lines;
         if(playerSystem) {
-            lines = extras.getConvertedLines(control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)),control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)));
+            lines = extras.getConvertedLines(
+                    control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)),
+                    control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS))
+            );
         } else {
             lines = control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
         }
-        for(String line : lines) {
-            try {
-                hoverToShow = addHoverLine(hoverToShow, new ServerPing.PlayerInfo(extras.getVariables(line,online,max), String.valueOf(ids)));
-            } catch (Throwable ignored) {
-                plugin.getStorage().getLogs().info("Can't show the hover, please check if everything is correct in your motd config.");
+        try {
+            final UUID uuid = new UUID(0,0);
+            for (String line : lines) {
+                hoverToShow = addHoverLine(hoverToShow, new ServerPing.PlayerInfo(extras.getVariables(line, online, max), uuid));
             }
-            ids++;
+        }catch(Exception exception) {
+            plugin.getStorage().getLogs().info("Can't show the hover, please check if everything is correct in your motd config.");
         }
         return hoverToShow;
     }

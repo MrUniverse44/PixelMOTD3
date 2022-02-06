@@ -30,12 +30,16 @@ public class PacketPingBuilder {
 
     public PacketPingBuilder(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
-        this.builder = new PacketMotdBuilder(plugin.getStorage().getLogs());
+        this.builder = new PacketMotdBuilder(plugin, plugin.getStorage().getLogs());
         this.extras = new SpigotExtras(plugin);
         load();
     }
 
-    public void update() { load(); }
+    public void update() {
+        builder.update();
+        extras.update();
+        load();
+    }
 
     private void load() {
         playerSystem = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.player-system.toggle",true);
@@ -47,17 +51,15 @@ public class PacketPingBuilder {
         return motds.get(control.getRandom().nextInt(motds.size()));
     }
 
-    public void execute(MotdType motdType, WrappedServerPing ping,final Player player) {
+    public void execute(MotdType motdType, WrappedServerPing ping,int code) {
         String motd = getMotd(motdType);
-        String line1,line2,completed;
-        int online,max;
+        String line1, line2, completed;
+        int online, max;
 
         motdType.setMotd(motd);
 
         if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
-            File motdFolder = IconFolders.getIconFolderFromText(plugin.getStorage().getFiles(), motdType.getSettings(MotdSettings.ICONS_FOLDER), motdType, motd);
-            File[] icons = motdFolder.listFiles();
-            WrappedServerPing.CompressedImage img = builder.getIcon(icons, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)), motdFolder);
+            WrappedServerPing.CompressedImage img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
             if(img != null) ping.setFavicon(img);
         }
 
@@ -84,9 +86,13 @@ public class PacketPingBuilder {
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PROTOCOL_TOGGLE))) {
-            MotdProtocol protocol = MotdProtocol.getFromText(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MODIFIER)));
+            MotdProtocol protocol = MotdProtocol.getFromText(
+                    control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MODIFIER)),
+                    code
+            );
+
             if(protocol == MotdProtocol.ALWAYS_POSITIVE) {
-                ping.setVersionProtocol(ProtocolLibrary.getProtocolManager().getProtocolVersion(player));
+                ping.setVersionProtocol(code);
             } else if (protocol == MotdProtocol.ALWAYS_NEGATIVE) {
                 ping.setVersionProtocol(-1);
             }
@@ -108,7 +114,7 @@ public class PacketPingBuilder {
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
             try {
                 completed = IridiumColorAPI.process(extras.getVariables(line1,online,max)) + "\n" + IridiumColorAPI.process(extras.getVariables(line2,online,max));
-            }catch (Throwable ignored) {
+            }catch (Exception ignored) {
                 completed = ChatColor.translateAlternateColorCodes('&',extras.getVariables(line1,online,max)) + "\n" + ChatColor.translateAlternateColorCodes('&',extras.getVariables(line2,online,max));
             }
         }

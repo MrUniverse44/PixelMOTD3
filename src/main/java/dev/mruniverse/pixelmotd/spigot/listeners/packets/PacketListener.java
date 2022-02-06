@@ -65,43 +65,43 @@ public class PacketListener extends PacketAdapter implements Ping {
 
         if(isWhitelisted) {
             if(protocol >= 735) {
-                pingBuilder.execute(MotdType.WHITELIST_HEX,ping,event.getPlayer());
+                pingBuilder.execute(MotdType.WHITELIST_HEX,ping, protocol);
                 return;
             }
-            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED),ping,event.getPlayer());
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED),ping, protocol);
             return;
         }
 
         if(MAX_PROTOCOL < protocol) {
             if(hasOutdatedServer) {
-                pingBuilder.execute(MotdType.OUTDATED_SERVER,ping,event.getPlayer());
+                pingBuilder.execute(MotdType.OUTDATED_SERVER,ping, protocol);
             } else {
                 if(protocol >= 735) {
-                    pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
+                    pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
                     return;
                 }
-                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping,event.getPlayer());
+                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping, protocol);
             }
             return;
         }
         if(MIN_PROTOCOL > protocol) {
             if(hasOutdatedClient) {
-                pingBuilder.execute(MotdType.OUTDATED_CLIENT, ping, event.getPlayer());
+                pingBuilder.execute(MotdType.OUTDATED_CLIENT, ping, protocol);
             } else {
                 if(protocol >= 735) {
-                    pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
+                    pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
                     return;
                 }
-                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping,event.getPlayer());
+                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping, protocol);
             }
 
             return;
         }
 
         if(protocol >= 735) {
-            pingBuilder.execute(MotdType.NORMAL_HEX,ping,event.getPlayer());
+            pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
         } else {
-            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, event.getPlayer());
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, protocol);
         }
     }
 

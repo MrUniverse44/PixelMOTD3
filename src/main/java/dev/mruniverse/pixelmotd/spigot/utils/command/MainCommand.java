@@ -97,10 +97,10 @@ public class MainCommand implements CommandExecutor {
 
                             plugin.getWhitelist().update(plugin);
 
-                        }catch (Throwable throwable) {
+                        }catch (Exception exception) {
                             plugin.getStorage().getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");
                             plugin.getStorage().getLogs().error("If you are sure than this isn't your error, please contact the developer.");
-                            plugin.getStorage().getLogs().error(throwable);
+                            plugin.getStorage().getLogs().error(exception);
                         }
                         String reload = plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.reload","&aThe plugin was reloaded correctly in <ms>ms.");
                         reload = reload.replace("<ms>", (System.currentTimeMillis() - timeMS) + "");
@@ -122,8 +122,8 @@ public class MainCommand implements CommandExecutor {
                 }
             }
             return true;
-        } catch (Throwable throwable) {
-            plugin.getStorage().getLogs().error(throwable);
+        } catch (Exception exception) {
+            plugin.getStorage().getLogs().error(exception);
         }
         return true;
     }

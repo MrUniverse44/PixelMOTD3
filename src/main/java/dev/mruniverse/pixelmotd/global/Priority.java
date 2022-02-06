@@ -11,7 +11,7 @@ public enum Priority {
     public static Priority getFromText(String text) {
         try {
             return Priority.valueOf(text.toUpperCase());
-        }catch (Throwable ignored) {
+        }catch (IllegalArgumentException ignored) {
             return Priority.HIGH;
         }
     }

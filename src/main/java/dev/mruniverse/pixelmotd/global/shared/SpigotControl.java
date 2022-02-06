@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -77,9 +78,9 @@ public class SpigotControl implements Control {
     public void save() {
         try {
             configuration.save(file);
-        }catch (Throwable throwable) {
+        }catch (IOException exception) {
             logs.error("Can't save file: " + file.getName());
-            logs.error(throwable);
+            logs.error(exception);
         }
     }
 
@@ -87,9 +88,9 @@ public class SpigotControl implements Control {
     public void reload() {
         try {
             configuration = YamlConfiguration.loadConfiguration(file);
-        }catch (Throwable throwable) {
+        }catch (IllegalArgumentException exception) {
             logs.error("Can't reload file: " + file.getName());
-            logs.error(throwable);
+            logs.error(exception);
         }
     }
 
@@ -108,9 +109,9 @@ public class SpigotControl implements Control {
                 if(in != null) {
                     Files.copy(in, fileToSave.toPath());
                 }
-            } catch (Throwable throwable) {
-                logs.error(String.format("A error occurred while copying the config %s to the plugin data folder. Error: %s", fileToSave.getName(), throwable));
-                logs.error(throwable);
+            } catch (IOException exception) {
+                logs.error(String.format("A error occurred while copying the config %s to the plugin data folder. Error: %s", fileToSave.getName(), exception));
+                logs.error(exception);
             }
         }
     }
@@ -123,9 +124,9 @@ public class SpigotControl implements Control {
         FileConfiguration cnf = null;
         try {
             cnf = YamlConfiguration.loadConfiguration(file);
-        } catch (Throwable throwable) {
+        } catch (IllegalArgumentException exception) {
             logs.error("Can't load: " + file.getName() + ".!");
-            logs.error(throwable);
+            logs.error(exception);
         }
 
         logs.info(String.format("&7File &e%s &7has been loaded", file.getName()));

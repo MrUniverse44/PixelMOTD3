@@ -11,7 +11,6 @@ import dev.mruniverse.pixelmotd.velocity.PixelMOTDBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
-import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,13 +27,14 @@ public class PingBuilder {
 
     public PingBuilder(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
-        this.builder = new MotdBuilder(plugin.getStorage().getLogs());
+        this.builder = new MotdBuilder(plugin, plugin.getStorage().getLogs());
         this.extras = new VelocityExtras(plugin);
         load();
     }
 
     public void update() {
         load();
+        builder.update();
         extras.update();
     }
 
@@ -72,9 +72,7 @@ public class PingBuilder {
         motdType.setMotd(motd);
 
         if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
-            File motdFolder = IconFolders.getIconFolderFromText(plugin.getStorage().getFiles(), motdType.getSettings(MotdSettings.ICONS_FOLDER), motdType, motd);
-            File[] icons = motdFolder.listFiles();
-            Favicon img = builder.getIcon(icons, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)), motdFolder);
+            Favicon img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
             if(img != null) ping.favicon(img);
         }
 
@@ -101,7 +99,10 @@ public class PingBuilder {
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PROTOCOL_TOGGLE))) {
-            MotdProtocol protocol = MotdProtocol.getFromText(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MODIFIER)));
+            MotdProtocol protocol = MotdProtocol.getFromText(
+                    control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MODIFIER)),
+                    code
+            );
             String protocolName;
             int p1 = ping.getVersion().getProtocol();
 

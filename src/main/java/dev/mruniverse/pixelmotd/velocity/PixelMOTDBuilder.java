@@ -16,6 +16,7 @@ import dev.mruniverse.pixelmotd.velocity.listeners.MotdBuilder;
 
 import java.nio.file.Path;
 
+import dev.mruniverse.pixelmotd.velocity.listeners.PingListener;
 import dev.mruniverse.pixelmotd.velocity.storage.Storage;
 import dev.mruniverse.pixelmotd.velocity.utils.GuardianVelocityLogger;
 import dev.mruniverse.pixelmotd.velocity.utils.Metrics;
@@ -89,7 +90,7 @@ public class PixelMOTDBuilder {
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
 
-        server.getEventManager().register(this,new MotdBuilder(getStorage().getLogs()));
+        server.getEventManager().register(this,new PingListener(this));
 
         Metrics metrics = metricsFactory.make(this,8509);
 

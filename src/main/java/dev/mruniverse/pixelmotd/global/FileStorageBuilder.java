@@ -149,9 +149,9 @@ public class FileStorageBuilder implements FileStorage {
             files.put(GuardianFiles.MESSAGES, new SpigotControl(logs,
                     new File(translationsFolder, "messages_" + code + ".yml"))
             );
-        }catch (Throwable throwable) {
+        }catch (Exception exception) {
             logs.error("Can't find messages file with code: " + code);
-            logs.error(throwable);
+            logs.error(exception);
         }
     }
 
