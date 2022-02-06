@@ -33,16 +33,11 @@ import net.md_5.bungee.api.chat.hover.content.Content;
 import net.md_5.bungee.api.chat.hover.content.Entity;
 import net.md_5.bungee.api.chat.hover.content.Item;
 import net.md_5.bungee.api.chat.hover.content.Text;
+import org.bukkit.ChatColor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -51,7 +46,7 @@ import java.util.regex.Pattern;
 /**
  * This class offers the ability to replace placeholders with values in strings and components.
  * It also lets you define which placeholders indicators (prefix and suffix) should be used.
- * By default these are the % character.
+ * By default, these are the % character.
  */
 public class Replacer {
 
@@ -204,13 +199,33 @@ public class Replacer {
     public BaseComponent[] replaceIn(List<BaseComponent> components) {
         List<BaseComponent> returnList = new ArrayList<>();
         // String replacements:
-        for (int i = 0; i < components.size(); i++) {
-            BaseComponent component = components.get(i).duplicate();
+        for (BaseComponent baseComponent : components) {
+            BaseComponent component = baseComponent.duplicate();
             if (HAS_KEYBIND_SUPPORT && component instanceof KeybindComponent) {
                 ((KeybindComponent) component).setKeybind(replaceIn(((KeybindComponent) component).getKeybind()));
             }
             if (component instanceof TextComponent) {
-                ((TextComponent) component).setText(replaceIn(((TextComponent) component).getText()));
+                String replaced = replaceIn(((TextComponent) component).getText());
+                int sectionIndex = replaced.indexOf(ChatColor.COLOR_CHAR);
+                if (sectionIndex > -1 && replaced.length() > sectionIndex + 1
+                        && ChatColor.getByChar(replaced.charAt(sectionIndex + 1)) != null) {
+                    // replacement contain legacy code, parse to components and append them as extra
+                    BaseComponent[] replacedComponent = TextComponent.fromLegacyText(replaced);
+                    ((TextComponent) component).setText("");
+                    List<BaseComponent> extra = new ArrayList<>();
+                    Collections.addAll(extra, replacedComponent);
+                    if (component.getExtra() != null) {
+                        Collections.addAll(extra, replaceIn(component.getExtra()));
+                    }
+                    component.setExtra(extra);
+                } else {
+                    ((TextComponent) component).setText(replaced);
+                    if (component.getExtra() != null) {
+                        component.setExtra(Arrays.asList(replaceIn(component.getExtra())));
+                    }
+                }
+            } else if (component.getExtra() != null) {
+                component.setExtra(Arrays.asList(replaceIn(component.getExtra())));
             }
             if (component instanceof TranslatableComponent) {
                 ((TranslatableComponent) component).setTranslate(replaceIn(((TranslatableComponent) component).getTranslate()));
@@ -241,9 +256,6 @@ public class Replacer {
                         e.printStackTrace();
                     }
                 }
-            }
-            if (component.getExtra() != null) {
-                component.setExtra(Arrays.asList(replaceIn(component.getExtra())));
             }
 
             // Component replacements

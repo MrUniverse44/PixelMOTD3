@@ -6,8 +6,11 @@ import dev.mruniverse.pixelmotd.global.iridiumcolorapi.patterns.Pattern;
 import dev.mruniverse.pixelmotd.global.iridiumcolorapi.patterns.RainbowPattern;
 import dev.mruniverse.pixelmotd.global.iridiumcolorapi.patterns.SolidPattern;
 import net.md_5.bungee.api.ChatColor;
+import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +28,7 @@ public class IridiumColorAPI {
      */
     private static final boolean SUPPORTS_RGB = true;
 
-    private static final List<String> SPECIAL_COLORS = Arrays.asList("&l", "&n", "&o", "&k", "&m");
+    private static final List<String> SPECIAL_COLORS = Arrays.asList("&l", "&n", "&o", "&k", "&m","§l", "§n", "§o", "§k", "§m");
 
     /**
      * Cached result of all legacy colors.
@@ -106,21 +109,10 @@ public class IridiumColorAPI {
      * @since 1.0.0
      */
     @NotNull
-    public static String color(@NotNull String string, @NotNull Color start, @NotNull Color end) {
-        StringBuilder specialColors = new StringBuilder();
-        for (String color : SPECIAL_COLORS) {
-            if (string.contains(color)) {
-                specialColors.append(color);
-                string = string.replace(color, "");
-            }
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        ChatColor[] colors = createGradient(start, end, string.length());
-        String[] characters = string.split("");
-        for (int i = 0; i < string.length(); i++) {
-            stringBuilder.append(colors[i]).append(specialColors).append(characters[i]);
-        }
-        return stringBuilder.toString();
+    public static String color(@Nonnull String string, @Nonnull Color start, @Nonnull Color end) {
+
+        ChatColor[] colors = createGradient(start, end, withoutSpecialChar(string).length());
+        return apply(string, colors);
     }
 
     /**
@@ -130,22 +122,11 @@ public class IridiumColorAPI {
      * @param saturation The saturation of the rainbow colors
      * @since 1.0.3
      */
-    @NotNull
-    public static String rainbow(@NotNull String string, float saturation) {
-        StringBuilder specialColors = new StringBuilder();
-        for (String color : SPECIAL_COLORS) {
-            if (string.contains(color)) {
-                specialColors.append(color);
-                string = string.replace(color, "");
-            }
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        ChatColor[] colors = createRainbow(string.length(), saturation);
-        String[] characters = string.split("");
-        for (int i = 0; i < string.length(); i++) {
-            stringBuilder.append(colors[i]).append(specialColors).append(characters[i]);
-        }
-        return stringBuilder.toString();
+    @Nonnull
+    public static String rainbow(@Nonnull String string, float saturation) {
+
+        ChatColor[] colors = createRainbow(withoutSpecialChar(string).length(), saturation);
+        return apply(string, colors);
     }
 
     /**
@@ -155,20 +136,57 @@ public class IridiumColorAPI {
      * @since 1.0.0
      */
     @NotNull
-    public static ChatColor getColor(@NotNull String string) {
-        return SUPPORTS_RGB ? ChatColor.of(new Color(Integer.parseInt(string, 16))) : getClosestColor(new Color(Integer.parseInt(string, 16)));
+    public static ChatColor getColor(@Nonnull String string) {
+        return SUPPORTS_RGB ? ChatColor.of(new Color(Integer.parseInt(string, 16)))
+                : getClosestColor(new Color(Integer.parseInt(string, 16)));
     }
 
     /**
-     * Removes all color codes from the provided String, including IridiumColorAPI patterns.
+     * Removes all color codes from the provided String, including IridiumColorAPI
+     * patterns.
      *
-     * @param string    The String which should be stripped
-     * @return          The stripped string without color codes
+     * @param string The String which should be stripped
+     * @return The stripped string without color codes
      * @since 1.0.5
      */
     @NotNull
     public static String stripColorFormatting(@NotNull String string) {
-        return string.replaceAll("[&§][a-f0-9lnokm]|<[/]?\\w{5,8}(:[0-9A-F]{6})?>", "");
+        return string.replaceAll("<#[0-9A-F]{6}>|[&§][a-f0-9lnokm]|<[/]?[A-Z]{5,8}(:[0-9A-F]{6})?[0-9]*>", "");
+    }
+
+    @NotNull
+    private static String apply(@NotNull String source, ChatColor[] colors) {
+        StringBuilder specialColors = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
+        String[] characters = source.split("");
+        int outIndex = 0;
+        for (int i = 0; i < characters.length; i++) {
+            if (characters[i].equals("&") || characters[i].equals("§")) {
+                if (i + 1 < characters.length) {
+                    if (characters[i + 1].equals("r")) {
+                        specialColors.setLength(0);
+                    } else {
+                        specialColors.append(characters[i]);
+                        specialColors.append(characters[i + 1]);
+                    }
+                    i++;
+                } else
+                    stringBuilder.append(colors[outIndex++]).append(specialColors).append(characters[i]);
+            } else
+                stringBuilder.append(colors[outIndex++]).append(specialColors).append(characters[i]);
+        }
+        return stringBuilder.toString();
+    }
+
+    @NotNull
+    private static String withoutSpecialChar(@NotNull String source) {
+        String workingString = source;
+        for (String color : SPECIAL_COLORS) {
+            if (workingString.contains(color)) {
+                workingString = workingString.replace(color, "");
+            }
+        }
+        return workingString;
     }
 
     /**
@@ -183,6 +201,7 @@ public class IridiumColorAPI {
     private static ChatColor[] createRainbow(int step, float saturation) {
         ChatColor[] colors = new ChatColor[step];
         double colorStep = (1.00 / step);
+
         for (int i = 0; i < step; i++) {
             Color color = Color.getHSBColor((float) (colorStep * i), saturation, saturation);
             if (SUPPORTS_RGB) {
@@ -191,6 +210,7 @@ public class IridiumColorAPI {
                 colors[i] = getClosestColor(color);
             }
         }
+
         return colors;
     }
 
@@ -209,7 +229,7 @@ public class IridiumColorAPI {
         int stepR = Math.abs(start.getRed() - end.getRed()) / (step - 1);
         int stepG = Math.abs(start.getGreen() - end.getGreen()) / (step - 1);
         int stepB = Math.abs(start.getBlue() - end.getBlue()) / (step - 1);
-        int[] direction = new int[]{
+        int[] direction = new int[] {
                 start.getRed() < end.getRed() ? +1 : -1,
                 start.getGreen() < end.getGreen() ? +1 : -1,
                 start.getBlue() < end.getBlue() ? +1 : -1
@@ -223,9 +243,9 @@ public class IridiumColorAPI {
                 colors[i] = getClosestColor(color);
             }
         }
+
         return colors;
     }
-
 
     /**
      * Returns the closest legacy color from an rgb color
@@ -247,5 +267,34 @@ public class IridiumColorAPI {
         }
         return COLORS.get(nearestColor);
     }
+
+    /**
+     * Gets a simplified major version (..., 9, 10, ..., 14).
+     * In most cases, you shouldn't be using this method.
+     *
+     * @return the simplified major version.
+     * @since 1.0.0
+     */
+    private static int getVersion() {
+        String version = Bukkit.getVersion();
+        Validate.notEmpty(version, "Cannot get major Minecraft version from null or empty string");
+
+        // getVersion()
+        int index = version.lastIndexOf("MC:");
+        if (index != -1) {
+            version = version.substring(index + 4, version.length() - 1);
+        } else if (version.endsWith("SNAPSHOT")) {
+            // getBukkitVersion()
+            index = version.indexOf('-');
+            version = version.substring(0, index);
+        }
+
+        // 1.13.2, 1.14.4, etc...
+        int lastDot = version.lastIndexOf('.');
+        if (version.indexOf('.') != lastDot) version = version.substring(0, lastDot);
+
+        return Integer.parseInt(version.substring(2));
+    }
+
 
 }
