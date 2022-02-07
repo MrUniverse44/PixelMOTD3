@@ -24,7 +24,7 @@ public enum MotdSettings implements Settings {
 
     private final String path;
 
-    MotdSettings(String path){
+    MotdSettings(String path) {
         this.path = path;
     }
 
@@ -33,8 +33,8 @@ public enum MotdSettings implements Settings {
         return path;
     }
 
-    public static MotdSettings getValuePath(MotdPlayersMode mode,boolean isMaxPlayerPath) {
-        if(isMaxPlayerPath) {
+    public static MotdSettings getValuePath(MotdPlayersMode mode, boolean isMaxPlayerPath) {
+        if (isMaxPlayerPath) {
             if (mode.equals(MotdPlayersMode.VALUES)) return PLAYERS_MAX_VALUES;
             return PLAYERS_MAX_SINGLE_VALUE;
         }

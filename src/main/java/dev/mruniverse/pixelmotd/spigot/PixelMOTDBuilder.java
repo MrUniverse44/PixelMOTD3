@@ -61,7 +61,7 @@ public final class PixelMOTDBuilder extends JavaPlugin {
                 String priority = settings.getString("settings.extras-event-priority", "HIGH");
                 String event = settings.getString("settings.event-priority", "HIGH");
 
-                if(configVersion.isUpdated()) {
+                if (configVersion.isUpdated()) {
                     storage.getLogs().info("Your configuration is updated!");
                 } else {
                     storage.getLogs().info("Your configuration is outdated!");
@@ -69,7 +69,7 @@ public final class PixelMOTDBuilder extends JavaPlugin {
                 }
                 abstractWhitelistListener = new ListenerBuilder(instance);
 
-                if(settings.getStatus("settings.update-check",true)) {
+                if (settings.getStatus("settings.update-check",true)) {
                     if (settings.getStatus("settings.auto-download-updates",true)) {
                         new Updater(storage.getLogs(), getDescription().getVersion(), 37177, getDataFolder(), Updater.UpdateType.CHECK_DOWNLOAD);
                     } else {

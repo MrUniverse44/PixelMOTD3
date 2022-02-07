@@ -52,27 +52,27 @@ public class PingListener implements Ping {
 
         final int protocol = ping.getVersion().getProtocol();
 
-        if(isWhitelisted) {
-            if(protocol >= 735) {
+        if (isWhitelisted) {
+            if (protocol >= 735) {
                 pingBuilder.execute(MotdType.WHITELIST_HEX,event,protocol);
                 return;
             }
             pingBuilder.execute(MotdType.WHITELIST,event,protocol);
             return;
         }
-        if(!hasOutdatedClient && !hasOutdatedServer || protocol >= MIN_PROTOCOL && protocol <= MAX_PROTOCOL) {
-            if(protocol >= 735) {
+        if (!hasOutdatedClient && !hasOutdatedServer || protocol >= MIN_PROTOCOL && protocol <= MAX_PROTOCOL) {
+            if (protocol >= 735) {
                 pingBuilder.execute(MotdType.NORMAL_HEX,event,protocol);
                 return;
             }
             pingBuilder.execute(MotdType.NORMAL,event,protocol);
             return;
         }
-        if(MAX_PROTOCOL < protocol && hasOutdatedServer) {
+        if (MAX_PROTOCOL < protocol && hasOutdatedServer) {
             pingBuilder.execute(MotdType.OUTDATED_SERVER,event,protocol);
             return;
         }
-        if(MIN_PROTOCOL > protocol && hasOutdatedClient) {
+        if (MIN_PROTOCOL > protocol && hasOutdatedClient) {
             pingBuilder.execute(MotdType.OUTDATED_CLIENT,event,protocol);
         }
     }

@@ -20,7 +20,7 @@ public enum PluginVersion implements Config {
 
     public static PluginVersion getFromCode(int code) {
         for(PluginVersion value : PluginVersion.values()) {
-            if(code == value.getVersionID()){
+            if (code == value.getVersionID()) {
                 return value.setCode(code);
             }
         }

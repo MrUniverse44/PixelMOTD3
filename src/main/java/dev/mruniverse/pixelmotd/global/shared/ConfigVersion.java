@@ -29,10 +29,10 @@ public class ConfigVersion {
 
     private void load() {
         currentVersion = PluginVersion.getFromCode(control.getInt("settings.config-version",0));
-        if(isUpdated() && !isWork()) {
+        if (isUpdated() && !isWork()) {
             work = true;
         }
-        if(!isUpdated() && isWork()) {
+        if (!isUpdated() && isWork()) {
             work = false;
         }
     }

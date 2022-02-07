@@ -51,7 +51,7 @@ public class PixelMOTDBuilder {
 
     // connect to the server and logger
     @Inject
-    public PixelMOTDBuilder(ProxyServer server, Logger logger,Metrics.Factory metricsFactory){
+    public PixelMOTDBuilder(ProxyServer server, Logger logger,Metrics.Factory metricsFactory) {
         this.server = server;
         this.logger = logger;
         this.metricsFactory = metricsFactory;
@@ -59,11 +59,11 @@ public class PixelMOTDBuilder {
         storage = new Storage(this);
         storage.setInputManager(new VelocityInput(this));
         storage.setLogs(new GuardianVelocityLogger(server,"PixelMOTD", "dev.mruniverse.pixelmotd."));
-        storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.VELOCITY,dataDirectory.toFile(),storage.getInputManager()));
+        storage.setStorage(new FileStorageBuilder(storage.getLogs(), InitialMode.VELOCITY, dataDirectory.toFile(), storage.getInputManager()));
         storage.updatePriority();
         configVersion = new ConfigVersion(storage.getFiles().getControl(GuardianFiles.SETTINGS));
 
-        if(configVersion.isUpdated()) {
+        if (configVersion.isUpdated()) {
             storage.getLogs().info("Your configuration is updated!");
         } else {
             storage.getLogs().info("Your configuration is outdated!");

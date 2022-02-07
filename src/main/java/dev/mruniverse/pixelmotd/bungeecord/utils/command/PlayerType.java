@@ -30,7 +30,7 @@ public enum PlayerType {
     }
 
     public static PlayerType fromUnknown(String paramString) {
-        if(paramString.contains("-")) {
+        if (paramString.contains("-")) {
             return PlayerType.ID;
         }
         return PlayerType.PLAYER;

@@ -45,7 +45,7 @@ public class PingBuilder {
     }
 
     public void execute(MotdType motdType, ServerListPingEvent ping) {
-        if(!plugin.getConfigVersion().isWork()) {
+        if (!plugin.getConfigVersion().isWork()) {
             plugin.getStorage().getLogs().info("Your configuration is outdated,please check your config for missing paths, paths issues or update the plugin for new paths!");
             plugin.getStorage().getLogs().info("You can backup your plugin files and let the plugin create new files to fix the issue");
             plugin.getStorage().getLogs().info("Or apply manually file changes and update the config-version of the settings.yml to the latest config-version.");
@@ -65,21 +65,21 @@ public class PingBuilder {
 
 
 
-        if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
+        if (plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
             CachedServerIcon img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
-            if(img != null) ping.setServerIcon(img);
+            if (img != null) ping.setServerIcon(img);
         }
 
-        if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
+        if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
             MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TYPE)));
             online = mode.execute(control,motdType,MotdSettings.getValuePath(mode,false),ping.getNumPlayers());
         } else {
             online = ping.getNumPlayers();
         }
 
-        if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {
+        if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {
             MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_MAX_TYPE)));
-            if(mode != MotdPlayersMode.EQUALS) {
+            if (mode != MotdPlayersMode.EQUALS) {
                 max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), ping.getMaxPlayers());
             } else {
                 max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), online);
@@ -88,7 +88,7 @@ public class PingBuilder {
             max = ping.getMaxPlayers();
         }
 
-        if(!motdType.isHexMotd()) {
+        if (!motdType.isHexMotd()) {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getColoredString(motdType.getSettings(MotdSettings.LINE2));
             completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
@@ -101,7 +101,7 @@ public class PingBuilder {
                 completed = ChatColor.translateAlternateColorCodes('&',extras.getVariables(line1,online,max)) + "\n" + ChatColor.translateAlternateColorCodes('&',extras.getVariables(line2,online,max));
             }
         }
-        if(plugin.hasPAPI()) {
+        if (plugin.hasPAPI()) {
             completed = PlaceholderParser.parse(plugin.getStorage().getLogs(),completed);
         }
 

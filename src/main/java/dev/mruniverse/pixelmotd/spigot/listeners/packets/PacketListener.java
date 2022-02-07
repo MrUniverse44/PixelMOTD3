@@ -27,7 +27,7 @@ public class PacketListener extends PacketAdapter implements Ping {
 
     private int MAX_PROTOCOL;
 
-    public PacketListener(PixelMOTDBuilder plugin,Priority priority) {
+    public PacketListener(PixelMOTDBuilder plugin, Priority priority) {
         super(plugin,get(priority), PacketType.Status.Server.SERVER_INFO);
         this.plugin = plugin;
         this.pingBuilder = new PacketPingBuilder(plugin);
@@ -56,15 +56,15 @@ public class PacketListener extends PacketAdapter implements Ping {
     @Override
     public void onPacketSending(final PacketEvent event) {
         if (event.getPacketType() != PacketType.Status.Server.SERVER_INFO) return;
-        if(event.isCancelled()) return;
-        if(event.getPlayer() == null) return;
+        if (event.isCancelled()) return;
+        if (event.getPlayer() == null) return;
 
         final WrappedServerPing ping = event.getPacket().getServerPings().read(0);
 
         final int protocol = plugin.getProtocolVersion(event.getPlayer());
 
-        if(isWhitelisted) {
-            if(protocol >= 735) {
+        if (isWhitelisted) {
+            if (protocol >= 735) {
                 pingBuilder.execute(MotdType.WHITELIST_HEX,ping, protocol);
                 return;
             }
@@ -72,11 +72,11 @@ public class PacketListener extends PacketAdapter implements Ping {
             return;
         }
 
-        if(MAX_PROTOCOL < protocol) {
-            if(hasOutdatedServer) {
+        if (MAX_PROTOCOL < protocol) {
+            if (hasOutdatedServer) {
                 pingBuilder.execute(MotdType.OUTDATED_SERVER,ping, protocol);
             } else {
-                if(protocol >= 735) {
+                if (protocol >= 735) {
                     pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
                     return;
                 }
@@ -84,11 +84,11 @@ public class PacketListener extends PacketAdapter implements Ping {
             }
             return;
         }
-        if(MIN_PROTOCOL > protocol) {
-            if(hasOutdatedClient) {
+        if (MIN_PROTOCOL > protocol) {
+            if (hasOutdatedClient) {
                 pingBuilder.execute(MotdType.OUTDATED_CLIENT, ping, protocol);
             } else {
-                if(protocol >= 735) {
+                if (protocol >= 735) {
                     pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
                     return;
                 }
@@ -98,7 +98,7 @@ public class PacketListener extends PacketAdapter implements Ping {
             return;
         }
 
-        if(protocol >= 735) {
+        if (protocol >= 735) {
             pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
         } else {
             pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, protocol);

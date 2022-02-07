@@ -27,7 +27,7 @@ public class SpigotControl implements Control {
 
 
 
-    public SpigotControl(GLogger logs,File file,InputStream resource) {
+    public SpigotControl(GLogger logs, File file, InputStream resource) {
         this.file = file;
         this.logs = logs;
         this.resource = resource;
@@ -40,7 +40,7 @@ public class SpigotControl implements Control {
         return file;
     }
 
-    public SpigotControl(GLogger logs,File file) {
+    public SpigotControl(GLogger logs, File file) {
         this.file = file;
         this.logs = logs;
         this.resource = null;
@@ -60,7 +60,7 @@ public class SpigotControl implements Control {
     }
 
     @Override
-    public String getColoredString(String path,String def) {
+    public String getColoredString(String path, String def) {
         return ChatColor.translateAlternateColorCodes('&',configuration.getString(path,def));
     }
 
@@ -70,7 +70,7 @@ public class SpigotControl implements Control {
     }
 
     @Override
-    public String getStringWithoutColors(String path,String def) {
+    public String getStringWithoutColors(String path, String def) {
         return ChatColor.stripColor(configuration.getString(path,def));
     }
 
@@ -101,12 +101,12 @@ public class SpigotControl implements Control {
     public void saveConfig(File fileToSave) {
         if (!fileToSave.getParentFile().exists()) {
             boolean createFile = fileToSave.getParentFile().mkdirs();
-            if(createFile) logs.info("&7Folder created!!");
+            if (createFile) logs.info("&7Folder created!!");
         }
 
         if (!fileToSave.exists()) {
             try (InputStream in = resource) {
-                if(in != null) {
+                if (in != null) {
                     Files.copy(in, fileToSave.toPath());
                 }
             } catch (IOException exception) {
@@ -152,7 +152,7 @@ public class SpigotControl implements Control {
     public List<String> getContent(String path, boolean getKeys) {
         List<String> rx = new ArrayList<>();
         ConfigurationSection section = configuration.getConfigurationSection(path);
-        if(section == null) return rx;
+        if (section == null) return rx;
         rx.addAll(section.getKeys(getKeys));
         return rx;
     }

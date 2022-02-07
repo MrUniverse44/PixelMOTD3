@@ -15,7 +15,7 @@ public class Storage extends PixelMOTD {
 
     public void loadCommand(String command) {
         PluginCommand cmd = plugin.getCommand(command);
-        if(cmd == null) return;
+        if (cmd == null) return;
         cmd.setExecutor(new MainCommand(plugin,command));
     }
 }

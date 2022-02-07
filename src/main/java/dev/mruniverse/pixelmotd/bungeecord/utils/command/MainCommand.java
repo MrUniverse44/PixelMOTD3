@@ -29,22 +29,22 @@ public class MainCommand extends Command {
     }
 
     public static void sendMessage(ProxiedPlayer player, String message) {
-        if(message == null) message = "Unknown Message";
+        if (message == null) message = "Unknown Message";
         message = ChatColor.translateAlternateColorCodes('&',message);
         player.sendMessage(new TextComponent(message));
     }
     public static void sendMessage(CommandSender sender, String message) {
-        if(message == null) message = "Unknown Message";
+        if (message == null) message = "Unknown Message";
         message = ChatColor.translateAlternateColorCodes('&',message);
         sender.sendMessage(new TextComponent(message));
     }
 
     private boolean hasPermission(CommandSender sender, String permission, boolean sendMessage) {
         boolean check = true;
-        if(sender instanceof ProxiedPlayer) {
+        if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer)sender;
             check = player.hasPermission(permission);
-            if(sendMessage) {
+            if (sendMessage) {
                 String permissionMsg = plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString("messages.others.no-perms");
                 if (permissionMsg == null) permissionMsg = "&cYou need permission &7%permission% &cfor this action.";
                 if (!check)
@@ -67,12 +67,12 @@ public class MainCommand extends Command {
                 sendMessage(sender," ");
                 sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
                 sendMessage(sender,"&8Created by MrUniverse44 w/ help from Sebastnchan & SUPREMObenjamin");
-                if(hasPermission(sender,"pmotd.admin.help",false) || hasPermission(sender,"pmotd.admin.help.*",false)) sendMessage(sender,cmdPrefix + " admin &8- &7Admin commands");
+                if (hasPermission(sender,"pmotd.admin.help",false) || hasPermission(sender,"pmotd.admin.help.*",false)) sendMessage(sender,cmdPrefix + " admin &8- &7Admin commands");
                 sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
                 return;
             }
             if (args[0].equalsIgnoreCase("admin")) {
-                if(args.length == 1 || args[1].equalsIgnoreCase("1")) {
+                if (args.length == 1 || args[1].equalsIgnoreCase("1")) {
                     if (hasPermission(sender, "pmotd.admin.help", true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         sendMessage(sender," ");
                         sendMessage(sender, "&a&l────── PIXEL MOTD ──────");
@@ -85,8 +85,8 @@ public class MainCommand extends Command {
                     return;
                 }
 
-                if(args[1].equalsIgnoreCase("reload")) {
-                    if(hasPermission(sender,"pmotd.admin.use.reload",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
+                if (args[1].equalsIgnoreCase("reload")) {
+                    if (hasPermission(sender,"pmotd.admin.use.reload",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         long timeMS = System.currentTimeMillis();
                         try {
                             plugin.getStorage().getFiles().reloadFile(FileSaveMode.ALL);
@@ -115,14 +115,14 @@ public class MainCommand extends Command {
                     return;
                 }
 
-                if(args[1].equalsIgnoreCase("whitelist")) {
-                    if(hasPermission(sender,"pmotd.admin.help.whitelist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
+                if (args[1].equalsIgnoreCase("whitelist")) {
+                    if (hasPermission(sender,"pmotd.admin.help.whitelist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         whitelist.usage(sender,getArguments(args));
                     }
                     return;
                 }
-                if(args[1].equalsIgnoreCase("blacklist")) {
-                    if(hasPermission(sender,"pmotd.admin.help.blacklist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
+                if (args[1].equalsIgnoreCase("blacklist")) {
+                    if (hasPermission(sender,"pmotd.admin.help.blacklist",true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
                         blacklist.usage(sender,getArguments(args));
                     }
                 }
@@ -132,12 +132,12 @@ public class MainCommand extends Command {
         }
     }
 
-    private String[] getArguments(String[] args){
+    private String[] getArguments(String[] args) {
         String[] arguments = new String[args.length - 2];
         int argID = 0;
         int aID = 0;
         for(String arg : args) {
-            if(aID != 0 && aID != 1) {
+            if (aID != 0 && aID != 1) {
                 arguments[argID] = arg;
                 argID++;
             }

@@ -3,20 +3,20 @@ package dev.mruniverse.pixelmotd.global.enums;
 import dev.mruniverse.pixelmotd.global.Motd;
 
 public enum MotdType implements Motd {
-    NORMAL("motds.","Normal",IconFolders.NORMAL,false),
-    NORMAL_HEX("motds-hex.","Normal",IconFolders.NORMAL,true),
-    WHITELIST("whitelist.","Whitelist",IconFolders.WHITELIST,false),
-    WHITELIST_HEX("whitelist-hex.","Whitelist",IconFolders.WHITELIST,true),
-    BLACKLIST("blacklist.","Blacklist",IconFolders.GENERAL,false),
-    OUTDATED_SERVER("outdated-server.","outdatedServer",IconFolders.OUTDATED_SERVER,false),
-    OUTDATED_CLIENT("outdated-client.","outdatedClient",IconFolders.OUTDATED_CLIENT,false);
+    NORMAL("motds.","Normal", IconFolders.NORMAL, false),
+    NORMAL_HEX("motds-hex.","Normal", IconFolders.NORMAL, true),
+    WHITELIST("whitelist.","Whitelist", IconFolders.WHITELIST, false),
+    WHITELIST_HEX("whitelist-hex.","Whitelist", IconFolders.WHITELIST, true),
+    BLACKLIST("blacklist.","Blacklist", IconFolders.GENERAL, false),
+    OUTDATED_SERVER("outdated-server.","outdatedServer", IconFolders.OUTDATED_SERVER, false),
+    OUTDATED_CLIENT("outdated-client.","outdatedClient", IconFolders.OUTDATED_CLIENT, false);
 
     private final String path;
     private final String name;
     private final IconFolders folder;
     private final boolean isHexMotd;
 
-    MotdType(String path,String name,IconFolders folder,boolean isHexMotd) {
+    MotdType(String path, String name, IconFolders folder, boolean isHexMotd) {
         this.path = path;
         this.name = name;
         this.folder = folder;
@@ -42,8 +42,8 @@ public enum MotdType implements Motd {
     }
 
     @Override
-    public String getSettings(MotdSettings settings){
-        if(hasMotd) return getPath() + motd + settings.getPath();
+    public String getSettings(MotdSettings settings) {
+        if (hasMotd) return getPath() + motd + settings.getPath();
         return settings.getPath();
     }
 

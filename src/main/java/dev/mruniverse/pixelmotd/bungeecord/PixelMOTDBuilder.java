@@ -70,7 +70,7 @@ public class PixelMOTDBuilder extends Plugin {
 
         Metrics bukkitMetrics = new Metrics(instance, 8509);
 
-        if(settings.getStatus("settings.update-check",true)) {
+        if (settings.getStatus("settings.update-check",true)) {
             if (settings.getStatus("settings.auto-download-updates",true)) {
                 new Updater(storage.getLogs(), getDescription().getVersion(), 37177, getDataFolder(), Updater.UpdateType.CHECK_DOWNLOAD);
             } else {
@@ -79,14 +79,14 @@ public class PixelMOTDBuilder extends Plugin {
 
         }
 
-        if(configVersion.isUpdated()) {
+        if (configVersion.isUpdated()) {
             storage.getLogs().info("Your configuration is updated!");
         } else {
             storage.getLogs().info("Your configuration is outdated!");
             configVersion.setWork(false);
         }
         storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
-        if(settings.getStatus("settings.server-status.toggle",false)) {
+        if (settings.getStatus("settings.server-status.toggle",false)) {
             checker = new ServerStatusChecker(this);
             checker.start();
         }

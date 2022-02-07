@@ -25,7 +25,7 @@ public class SpigotExtras implements Extras {
 
     private final Pattern varRegex = Pattern.compile("%player_([0-9]+)%");
 
-    private final Map<ListMode,List<String>> variables = new HashMap<>();
+    private final Map<ListMode, List<String>> variables = new HashMap<>();
 
     public SpigotExtras(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
@@ -37,16 +37,16 @@ public class SpigotExtras implements Extras {
         variables.clear();
         Control settings = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS);
         String path = "settings.online-variables";
-        for(String key : settings.getContent(path,false)) {
-            ListMode mode = ListMode.getFromText(key,settings.getString(path + "." + key + ".mode"));
+        for(String key : settings.getContent(path, false)) {
+            ListMode mode = ListMode.getFromText(key, settings.getString(path + "." + key + ".mode"));
             List<String> values = settings.getStringList(path + "." + key + ".values");
-            variables.put(mode,values);
+            variables.put(mode, values);
         }
     }
 
 
     @Override
-    public String getVariables(String message,int customOnline,int customMax) {
+    public String getVariables(String message, int customOnline, int customMax) {
         return getWorlds(message).replace("%online%","" + Bukkit.getOnlinePlayers().size())
                 .replace("%max%","" + max)
                 .replace("%fake_online%","" + customOnline)
@@ -57,7 +57,7 @@ public class SpigotExtras implements Extras {
     }
 
     @Override
-    public List<String> getConvertedLines(List<String> lines,int more) {
+    public List<String> getConvertedLines(List<String> lines, int more) {
         List<String> array = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("<hasOnline>") || line.contains("<hasMoreOnline>")) {
@@ -65,12 +65,12 @@ public class SpigotExtras implements Extras {
                 if (line.contains("<hasOnline>") && size >= 1) {
                     line = line.replace("<hasOnline>", "");
                     String replaceOnlineVariable = replaceOnlineVariable(line);
-                    if(!replaceOnlineVariable.contains("%canNotFindX02_")) {
+                    if (!replaceOnlineVariable.contains("%canNotFindX02_")) {
                         array.add(replaceOnlineVariable);
                     }
                     continue;
                 }
-                if(size >= more) {
+                if (size >= more) {
                     more--;
                     int fixedSize = size - more;
                     line = line.replace("<hasMoreOnline>","")
@@ -87,7 +87,7 @@ public class SpigotExtras implements Extras {
     private String replaceOnlineVariable(String text) {
         Matcher matcher = varRegex.matcher(text);
         List<? extends Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
-        if(players.size() >= 1) {
+        if (players.size() >= 1) {
             while (matcher.find()) {
                 int number = Integer.parseInt(matcher.group(1));
                 if (players.size() >= number && number != 0) {
@@ -104,19 +104,19 @@ public class SpigotExtras implements Extras {
 
     private String getWhitelistAuthor() {
         Control whitelist = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
-        if(!whitelist.getString("whitelist.author").equalsIgnoreCase("CONSOLE")) {
+        if (!whitelist.getString("whitelist.author").equalsIgnoreCase("CONSOLE")) {
             return whitelist.getString("whitelist.author");
         } else {
-            if(whitelist.getStatus("whitelist.customConsoleName.toggle")) {
+            if (whitelist.getStatus("whitelist.customConsoleName.toggle")) {
                 return whitelist.getString("whitelist.customConsoleName.name");
             }
             return "Console";
         }
     }
 
-    private String getWorlds(String message){
-        if(message.contains("%variable_")) {
-            for(Map.Entry<ListMode,List<String>> entry : variables.entrySet()) {
+    private String getWorlds(String message) {
+        if (message.contains("%variable_")) {
+            for(Map.Entry<ListMode, List<String>> entry : variables.entrySet()) {
                 int online = 0;
                 switch (entry.getKey()) {
                     case NAMES:
@@ -128,7 +128,7 @@ public class SpigotExtras implements Extras {
                 message = message.replace("%variable_" + entry.getKey().getKey() + "%","" + online);
             }
         }
-        if(message.contains("%online_")) {
+        if (message.contains("%online_")) {
             for (World world : plugin.getServer().getWorlds()) {
                 message = message.replace("%online_" + world.getName() + "%", world.getPlayers().size() + "");
             }
@@ -139,7 +139,7 @@ public class SpigotExtras implements Extras {
     private int getOnlineByNames(List<String> values) {
         int count = 0;
         for(World world : Bukkit.getWorlds()) {
-            if(values.contains(world.getName())) {
+            if (values.contains(world.getName())) {
                 count = count + world.getPlayers().size();
             }
         }
@@ -149,7 +149,7 @@ public class SpigotExtras implements Extras {
     private int getOnlineByContains(List<String> values) {
         int count = 0;
         for(World world : Bukkit.getWorlds()) {
-            count = count + contain(world,values);
+            count = count + contain(world, values);
         }
         return count;
     }
@@ -157,7 +157,7 @@ public class SpigotExtras implements Extras {
     private int contain(World world,List<String> values) {
         int number = 0;
         for(String value :  values) {
-            if(world.getName().contains(value)) {
+            if (world.getName().contains(value)) {
                 return world.getPlayers().size();
             }
         }
@@ -166,9 +166,9 @@ public class SpigotExtras implements Extras {
 
     @Override
     public String getEvents(String message) {
-        if(message.contains("%event_")) {
+        if (message.contains("%event_")) {
             Control events = plugin.getStorage().getFiles().getControl(GuardianFiles.EVENTS);
-            if(events.getStatus("events-toggle")) {
+            if (events.getStatus("events-toggle")) {
                 Date CurrentDate = new Date();
                 for (String event : events.getContent("events", false)) {
                     try {
@@ -176,7 +176,7 @@ public class SpigotExtras implements Extras {
                         long difference = getEventDate(events, event).getTime() - CurrentDate.getTime();
                         MotdEventFormat format = MotdEventFormat.getFromText(events.getString("events." + event + ".format-Type"));
                         if (difference >= 0L) {
-                            timeLeft = convertTime(events,difference,format);
+                            timeLeft = convertTime(events, difference, format);
                         } else {
                             timeLeft = events.getColoredString("events." + event + ".endMessage");
                         }
@@ -221,7 +221,7 @@ public class SpigotExtras implements Extras {
                 joiner.add(seconds + "");
             }
 
-        } else if(format == MotdEventFormat.FIRST) {
+        } else if (format == MotdEventFormat.FIRST) {
             long seconds = time / 1000;
             String unit;
             int unitValue = Math.toIntExact(seconds / TimeUnit.DAYS.toSeconds(7));
@@ -275,7 +275,7 @@ public class SpigotExtras implements Extras {
 
                 joiner.add(seconds + " " + unit);
             }
-        } else if(format == MotdEventFormat.THIRD) {
+        } else if (format == MotdEventFormat.THIRD) {
             long seconds = time / 1000;
             String separator = control.getString("timer.separator");
             int unitValue = Math.toIntExact(seconds / TimeUnit.DAYS.toSeconds(7));
@@ -302,14 +302,14 @@ public class SpigotExtras implements Extras {
                 joiner.add(seconds + control.getString("timer.s"));
             }
         }
-        if(format == MotdEventFormat.SECOND) {
+        if (format == MotdEventFormat.SECOND) {
             return joiner.toString().replace(" ","");
         } else {
             return joiner.toString();
         }
     }
 
-    public Date getEventDate(Control control,String eventName) throws ParseException {
+    public Date getEventDate(Control control, String eventName) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat(control.getString("pattern","MM/dd/yy HH:mm:ss"));
         format.setTimeZone(TimeZone.getTimeZone(control.getString("events." + eventName + ".TimeZone")));
         return format.parse(control.getString("events." + eventName + ".eventDate"));

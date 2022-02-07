@@ -41,21 +41,21 @@ public class FileStorageBuilder implements FileStorage {
     private void load() {
         for(GuardianFiles guardianFiles : GuardianFiles.values()) {
             File mainFolder = dataFolder;
-            if(guardianFiles.isInDifferentFolder()) {
+            if (guardianFiles.isInDifferentFolder()) {
                 mainFolder = new File(dataFolder,guardianFiles.getFolderName());
             }
-            if(isBungee) {
+            if (isBungee) {
                 files.put(guardianFiles, new BungeeControl(logs,
                         new File(mainFolder,guardianFiles.getFileName()),
                         inputManager.getInputStream(guardianFiles.getFileName())
                 ));
             } else {
-                if(initialMode.equals(InitialMode.SPIGOT)) {
+                if (initialMode.equals(InitialMode.SPIGOT)) {
                     files.put(guardianFiles, new SpigotControl(logs,
                             new File(mainFolder, guardianFiles.getFileName()),
                             inputManager.getInputStream(guardianFiles.getFileName())
                     ));
-                } else if(initialMode.equals(InitialMode.VELOCITY)) {
+                } else if (initialMode.equals(InitialMode.VELOCITY)) {
                     files.put(guardianFiles, new VelocityControl(logs,
                             new File(mainFolder, guardianFiles.getFileName()),
                             inputManager.getInputStream(guardianFiles.getFileName())
@@ -80,7 +80,7 @@ public class FileStorageBuilder implements FileStorage {
     public File getIconsFolder(MotdType motdType, String motdName) {
         File mainFolder = folders.get(IconFolders.GENERAL);
         File iconFolder = new File(mainFolder,motdType.getName() + "-" + motdName);
-        if(!iconFolder.exists()) iconFolder.mkdir();
+        if (!iconFolder.exists()) iconFolder.mkdir();
         return iconFolder;
     }
 
@@ -88,7 +88,7 @@ public class FileStorageBuilder implements FileStorage {
         folders.put(IconFolders.GENERAL,new File(dataFolder,IconFolders.GENERAL.getName()));
         File general = folders.get(IconFolders.GENERAL);
         for(IconFolders folder : IconFolders.values()) {
-            if(folder != IconFolders.GENERAL) {
+            if (folder != IconFolders.GENERAL) {
                 folders.put(folder,new File(general,folder.getName()));
             }
         }
@@ -98,7 +98,7 @@ public class FileStorageBuilder implements FileStorage {
     @Override
     public void checkIconFolder() {
         for(File folders : folders.values()) {
-            if(!folders.exists()) folders.mkdir();
+            if (!folders.exists()) folders.mkdir();
         }
     }
 
@@ -106,8 +106,8 @@ public class FileStorageBuilder implements FileStorage {
     private void checkPluginFolders() {
         File modesFolder = new File(dataFolder,"modes");
         File translationsFolder = new File(dataFolder,"translations");
-        if(!modesFolder.exists()) modesFolder.mkdirs();
-        if(!translationsFolder.exists()) translationsFolder.mkdirs();
+        if (!modesFolder.exists()) modesFolder.mkdirs();
+        if (!translationsFolder.exists()) translationsFolder.mkdirs();
         this.translationsFolder = translationsFolder;
     }
 
@@ -125,22 +125,22 @@ public class FileStorageBuilder implements FileStorage {
     public void setMessages(String code) {
         try {
             checkPluginFolders();
-            if(code.equalsIgnoreCase("en") || code.equalsIgnoreCase("english")) {
+            if (code.equalsIgnoreCase("en") || code.equalsIgnoreCase("english")) {
                 logs.info("Plugin now is using language-file code: '" + code + "'.");
                 files.put(GuardianFiles.MESSAGES,files.get(GuardianFiles.MESSAGES_EN));
                 return;
             }
-            if(code.equalsIgnoreCase("es") || code.equalsIgnoreCase("spanish")) {
+            if (code.equalsIgnoreCase("es") || code.equalsIgnoreCase("spanish")) {
                 logs.info("Plugin now is using language-file code: '" + code + "'.");
                 files.put(GuardianFiles.MESSAGES,files.get(GuardianFiles.MESSAGES_ES));
                 return;
             }
-            if(code.equalsIgnoreCase("pl") || code.equalsIgnoreCase("polish")) {
+            if (code.equalsIgnoreCase("pl") || code.equalsIgnoreCase("polish")) {
                 logs.info("Plugin now is using language-file code: '" + code + "'.");
                 files.put(GuardianFiles.MESSAGES,files.get(GuardianFiles.MESSAGES_PL));
                 return;
             }
-            if(code.equalsIgnoreCase("jp") || code.equalsIgnoreCase("japanese")) {
+            if (code.equalsIgnoreCase("jp") || code.equalsIgnoreCase("japanese")) {
                 logs.info("Plugin now is using language-file code: '" + code + "'.");
                 files.put(GuardianFiles.MESSAGES,files.get(GuardianFiles.MESSAGES_JP));
                 return;

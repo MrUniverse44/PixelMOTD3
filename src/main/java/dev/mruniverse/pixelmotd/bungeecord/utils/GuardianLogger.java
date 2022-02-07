@@ -25,7 +25,7 @@ public class GuardianLogger implements GLogger {
     public GuardianLogger(Plugin plugin, String pluginName, String hidePackage) {
         this.hidePackage = hidePackage;
         this.plugin = plugin;
-        if(pluginName != null) this.pluginName = pluginName;
+        if (pluginName != null) this.pluginName = pluginName;
     }
 
     /**
@@ -35,11 +35,11 @@ public class GuardianLogger implements GLogger {
      * @param hidePackage hide package example: dev.mruniverse.guardianrftb.
      * @param containIdentifier when a package contain this word this package will show in Internal - StackTrace
      */
-    public GuardianLogger(Plugin plugin,String pluginName,String hidePackage, String containIdentifier) {
+    public GuardianLogger(Plugin plugin, String pluginName, String hidePackage, String containIdentifier) {
         this.hidePackage = hidePackage;
         this.plugin = plugin;
-        if(pluginName != null) this.pluginName = pluginName;
-        if(containIdentifier == null) return;
+        if (pluginName != null) this.pluginName = pluginName;
+        if (containIdentifier == null) return;
         this.containIdentifier = containIdentifier;
     }
 
@@ -64,17 +64,17 @@ public class GuardianLogger implements GLogger {
      * Send a error message to console.
      * @param throwable throwable to send.
      */
-    public void error(Throwable throwable) {
+    public void error(Exception throwable) {
         String location = throwable.getClass().getName();
         String error = throwable.getClass().getSimpleName();
         sendMessage("&f[&cERROR &7| &f" + pluginName + "] -------------------------");
         sendMessage("&f[&cERROR &7| &f" + pluginName + "] Location: " + location.replace("." + error,""));
         sendMessage("&f[&cERROR &7| &f" + pluginName + "] Error: " + error);
-        if(throwable.getStackTrace() != null) {
+        if (throwable.getStackTrace() != null) {
             sendMessage("&f[&cERROR &7| &f" + pluginName + "] Internal - StackTrace: ");
             List<StackTraceElement> other = new ArrayList<>();
             for(StackTraceElement line : throwable.getStackTrace()) {
-                if(line.toString().contains(containIdentifier)) {
+                if (line.toString().contains(containIdentifier)) {
                     sendMessage("&f[&cERROR &7| &f" + pluginName + "] (Line: " + line.getLineNumber() + ") " + line.toString().replace("(" + line.getFileName() + ":" + line.getLineNumber() + ")","").replace(hidePackage,""));
                 } else {
                     other.add(line);

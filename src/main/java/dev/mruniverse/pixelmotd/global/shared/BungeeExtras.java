@@ -24,7 +24,7 @@ public class BungeeExtras implements Extras {
 
     private final Pattern varRegex = Pattern.compile("%player_([0-9]+)%");
 
-    private final Map<ListMode,List<String>> variables = new HashMap<>();
+    private final Map<ListMode, List<String>> variables = new HashMap<>();
 
     public BungeeExtras(PixelMOTDBuilder plugin) {
         this.plugin = plugin;
@@ -64,12 +64,12 @@ public class BungeeExtras implements Extras {
                 if (line.contains("<hasOnline>") && size >= 1) {
                     line = line.replace("<hasOnline>", "");
                     String replaceOnlineVariable = replaceOnlineVariable(line);
-                    if(!replaceOnlineVariable.contains("%canNotFindX02_")) {
+                    if (!replaceOnlineVariable.contains("%canNotFindX02_")) {
                         array.add(replaceOnlineVariable);
                     }
                     continue;
                 }
-                if(size >= more) {
+                if (size >= more) {
                     more--;
                     int fixedSize = size - more;
                     line = line.replace("<hasMoreOnline>","")
@@ -86,7 +86,7 @@ public class BungeeExtras implements Extras {
     private String replaceOnlineVariable(String text) {
         Matcher matcher = varRegex.matcher(text);
         List<? extends ProxiedPlayer> players = new ArrayList<>(plugin.getProxy().getPlayers());
-        if(players.size() >= 1) {
+        if (players.size() >= 1) {
             while (matcher.find()) {
                 int number = Integer.parseInt(matcher.group(1));
                 if (players.size() >= number && number != 0) {
@@ -103,18 +103,18 @@ public class BungeeExtras implements Extras {
 
     private String getWhitelistAuthor() {
         Control whitelist = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
-        if(!whitelist.getString("whitelist.author").equalsIgnoreCase("CONSOLE")) {
+        if (!whitelist.getString("whitelist.author").equalsIgnoreCase("CONSOLE")) {
             return whitelist.getString("whitelist.author");
         } else {
-            if(whitelist.getStatus("whitelist.customConsoleName.toggle")) {
+            if (whitelist.getStatus("whitelist.customConsoleName.toggle")) {
                 return whitelist.getString("whitelist.customConsoleName.name");
             }
             return "Console";
         }
     }
 
-    private String getServers(String message){
-        if(message.contains("%variable_")) {
+    private String getServers(String message) {
+        if (message.contains("%variable_")) {
             for(Map.Entry<ListMode,List<String>> entry : variables.entrySet()) {
                 int online = 0;
                 switch (entry.getKey()) {
@@ -127,10 +127,10 @@ public class BungeeExtras implements Extras {
                 message = message.replace("%variable_" + entry.getKey().getKey() + "%","" + online);
             }
         }
-        if(message.contains("%online_") || message.contains("%status_")) {
+        if (message.contains("%online_") || message.contains("%status_")) {
             for (ServerInfo info : plugin.getProxy().getServers().values()) {
                 message = message.replace("%online_" + info.getName() + "%", info.getPlayers().size() + "");
-                if(plugin.getChecker() != null) message = message.replace("%status_" + info.getName() + "%",plugin.getChecker().getServerStatus(info.getName()));
+                if (plugin.getChecker() != null) message = message.replace("%status_" + info.getName() + "%",plugin.getChecker().getServerStatus(info.getName()));
             }
         }
         return getEvents(message);
@@ -140,7 +140,7 @@ public class BungeeExtras implements Extras {
     private int getOnlineByNames(List<String> values) {
         int count = 0;
         for(ServerInfo server : plugin.getProxy().getServers().values()) {
-            if(values.contains(server.getName())) {
+            if (values.contains(server.getName())) {
                 count = count + server.getPlayers().size();
             }
         }
@@ -158,7 +158,7 @@ public class BungeeExtras implements Extras {
     private int contain(ServerInfo server,List<String> values) {
         int number = 0;
         for(String value :  values) {
-            if(server.getName().contains(value)) {
+            if (server.getName().contains(value)) {
                 return server.getPlayers().size();
             }
         }
@@ -168,8 +168,8 @@ public class BungeeExtras implements Extras {
     @Override
     public String getEvents(String message) {
         Control events = plugin.getStorage().getFiles().getControl(GuardianFiles.EVENTS);
-        if(events.getStatus("events-toggle")) {
-            if(message.contains("%event_")) {
+        if (events.getStatus("events-toggle")) {
+            if (message.contains("%event_")) {
                 Date CurrentDate;
                 CurrentDate = new Date();
                 for (String event : events.getContent("events", false)) {
@@ -223,7 +223,7 @@ public class BungeeExtras implements Extras {
                 joiner.add(seconds + "");
             }
 
-        } else if(format == MotdEventFormat.FIRST) {
+        } else if (format == MotdEventFormat.FIRST) {
             long seconds = time / 1000;
             String unit;
             int unitValue = Math.toIntExact(seconds / TimeUnit.DAYS.toSeconds(7));
@@ -277,7 +277,7 @@ public class BungeeExtras implements Extras {
 
                 joiner.add(seconds + " " + unit);
             }
-        } else if(format == MotdEventFormat.THIRD) {
+        } else if (format == MotdEventFormat.THIRD) {
             long seconds = time / 1000;
             String separator = control.getString("timer.separator");
             int unitValue = Math.toIntExact(seconds / TimeUnit.DAYS.toSeconds(7));
@@ -304,7 +304,7 @@ public class BungeeExtras implements Extras {
                 joiner.add(seconds + control.getString("timer.s"));
             }
         }
-        if(format == MotdEventFormat.SECOND) {
+        if (format == MotdEventFormat.SECOND) {
             return joiner.toString().replace(" ","");
         } else {
             return joiner.toString();

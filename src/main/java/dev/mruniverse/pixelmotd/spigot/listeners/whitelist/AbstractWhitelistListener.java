@@ -30,12 +30,12 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
     }
 
     public void checkPlayer(PlayerLoginEvent loginEvent) {
-        if(loginEvent == null) return;
+        if (loginEvent == null) return;
         Player player = loginEvent.getPlayer();
         final String user = player.getName();
         final String uuid = player.getUniqueId().toString();
-        if(whitelist.getStatus("whitelist.global.Enabled")) {
-            if(!whitelist.getStringList("players.global.by-name").contains(user) && !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {
+        if (whitelist.getStatus("whitelist.global.Enabled")) {
+            if (!whitelist.getStringList("players.global.by-name").contains(user) && !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist.global.kick-message"));
                 loginEvent.disallow(
                         PlayerLoginEvent.Result.KICK_WHITELIST,
@@ -51,8 +51,8 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
                 return;
             }
         }
-        if(blacklist.getStatus("blacklist.global.Enabled")) {
-            if(blacklist.getStringList("players.global.by-name").contains(user) || blacklist.getStringList("players.global.by-uuid").contains(uuid)) {
+        if (blacklist.getStatus("blacklist.global.Enabled")) {
+            if (blacklist.getStringList("players.global.by-name").contains(user) || blacklist.getStringList("players.global.by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(blacklist.getStringList("blacklist.global.kick-message"));
                 loginEvent.disallow(
                         PlayerLoginEvent.Result.KICK_BANNED,
@@ -69,17 +69,17 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
     }
 
     public void checkPlayer(PlayerTeleportEvent event) {
-        if(event == null) return;
+        if (event == null) return;
         final Player player = event.getPlayer();
         final String user = player.getName();
         final String uuid = player.getUniqueId().toString();
         World actualWorld = event.getPlayer().getWorld();
-        if(event.getTo() == null) return;
+        if (event.getTo() == null) return;
         World nextWorld = event.getTo().getWorld();
-        if(nextWorld == null) nextWorld = actualWorld;
+        if (nextWorld == null) nextWorld = actualWorld;
         final String target = nextWorld.getName();
-        if(whitelist.getStatus("whitelist." + target + ".Enabled")) {
-            if(!whitelist.getStringList("players." + target + ".by-name").contains(user) && !whitelist.getStringList("players." + target + ".by-uuid").contains(uuid)) {
+        if (whitelist.getStatus("whitelist." + target + ".Enabled")) {
+            if (!whitelist.getStringList("players." + target + ".by-name").contains(user) && !whitelist.getStringList("players." + target + ".by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist." + target + ".kick-message"));
                 player.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
@@ -94,8 +94,8 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
                 return;
             }
         }
-        if(blacklist.getStatus("blacklist." + target + ".Enabled")) {
-            if(blacklist.getStringList("players." + target + ".by-name").contains(user) || blacklist.getStringList("players." + target + ".by-uuid").contains(uuid)) {
+        if (blacklist.getStatus("blacklist." + target + ".Enabled")) {
+            if (blacklist.getStringList("players." + target + ".by-name").contains(user) || blacklist.getStringList("players." + target + ".by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(blacklist.getStringList("blacklist." + target + ".kick-message"));
                 player.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',

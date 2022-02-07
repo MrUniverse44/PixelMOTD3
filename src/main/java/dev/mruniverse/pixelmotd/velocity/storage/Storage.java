@@ -10,5 +10,9 @@ public class Storage extends PixelMOTD {
         this.builder = builder;
     }
 
+    public void loadCommand(String command) {
+        //TODO
+    }
+
 
 }

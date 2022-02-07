@@ -4,7 +4,7 @@ public interface GLogger {
 
     void error(String message);
 
-    void error(Throwable throwable);
+    void error(Exception throwable);
 
     void warn(String message);
 

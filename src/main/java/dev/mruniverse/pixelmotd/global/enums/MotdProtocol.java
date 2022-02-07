@@ -25,8 +25,8 @@ public enum MotdProtocol {
     }
 
     public static MotdProtocol getFromText(String paramText,int code) {
-        if(paramText.contains("POSITIVE")) return ALWAYS_POSITIVE.setCode(code);
-        if(paramText.contains("NEGATIVE")) return ALWAYS_NEGATIVE.setCode(code);
+        if (paramText.contains("POSITIVE")) return ALWAYS_POSITIVE.setCode(code);
+        if (paramText.contains("NEGATIVE")) return ALWAYS_NEGATIVE.setCode(code);
         return DEFAULT.setCode(code);
     }
 }

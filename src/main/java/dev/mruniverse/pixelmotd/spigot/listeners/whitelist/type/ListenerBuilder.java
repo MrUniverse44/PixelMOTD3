@@ -17,11 +17,11 @@ public class ListenerBuilder extends AbstractWhitelistListener implements EventE
 
     @Override
     public void execute(@NotNull Listener listener, @NotNull Event event) {
-        if(event instanceof PlayerLoginEvent) {
+        if (event instanceof PlayerLoginEvent) {
             checkPlayer((PlayerLoginEvent)event);
             return;
         }
-        if(event instanceof PlayerTeleportEvent) {
+        if (event instanceof PlayerTeleportEvent) {
             checkPlayer((PlayerTeleportEvent)event);
         }
     }

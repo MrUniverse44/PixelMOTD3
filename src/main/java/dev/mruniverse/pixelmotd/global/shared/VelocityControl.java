@@ -24,7 +24,7 @@ public class VelocityControl implements Control {
 
 
 
-    public VelocityControl(GLogger logs,File file,InputStream resource) {
+    public VelocityControl(GLogger logs, File file, InputStream resource) {
         this.file = file;
         this.logs = logs;
         this.resource = resource;
@@ -58,7 +58,7 @@ public class VelocityControl implements Control {
     }
 
     @Override
-    public String getColoredString(String path,String def) {
+    public String getColoredString(String path, String def) {
         return LegacyComponentSerializer.builder().character('&').build().deserialize(configuration.getString(path,def)).content();
     }
 
@@ -68,7 +68,7 @@ public class VelocityControl implements Control {
     }
 
     @Override
-    public String getStringWithoutColors(String path,String def) {
+    public String getStringWithoutColors(String path, String def) {
         return configuration.getString(path,def);
     }
 
@@ -76,9 +76,9 @@ public class VelocityControl implements Control {
     public void save() {
         try {
             ConfigurationProvider.getProvider(ConfigurationProvider.Provider.YAML).save(this.configuration, this.file);
-        }catch (Throwable throwable) {
+        }catch (Exception exception) {
             logs.error("Can't save file: " + file.getName());
-            logs.error(throwable);
+            logs.error(exception);
         }
     }
 
@@ -86,9 +86,9 @@ public class VelocityControl implements Control {
     public void reload() {
         try {
             configuration = ConfigurationProvider.getProvider(ConfigurationProvider.Provider.YAML).load(file);
-        }catch (Throwable throwable) {
+        }catch (Exception exception) {
             logs.error("Can't reload file: " + file.getName());
-            logs.error(throwable);
+            logs.error(exception);
         }
     }
 
@@ -99,17 +99,17 @@ public class VelocityControl implements Control {
     public void saveConfig(File fileToSave) {
         if (!fileToSave.getParentFile().exists()) {
             boolean createFile = fileToSave.getParentFile().mkdirs();
-            if(createFile) logs.info("&7Folder created!!");
+            if (createFile) logs.info("&7Folder created!!");
         }
 
         if (!fileToSave.exists()) {
             try (InputStream in = resource) {
-                if(in != null) {
+                if (in != null) {
                     Files.copy(in, fileToSave.toPath());
                 }
-            } catch (Throwable throwable) {
-                logs.error(String.format("A error occurred while copying the config %s to the plugin data folder. Error: %s", fileToSave.getName(), throwable));
-                logs.error(throwable);
+            } catch (Exception exception) {
+                logs.error(String.format("A error occurred while copying the config %s to the plugin data folder. Error: %s", fileToSave.getName(), exception));
+                logs.error(exception);
             }
         }
     }
@@ -122,9 +122,9 @@ public class VelocityControl implements Control {
         Configuration cnf = null;
         try {
             cnf = ConfigurationProvider.getProvider(ConfigurationProvider.Provider.YAML).load(file);
-        } catch (Throwable throwable) {
+        } catch (Exception exception) {
             logs.error("Can't load: " + file.getName() + ".!");
-            logs.error(throwable);
+            logs.error(exception);
         }
 
         logs.info(String.format("&7File &e%s &7has been loaded", file.getName()));
@@ -150,7 +150,7 @@ public class VelocityControl implements Control {
     public List<String> getContent(String path, boolean getKeys) {
         List<String> rx = new ArrayList<>();
         Configuration section = configuration.getSection(path);
-        if(section == null) return rx;
+        if (section == null) return rx;
         rx.addAll(section.getKeys());
         return rx;
     }

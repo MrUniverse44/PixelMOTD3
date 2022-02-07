@@ -54,11 +54,11 @@ public class ServerStatusChecker {
         int pingOnline = control.getInt("settings.server-status.intervals.online", 10);
         int pingOffline = control.getInt("settings.server-status.intervals.offline", 10);
         pingTimeout = control.getInt("settings.server-status.intervals.timeout", 500);
-        if(pingOnline == pingOffline) {
-            if(pingOnline == 0)
+        if (pingOnline == pingOffline) {
+            if (pingOnline == 0)
                 return;
             pingTask.add(plugin.getProxy().getScheduler().schedule(plugin, () -> {
-                if(control.getStatus("settings.server-status.toggle")) {
+                if (control.getStatus("settings.server-status.toggle")) {
                     refreshStatusMap(plugin.getProxy().getServers().values());
                 } else {
                     stop();
@@ -66,18 +66,18 @@ public class ServerStatusChecker {
             }, 10, pingOnline, TimeUnit.SECONDS));
         } else {
             refreshStatusMap(plugin.getProxy().getServers().values());
-            if(pingOnline != 0) {
+            if (pingOnline != 0) {
                 pingTask.add(plugin.getProxy().getScheduler().schedule(plugin, () -> {
-                    if(control.getStatus("settings.server-status.toggle")) {
+                    if (control.getStatus("settings.server-status.toggle")) {
                         refreshStatusMap(getOnlineServers());
                     } else {
                         stop();
                     }
                 }, 10, pingOnline, TimeUnit.SECONDS));
             }
-            if(pingOffline != 0) {
+            if (pingOffline != 0) {
                 pingTask.add(plugin.getProxy().getScheduler().schedule(plugin, () -> {
-                    if(control.getStatus("settings.server-status.toggle")) {
+                    if (control.getStatus("settings.server-status.toggle")) {
                         refreshStatusMap(getOfflineServers());
                     } else {
                         stop();
@@ -90,9 +90,9 @@ public class ServerStatusChecker {
     public Collection<ServerInfo> getOnlineServers() {
         List<ServerInfo> onlineServers = new ArrayList<>();
         for(Map.Entry<String, Boolean> entry : getStatusMap().entrySet()) {
-            if(entry.getValue() != null && entry.getValue()) {
+            if (entry.getValue() != null && entry.getValue()) {
                 ServerInfo server = plugin.getProxy().getServerInfo(entry.getKey());
-                if(server != null) {
+                if (server != null) {
                     onlineServers.add(server);
                 }
             }
@@ -103,9 +103,9 @@ public class ServerStatusChecker {
     public Collection<ServerInfo> getOfflineServers() {
         List<ServerInfo> offlineServers = new ArrayList<>();
         for(Map.Entry<String, Boolean> entry : getStatusMap().entrySet()) {
-            if(entry.getValue() != null && !entry.getValue()) {
+            if (entry.getValue() != null && !entry.getValue()) {
                 ServerInfo server = plugin.getProxy().getServerInfo(entry.getKey());
-                if(server != null) {
+                if (server != null) {
                     offlineServers.add(server);
                 }
             }
@@ -116,7 +116,7 @@ public class ServerStatusChecker {
     @SuppressWarnings("deprecation")
     public void refreshStatusMap(Collection<ServerInfo> servers) {
         for(final ServerInfo server : servers) {
-            if(server.getPlayers().size() == 0) {
+            if (server.getPlayers().size() == 0) {
                 plugin.getProxy().getScheduler().runAsync(plugin, () -> setStatus(server, isReachable(server.getAddress())));
             } else {
                 setStatus(server, true);
@@ -157,9 +157,9 @@ public class ServerStatusChecker {
     }
 
     public String getServerStatus(String server) {
-        if(statusMap.containsKey(server)) {
+        if (statusMap.containsKey(server)) {
             boolean status = statusMap.get(server);
-            if(status) {
+            if (status) {
                 return online;
             }
             return offline;

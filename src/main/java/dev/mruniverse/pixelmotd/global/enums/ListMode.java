@@ -14,9 +14,9 @@ public enum ListMode {
         this.key = key;
     }
 
-    public static ListMode getFromText(String key,String text) {
+    public static ListMode getFromText(String key, String text) {
         ListMode mode;
-        if(text.contains("CONTAIN")) {
+        if (text.contains("CONTAIN")) {
             mode = ListMode.CONTAINS;
         } else {
             mode = ListMode.NAMES;

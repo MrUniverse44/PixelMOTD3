@@ -39,7 +39,7 @@ public class PingListener implements Listener, Ping {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onMotd(ServerListPingEvent event) {
 
-        if(isWhitelisted) {
+        if (isWhitelisted) {
             pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED),event);
             return;
         }

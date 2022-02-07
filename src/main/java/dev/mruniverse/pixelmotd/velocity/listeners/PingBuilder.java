@@ -50,7 +50,7 @@ public class PingBuilder {
 
     public void execute(MotdType motdType, ProxyPingEvent event, int code) {
 
-        if(!plugin.getConfigVersion().isWork()) {
+        if (!plugin.getConfigVersion().isWork()) {
             plugin.getStorage().getLogs().info("Your configuration is outdated,please check your config for missing paths, paths issues or update the plugin for new paths!");
             plugin.getStorage().getLogs().info("You can backup your plugin files and let the plugin create new files to fix the issue");
             plugin.getStorage().getLogs().info("Or apply manually file changes and update the config-version of the settings.yml to the latest config-version.");
@@ -71,21 +71,21 @@ public class PingBuilder {
 
         motdType.setMotd(motd);
 
-        if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
+        if (plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
             Favicon img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
-            if(img != null) ping.favicon(img);
+            if (img != null) ping.favicon(img);
         }
 
-        if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
+        if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
             MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TYPE)));
             online = mode.execute(control,motdType,MotdSettings.getValuePath(mode,false), plugin.getServer().getPlayerCount());
         } else {
             online = plugin.getServer().getPlayerCount();
         }
 
-        if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {
+        if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {
             MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_MAX_TYPE)));
-            if(mode != MotdPlayersMode.EQUALS) {
+            if (mode != MotdPlayersMode.EQUALS) {
                 max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), plugin.getServer().getConfiguration().getShowMaxPlayers());
             } else {
                 max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), online);
@@ -94,7 +94,7 @@ public class PingBuilder {
             max = plugin.getServer().getConfiguration().getShowMaxPlayers();
         }
 
-        if(control.getStatus(motdType.getSettings(MotdSettings.HOVER_TOGGLE))) {
+        if (control.getStatus(motdType.getSettings(MotdSettings.HOVER_TOGGLE))) {
             ping.samplePlayers(getHover(motdType,online,max));
         }
 
@@ -106,7 +106,7 @@ public class PingBuilder {
             String protocolName;
             int p1 = ping.getVersion().getProtocol();
 
-            if(protocol == MotdProtocol.ALWAYS_POSITIVE) {
+            if (protocol == MotdProtocol.ALWAYS_POSITIVE) {
                 p1 = code;
             } else if (protocol == MotdProtocol.ALWAYS_NEGATIVE) {
                 p1 = -1;
@@ -117,7 +117,7 @@ public class PingBuilder {
             ping.version(new ServerPing.Version(p1,protocolName));
         }
         Component result;
-        if(!motdType.isHexMotd()) {
+        if (!motdType.isHexMotd()) {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getColoredString(motdType.getSettings(MotdSettings.LINE2));
             completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
@@ -131,8 +131,8 @@ public class PingBuilder {
                  */
                 completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
                 result = Component.text(completed);
-            }catch (Throwable throwable) {
-                plugin.getStorage().getLogs().error(throwable);
+            }catch (NullPointerException exception) {
+                plugin.getStorage().getLogs().error(exception);
                 completed = LegacyComponentSerializer.builder().character('&').build().deserialize(extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max)).content();
                 result = Component.text(completed);
             }
@@ -144,10 +144,10 @@ public class PingBuilder {
         event.setPing(ping.build());
     }
 
-    public ServerPing.SamplePlayer[] getHover(MotdType motdType, int online,int max) {
+    public ServerPing.SamplePlayer[] getHover(MotdType motdType, int online, int max) {
         ServerPing.SamplePlayer[] hoverToShow = new ServerPing.SamplePlayer[0];
         List<String> lines;
-        if(playerSystem) {
+        if (playerSystem) {
             lines = extras.getConvertedLines(control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)),control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)));
         } else {
             lines = control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES));

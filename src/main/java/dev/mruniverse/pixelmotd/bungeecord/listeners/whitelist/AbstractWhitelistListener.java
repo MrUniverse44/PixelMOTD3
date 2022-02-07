@@ -7,6 +7,7 @@ import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
@@ -14,7 +15,7 @@ import net.md_5.bungee.api.plugin.Listener;
 
 public abstract class AbstractWhitelistListener implements Listener {
 
-    private final String security = ChatColor.translateAlternateColorCodes('&',"&cWarning PixelMOTDBuilder detected a Null IP from player: &6");
+    private final String security = ChatColor.translateAlternateColorCodes('&',"&cWarning PixelMOTD detected a Null IP from player: &6");
 
     private final TextComponent suggest = new TextComponent(ChatColor.translateAlternateColorCodes('&',"&cIf you want a Block-Null-IPs features suggest it to me and i will add this feature."));
 
@@ -32,20 +33,30 @@ public abstract class AbstractWhitelistListener implements Listener {
         blacklist = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
     }
 
-    public void checkPlayer(LoginEvent loginEvent) {
-        if(loginEvent == null) return;
-        if(loginEvent.getConnection() == null) return;
-        if(loginEvent.getConnection().getUniqueId() == null) {
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(security + loginEvent.getConnection().getName()));
-            ProxyServer.getInstance().getConsole().sendMessage(suggest);
+    public void checkPlayer(LoginEvent event) {
+        if (event == null) {
             return;
         }
-        final String user = loginEvent.getConnection().getName();
-        final String uuid = loginEvent.getConnection().getUniqueId().toString();
-        if(whitelist.getStatus("whitelist.global.Enabled")) {
-            if(!whitelist.getStringList("players.global.by-name").contains(user) && !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {
+
+        final PendingConnection connection = event.getConnection();
+
+        if (connection == null) {
+            return;
+        }
+
+        if (connection.getUniqueId() == null) {
+            sendMessage(new TextComponent(security + connection.getName()));
+            sendMessage(suggest);
+            return;
+        }
+
+        final String user = connection.getName();
+        final String uuid = connection.getUniqueId().toString();
+
+        if (whitelist.getStatus("whitelist.global.Enabled")) {
+            if (!whitelist.getStringList("players.global.by-name").contains(user) && !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist.global.kick-message"));
-                loginEvent.setCancelReason(
+                event.setCancelReason(
                         new TextComponent(
                                 ChatColor.translateAlternateColorCodes('&',
                                         reason.replace("%uuid%",user)
@@ -56,14 +67,14 @@ public abstract class AbstractWhitelistListener implements Listener {
                                 )
                         )
                 );
-                loginEvent.setCancelled(true);
+                event.setCancelled(true);
                 return;
             }
         }
-        if(blacklist.getStatus("blacklist.global.Enabled")) {
-            if(blacklist.getStringList("players.global.by-name").contains(user) || blacklist.getStringList("players.global.by-uuid").contains(uuid)) {
+        if (blacklist.getStatus("blacklist.global.Enabled")) {
+            if (blacklist.getStringList("players.global.by-name").contains(user) || blacklist.getStringList("players.global.by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(blacklist.getStringList("blacklist.global.kick-message"));
-                loginEvent.setCancelReason(
+                event.setCancelReason(
                         new TextComponent(
                                 ChatColor.translateAlternateColorCodes('&',
                                         reason.replace("%uuid%",user)
@@ -74,25 +85,33 @@ public abstract class AbstractWhitelistListener implements Listener {
                                 )
                         )
                 );
-                loginEvent.setCancelled(true);
+                event.setCancelled(true);
             }
         }
     }
 
     public void checkPlayer(ServerConnectEvent event) {
-        if(event == null) return;
-        if(event.getPlayer() == null) return;
-        final ProxiedPlayer player = event.getPlayer();
-        if(player.getUniqueId() == null) {
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(security + player.getName()));
-            ProxyServer.getInstance().getConsole().sendMessage(suggest);
+        if (event == null) {
             return;
         }
+        if (event.getPlayer() == null) {
+            return;
+        }
+
+        final ProxiedPlayer player = event.getPlayer();
+
+        if (player.getUniqueId() == null) {
+            sendMessage(new TextComponent(security + player.getName()));
+            sendMessage(suggest);
+            return;
+        }
+
         final String user = player.getName();
         final String uuid = player.getUniqueId().toString();
         final String server = event.getTarget().getName();
-        if(whitelist.getStatus("whitelist." + server + ".Enabled")) {
-            if(!whitelist.getStringList("players." + server + ".by-name").contains(user) && !whitelist.getStringList("players." + server + ".by-uuid").contains(uuid)) {
+
+        if (whitelist.getStatus("whitelist." + server + ".Enabled")) {
+            if (!whitelist.getStringList("players." + server + ".by-name").contains(user) && !whitelist.getStringList("players." + server + ".by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist." + server + ".kick-message"));
                 player.sendMessage(
                         new TextComponent(
@@ -109,8 +128,8 @@ public abstract class AbstractWhitelistListener implements Listener {
                 return;
             }
         }
-        if(blacklist.getStatus("blacklist." + server + ".Enabled")) {
-            if(blacklist.getStringList("players." + server + ".by-name").contains(user) || blacklist.getStringList("players." + server + ".by-uuid").contains(uuid)) {
+        if (blacklist.getStatus("blacklist." + server + ".Enabled")) {
+            if (blacklist.getStringList("players." + server + ".by-name").contains(user) || blacklist.getStringList("players." + server + ".by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(blacklist.getStringList("blacklist." + server + ".kick-message"));
                 player.sendMessage(
                         new TextComponent(
@@ -126,6 +145,10 @@ public abstract class AbstractWhitelistListener implements Listener {
                 event.setCancelled(true);
             }
         }
+    }
+
+    private void sendMessage(TextComponent component) {
+        ProxyServer.getInstance().getConsole().sendMessage(component);
     }
 
 }

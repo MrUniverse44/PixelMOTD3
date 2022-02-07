@@ -50,8 +50,8 @@ public class PingBuilder {
         return motds.get(control.getRandom().nextInt(motds.size()));
     }
 
-    public void execute(MotdType motdType, ServerPing ping,int code) {
-        if(!plugin.getConfigVersion().isWork()) {
+    public void execute(MotdType motdType, ServerPing ping, int code) {
+        if (!plugin.getConfigVersion().isWork()) {
             plugin.getStorage().getLogs().info("Your configuration is outdated,please check your config for missing paths, paths issues or update the plugin for new paths!");
             plugin.getStorage().getLogs().info("You can backup your plugin files and let the plugin create new files to fix the issue");
             plugin.getStorage().getLogs().info("Or apply manually file changes and update the config-version of the settings.yml to the latest config-version.");
@@ -69,21 +69,21 @@ public class PingBuilder {
 
         motdType.setMotd(motd);
 
-        if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
+        if (plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
             Favicon img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
-            if(img != null) ping.setFavicon(img);
+            if (img != null) ping.setFavicon(img);
         }
 
-        if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
+        if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
             MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TYPE)));
             online = mode.execute(control,motdType,MotdSettings.getValuePath(mode,false),ProxyServer.getInstance().getOnlineCount());
         } else {
             online = ProxyServer.getInstance().getOnlineCount();
         }
 
-        if(control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {
+        if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {
             MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_MAX_TYPE)));
-            if(mode != MotdPlayersMode.EQUALS) {
+            if (mode != MotdPlayersMode.EQUALS) {
                 max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), ping.getPlayers().getMax());
             } else {
                 max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), online);
@@ -92,7 +92,7 @@ public class PingBuilder {
             max = ping.getPlayers().getMax();
         }
 
-        if(control.getStatus(motdType.getSettings(MotdSettings.HOVER_TOGGLE))) {
+        if (control.getStatus(motdType.getSettings(MotdSettings.HOVER_TOGGLE))) {
             ping.getPlayers().setSample(getHover(motdType,online,max));
         }
 
@@ -102,12 +102,12 @@ public class PingBuilder {
                     code
             );
 
-            if(protocol == MotdProtocol.ALWAYS_POSITIVE || protocol == MotdProtocol.ALWAYS_NEGATIVE) {
+            if (protocol == MotdProtocol.ALWAYS_POSITIVE || protocol == MotdProtocol.ALWAYS_NEGATIVE) {
                 ping.getVersion().setProtocol(protocol.getCode());
             }
 
             String result;
-            if(!motdType.isHexMotd()) {
+            if (!motdType.isHexMotd()) {
                 result = ChatColor.translateAlternateColorCodes('&', extras.getVariables(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)), online, max));
             } else {
                 result = IridiumColorAPI.process(extras.getVariables(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)), online, max));
@@ -116,7 +116,7 @@ public class PingBuilder {
         }
 
         TextComponent result = new TextComponent("");
-        if(!motdType.isHexMotd()) {
+        if (!motdType.isHexMotd()) {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getColoredString(motdType.getSettings(MotdSettings.LINE2));
             completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
@@ -125,7 +125,7 @@ public class PingBuilder {
             line1 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
             try {
-                if(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.hex-system-process","IRIDIUMCOLORAPI").equalsIgnoreCase("IRIDIUMCOLORAPI")) {
+                if (plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.hex-system-process","IRIDIUMCOLORAPI").equalsIgnoreCase("IRIDIUMCOLORAPI")) {
                     TextComponent firstLine = new TextComponent(IridiumColorAPI.process(extras.getVariables(line1, online, max) + "&f"));
                     TextComponent secondLine = new TextComponent(IridiumColorAPI.process(extras.getVariables(line2, online, max) + "&f"));
                     result.addExtra(firstLine);
@@ -148,10 +148,10 @@ public class PingBuilder {
 
     }
 
-    public ServerPing.PlayerInfo[] getHover(MotdType motdType, int online,int max) {
+    public ServerPing.PlayerInfo[] getHover(MotdType motdType, int online, int max) {
         ServerPing.PlayerInfo[] hoverToShow = new ServerPing.PlayerInfo[0];
         List<String> lines;
-        if(playerSystem) {
+        if (playerSystem) {
             lines = extras.getConvertedLines(
                     control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)),
                     control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS))

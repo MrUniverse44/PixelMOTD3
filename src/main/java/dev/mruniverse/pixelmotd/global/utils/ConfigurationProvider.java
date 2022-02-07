@@ -27,7 +27,7 @@ public abstract class ConfigurationProvider {
         JSON;
 
         public Class<? extends ConfigurationProvider> get() {
-            if(this == YAML) return YamlConfiguration.class;
+            if (this == YAML) return YamlConfiguration.class;
             return JsonConfiguration.class;
         }
     }

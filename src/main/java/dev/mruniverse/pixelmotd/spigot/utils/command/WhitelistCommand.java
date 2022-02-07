@@ -32,20 +32,20 @@ public class WhitelistCommand {
                 String value = arguments[1];
                 PlayerType type = PlayerType.fromUnknown(value);
                 String server;
-                if(arguments.length == 3) {
+                if (arguments.length == 3) {
                     server = arguments[2];
                 } else {
                     server = "global";
                 }
                 List<String> list;
                 String path;
-                if(type == PlayerType.PLAYER) {
+                if (type == PlayerType.PLAYER) {
                     path = "players." + server + ".by-name";
                 } else {
                     path = "players." + server + ".by-uuid";
                 }
                 list = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStringList(path);
-                if(list.contains(value)) {
+                if (list.contains(value)) {
                     sendMessage(
                             sender,
                             plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString(
@@ -79,24 +79,24 @@ public class WhitelistCommand {
         if (arguments[0].equalsIgnoreCase("on")) {
             if (arguments.length >= 2) {
                 String author;
-                if(sender instanceof Player) {
+                if (sender instanceof Player) {
                     author = sender.getName();
                 } else {
                     author = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getString("settings.console-name","Console");
                 }
                 String server = arguments[1];
                 String reason;
-                if(arguments.length >= 3) {
+                if (arguments.length >= 3) {
                     reason = Converter.ListToStringText(
                             Arrays.asList(getArguments(arguments))
                     );
                 } else {
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getString("settings.default-reason","The server will be updated!");
                 }
-                if(!plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).contains("whitelist." + server + ".kick-message")) {
+                if (!plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).contains("whitelist." + server + ".kick-message")) {
                     List<String> defaultKick = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStringList("settings.default-kick-message");
                     Map<String,String> replacements = new HashMap<>();
-                    if(server.equalsIgnoreCase("global")) {
+                    if (server.equalsIgnoreCase("global")) {
                         replacements.put("%server%", server);
                     } else {
                         replacements.put("%server%", "the Network");
@@ -119,21 +119,21 @@ public class WhitelistCommand {
         if (arguments[0].equalsIgnoreCase("off")) {
             if (arguments.length >= 2) {
                 String author;
-                if(sender instanceof Player) {
+                if (sender instanceof Player) {
                     author = sender.getName();
                 } else {
                     author = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getString("settings.console-name","Console");
                 }
                 String server = arguments[1];
                 String reason;
-                if(arguments.length >= 3) {
+                if (arguments.length >= 3) {
                     reason = Converter.ListToStringText(
                             Arrays.asList(getArguments(arguments))
                     );
                 } else {
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getString("settings.default-reason","The server will be updated!");
                 }
-                if(!plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).contains("whitelist." + server + ".kick-message")) {
+                if (!plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).contains("whitelist." + server + ".kick-message")) {
                     List<String> defaultKick = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStringList("settings.default-kick-message");
                     plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set("whitelist." + server + ".kick-message",defaultKick);
                 }
@@ -154,20 +154,20 @@ public class WhitelistCommand {
                 String value = arguments[1];
                 PlayerType type = PlayerType.fromUnknown(value);
                 String server;
-                if(arguments.length == 3) {
+                if (arguments.length == 3) {
                     server = arguments[2];
                 } else {
                     server = "global";
                 }
                 List<String> list;
                 String path;
-                if(type == PlayerType.PLAYER) {
+                if (type == PlayerType.PLAYER) {
                     path = "players." + server + ".by-name";
                 } else {
                     path = "players." + server + ".by-uuid";
                 }
                 list = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStringList(path);
-                if(!list.contains(value)) {
+                if (!list.contains(value)) {
                     sendMessage(
                             sender,
                             plugin.getStorage().getFiles().getControl(GuardianFiles.MESSAGES).getColoredString(
@@ -253,12 +253,12 @@ public class WhitelistCommand {
         sendMessage(sender,"&7Invalid arguments, please use the correct syntax.");
     }
 
-    private String[] getArguments(String[] args){
+    private String[] getArguments(String[] args) {
         String[] arguments = new String[args.length - 3];
         int argID = 0;
         int aID = 0;
         for(String arg : args) {
-            if(aID < 3) {
+            if (aID < 3) {
                 arguments[argID] = arg;
                 argID++;
             }

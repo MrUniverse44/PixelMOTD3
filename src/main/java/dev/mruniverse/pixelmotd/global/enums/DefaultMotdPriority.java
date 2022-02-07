@@ -1,14 +1,14 @@
 package dev.mruniverse.pixelmotd.global.enums;
 
 public enum DefaultMotdPriority {
-    NORMAL(MotdType.NORMAL,MotdType.WHITELIST,MotdType.BLACKLIST),
-    HEX(MotdType.NORMAL_HEX,MotdType.WHITELIST_HEX,MotdType.BLACKLIST);
+    NORMAL (MotdType.NORMAL, MotdType.WHITELIST, MotdType.BLACKLIST),
+    HEX (MotdType.NORMAL_HEX, MotdType.WHITELIST_HEX, MotdType.BLACKLIST);
 
     private final MotdType type;
     private final MotdType whitelist;
     private final MotdType blacklist;
 
-    DefaultMotdPriority(MotdType type,MotdType whitelist,MotdType blacklist) {
+    DefaultMotdPriority(MotdType type, MotdType whitelist, MotdType blacklist) {
         this.type = type;
         this.whitelist = whitelist;
         this.blacklist = blacklist;
@@ -27,7 +27,7 @@ public enum DefaultMotdPriority {
     }
 
     public static DefaultMotdPriority getFromText(String verifier) {
-        if(verifier.equalsIgnoreCase("HEX")) return HEX;
+        if (verifier.equalsIgnoreCase("HEX")) return HEX;
         return NORMAL;
     }
 }

@@ -51,7 +51,7 @@ public class Updater {
         this.logs = logger;
         this.currentVersion = currentVersion;
         this.updateFolder = new File(file,"downloads");
-        if(!updateFolder.exists()) {
+        if (!updateFolder.exists()) {
             if (updateFolder.mkdirs()) logger.info("Downloads folder has been created");
         }
         this.id = id;
@@ -133,7 +133,7 @@ public class Updater {
 
             int code = connection.getResponseCode();
 
-            if(code != 200)
+            if (code != 200)
             {
                 connection.disconnect();
                 result = Result.BAD_ID;
@@ -169,57 +169,57 @@ public class Updater {
             JsonElement element = new JsonParser().parse(reader);
             JsonArray jsonArray = element.getAsJsonArray();
 
-            if(jsonArray.size() == 10 && !emptyPage)
+            if (jsonArray.size() == 10 && !emptyPage)
             {
                 connection.disconnect();
                 this.page++;
                 checkUpdate();
             }
-            else if(jsonArray.size() == 0)
+            else if (jsonArray.size() == 0)
             {
                 emptyPage = true;
                 this.page--;
                 checkUpdate();
             }
-            else if(jsonArray.size() < 10)
+            else if (jsonArray.size() < 10)
             {
                 element = jsonArray.get(jsonArray.size()-1);
 
                 JsonObject object = element.getAsJsonObject();
                 element = object.get("name");
                 version = element.toString().replaceAll("\"", "").replace("v","");
-                if(logger)
+                if (logger)
                     logs.info("Checking for update...");
-                if(shouldUpdate(version, currentVersion) && updateType == UpdateType.VERSION_CHECK)
+                if (shouldUpdate(version, currentVersion) && updateType == UpdateType.VERSION_CHECK)
                 {
                     result = Result.UPDATE_FOUND;
-                    if(logger)
+                    if (logger)
                         logs.info("Update found!");
                 }
-                else if(updateType == UpdateType.DOWNLOAD)
+                else if (updateType == UpdateType.DOWNLOAD)
                 {
-                    if(logger)
+                    if (logger)
                         logs.info("Trying to download update..");
                     download();
                 }
-                else if(updateType == UpdateType.CHECK_DOWNLOAD)
+                else if (updateType == UpdateType.CHECK_DOWNLOAD)
                 {
-                    if(shouldUpdate(version, currentVersion))
+                    if (shouldUpdate(version, currentVersion))
                     {
-                        if(logger)
+                        if (logger)
                             logs.info("Update found, downloading now...");
                         download();
                     }
                     else
                     {
-                        if(logger)
+                        if (logger)
                             logs.info("You are using latest version of the plugin.");
                         result = Result.NO_UPDATE;
                     }
                 }
                 else
                 {
-                    if(logger)
+                    if (logger)
                         logs.info("You are using latest version of the plugin.");
                     result = Result.NO_UPDATE;
                 }
@@ -266,7 +266,7 @@ public class Updater {
         }
         catch (Throwable throwable)
         {
-            if(logger)
+            if (logger)
                 logs.info("Can't download latest version automatically, download it manually from website.");
                 logs.info(" ");
             result = Result.FAILED;
@@ -276,17 +276,17 @@ public class Updater {
                 if (in != null) {
                     in.close();
                 }
-            } catch (final Throwable throwable) {
+            } catch (final IOException exception) {
                 logs.error("Can't download");
-                logs.error(throwable);
+                logs.error(exception);
             }
             try {
                 if (fout != null) {
                     fout.close();
                 }
-            } catch (final Throwable throwable) {
+            } catch (final IOException exception) {
                 logs.error("Can't download");
-                logs.error(throwable);
+                logs.error(exception);
             }
         }
     }
@@ -296,14 +296,14 @@ public class Updater {
      */
     private void waitThread()
     {
-        if(thread != null && thread.isAlive())
+        if (thread != null && thread.isAlive())
         {
             try
             {
                 thread.join();
-            } catch (Throwable throwable) {
+            } catch (InterruptedException exception) {
                 logs.error("Can't download");
-                logs.error(throwable);
+                logs.error(exception);
             }
         }
     }
@@ -312,7 +312,7 @@ public class Updater {
     {
 
         public void run() {
-            if(checkResource(downloadLink))
+            if (checkResource(downloadLink))
             {
                 downloadLink = downloadLink + DOWNLOAD;
                 checkUpdate();

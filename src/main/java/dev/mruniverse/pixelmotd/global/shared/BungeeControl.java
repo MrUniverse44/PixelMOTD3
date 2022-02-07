@@ -27,14 +27,14 @@ public class BungeeControl implements Control {
 
 
 
-    public BungeeControl(GLogger logs,File file,InputStream resource) {
+    public BungeeControl(GLogger logs, File file, InputStream resource) {
         this.file = file;
         this.logs = logs;
         this.resource = resource;
         load();
     }
 
-    public BungeeControl(GLogger logs,File file) {
+    public BungeeControl(GLogger logs, File file) {
         this.file = file;
         this.logs = logs;
         this.resource = null;
@@ -64,7 +64,7 @@ public class BungeeControl implements Control {
     }
 
     @Override
-    public String getColoredString(String path,String def) {
+    public String getColoredString(String path, String def) {
         return ChatColor.translateAlternateColorCodes('&',configuration.getString(path,def));
     }
 
@@ -74,7 +74,7 @@ public class BungeeControl implements Control {
     }
 
     @Override
-    public String getStringWithoutColors(String path,String def) {
+    public String getStringWithoutColors(String path, String def) {
         return ChatColor.stripColor(configuration.getString(path,def));
     }
 
@@ -95,12 +95,12 @@ public class BungeeControl implements Control {
     public void saveConfig(File fileToSave) {
         if (!fileToSave.getParentFile().exists()) {
             boolean createFile = fileToSave.getParentFile().mkdirs();
-            if(createFile) logs.info("&7Folder created!!");
+            if (createFile) logs.info("&7Folder created!!");
         }
 
         if (!fileToSave.exists()) {
             try (InputStream in = resource) {
-                if(in != null) {
+                if (in != null) {
                     Files.copy(in, fileToSave.toPath());
                 }
             } catch (IOException exception) {
@@ -151,7 +151,7 @@ public class BungeeControl implements Control {
     public List<String> getContent(String path, boolean getKeys) {
         List<String> rx = new ArrayList<>();
         Configuration section = configuration.getSection(path);
-        if(section == null) return rx;
+        if (section == null) return rx;
         rx.addAll(section.getKeys());
         return rx;
     }
