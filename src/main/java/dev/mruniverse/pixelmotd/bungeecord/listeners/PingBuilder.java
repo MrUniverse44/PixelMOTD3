@@ -151,6 +151,7 @@ public class PingBuilder {
     public ServerPing.PlayerInfo[] getHover(MotdType motdType, int online, int max) {
         ServerPing.PlayerInfo[] hoverToShow = new ServerPing.PlayerInfo[0];
         List<String> lines;
+
         if (playerSystem) {
             lines = extras.getConvertedLines(
                     control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)),
@@ -159,14 +160,13 @@ public class PingBuilder {
         } else {
             lines = control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
         }
-        try {
-            final UUID uuid = new UUID(0,0);
-            for (String line : lines) {
-                hoverToShow = addHoverLine(hoverToShow, new ServerPing.PlayerInfo(extras.getVariables(line, online, max), uuid));
-            }
-        }catch(Exception exception) {
-            plugin.getStorage().getLogs().info("Can't show the hover, please check if everything is correct in your motd config.");
+
+        final UUID uuid = UUID.fromString("0-0-0-0-0");
+
+        for (String line : lines) {
+            hoverToShow = addHoverLine(hoverToShow, new ServerPing.PlayerInfo(extras.getVariables(line, online, max), uuid));
         }
+
         return hoverToShow;
     }
     private ServerPing.PlayerInfo[] addHoverLine(ServerPing.PlayerInfo[] player, ServerPing.PlayerInfo info) {

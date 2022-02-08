@@ -1,6 +1,5 @@
 package dev.mruniverse.pixelmotd.spigot.listeners.packets;
 
-import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
 import dev.mruniverse.pixelmotd.global.Control;
@@ -9,10 +8,8 @@ import dev.mruniverse.pixelmotd.global.enums.*;
 import dev.mruniverse.pixelmotd.global.iridiumcolorapi.IridiumColorAPI;
 import dev.mruniverse.pixelmotd.global.shared.SpigotExtras;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
-import java.io.File;
+import org.bukkit.ChatColor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -127,6 +124,17 @@ public class PacketPingBuilder {
 
     public List<WrappedGameProfile> getHover(MotdType motdType, int online, int max) {
         List<WrappedGameProfile> result = new ArrayList<>();
+        if (motdType.isHexMotd()) {
+            if (playerSystem) {
+                for (String line : extras.getConvertedLines(control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES)), control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)))) {
+                    result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), IridiumColorAPI.process(extras.getVariables(line, online, max))));
+                }
+            } else {
+                for (String line : control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES))) {
+                    result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), IridiumColorAPI.process(extras.getVariables(line, online, max))));
+                }
+            }
+        }
         if (playerSystem) {
             for (String line : extras.getConvertedLines(control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)), control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)))) {
                 result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line, online, max)));

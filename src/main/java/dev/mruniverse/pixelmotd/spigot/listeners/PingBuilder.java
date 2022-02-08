@@ -58,8 +58,8 @@ public class PingBuilder {
             plugin.getStorage().getLogs().error("This file isn't updated to the latest file or the motd-path is incorrect, can't find motds for MotdType: " + motdType.getName());
             return;
         }
-        String line1,line2,completed;
-        int online,max;
+        String line1, line2, completed;
+        int online, max;
 
         motdType.setMotd(motd);
 

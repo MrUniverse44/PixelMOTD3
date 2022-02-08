@@ -51,6 +51,7 @@ public class MotdBuilder {
         File[] files = folder.listFiles((d, fn) -> fn.endsWith(".png"));
 
         if (files == null) {
+            icons.put(motdType, iconsPerType);
             return;
         }
 
@@ -69,14 +70,21 @@ public class MotdBuilder {
 
     public Favicon getFavicon(MotdType motdType, String key) {
         Map<String, Icon> icons = this.icons.get(motdType);
+
+        if (icons == null) {
+            load(motdType);
+            icons = this.icons.get(motdType);
+        }
+
         if (key.equalsIgnoreCase("RANDOM")) {
             List<Icon> values = new ArrayList<>(icons.values());
             int randomIndex = random.nextInt(values.size());
             return values.get(randomIndex).getFavicon();
         }
-        return icons.get(key) == null
-                ? null
-                : icons.get(key).getFavicon();
+        if (icons.containsKey(key)) {
+            return icons.get(key).getFavicon();
+        }
+        return null;
     }
 
 }
