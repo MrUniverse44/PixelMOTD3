@@ -64,6 +64,7 @@ public class MotdBuilder {
                     )
             );
         }
+        icons.put(motdType, iconsPerType);
     }
 
     public Favicon getFavicon(MotdType motdType, String key) {
