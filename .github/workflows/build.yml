@@ -37,7 +37,7 @@ jobs:
     - name: Compile Minecraft Spigot or Paper (BuildTools)
       uses: SpraxDev/Action-SpigotMC@v3
       with:
-        versions: latest
+        versions: 1.8.8
         generateSrc: false
         generateDoc: false
         disableJavaCheck: false
