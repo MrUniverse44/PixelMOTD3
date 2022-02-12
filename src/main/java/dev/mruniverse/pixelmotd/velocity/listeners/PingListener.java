@@ -4,14 +4,14 @@ import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Ping;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.velocity.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Ping;
+import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.commons.enums.MotdType;
+import dev.mruniverse.pixelmotd.velocity.PixelMOTD;
 
 public class PingListener implements Ping {
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
     private final PingBuilder pingBuilder;
 
     private boolean isWhitelisted;
@@ -22,7 +22,7 @@ public class PingListener implements Ping {
 
     private int MAX_PROTOCOL;
 
-    public PingListener(PixelMOTDBuilder plugin) {
+    public PingListener(PixelMOTD plugin) {
         this.plugin = plugin;
         this.pingBuilder = new PingBuilder(plugin);
         load();

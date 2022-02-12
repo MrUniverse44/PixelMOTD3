@@ -3,11 +3,11 @@ package dev.mruniverse.pixelmotd.velocity.listeners;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.api.util.Favicon;
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Extras;
-import dev.mruniverse.pixelmotd.global.enums.*;
-import dev.mruniverse.pixelmotd.global.shared.VelocityExtras;
-import dev.mruniverse.pixelmotd.velocity.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Extras;
+import dev.mruniverse.pixelmotd.commons.enums.*;
+import dev.mruniverse.pixelmotd.commons.shared.VelocityExtras;
+import dev.mruniverse.pixelmotd.velocity.PixelMOTD;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class PingBuilder {
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
 
     private final MotdBuilder builder;
 
@@ -25,7 +25,7 @@ public class PingBuilder {
 
     private Control control;
 
-    public PingBuilder(PixelMOTDBuilder plugin) {
+    public PingBuilder(PixelMOTD plugin) {
         this.plugin = plugin;
         this.builder = new MotdBuilder(plugin, plugin.getStorage().getLogs());
         this.extras = new VelocityExtras(plugin);

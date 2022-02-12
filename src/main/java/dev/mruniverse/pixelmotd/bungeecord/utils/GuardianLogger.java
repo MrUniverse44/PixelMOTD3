@@ -1,6 +1,6 @@
 package dev.mruniverse.pixelmotd.bungeecord.utils;
 
-import dev.mruniverse.pixelmotd.global.GLogger;
+import dev.mruniverse.pixelmotd.commons.GLogger;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -13,7 +13,7 @@ import java.util.List;
 public class GuardianLogger implements GLogger {
     private final String hidePackage;
     private final Plugin plugin;
-    private String pluginName = "PixelMOTDBuilder";
+    private String pluginName = "PixelMOTD";
     private String containIdentifier = "mruniverse";
 
     /**

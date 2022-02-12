@@ -1,8 +1,8 @@
 package dev.mruniverse.pixelmotd.bungeecord.utils;
 
-import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
 
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 @SuppressWarnings("unused")
 public class ServerStatusChecker {
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
 
     private final List<ScheduledTask> pingTask = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class ServerStatusChecker {
 
     private String offline;
 
-    public ServerStatusChecker(PixelMOTDBuilder plugin) {
+    public ServerStatusChecker(PixelMOTD plugin) {
         this.plugin = plugin;
         load();
     }

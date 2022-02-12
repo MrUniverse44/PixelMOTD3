@@ -1,9 +1,9 @@
 package dev.mruniverse.pixelmotd.spigot.utils.command;
 
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Converter;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Converter;
+import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 public class WhitelistCommand {
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
     private final String cmdPrefix;
 
-    public WhitelistCommand(PixelMOTDBuilder plugin, String command) {
+    public WhitelistCommand(PixelMOTD plugin, String command) {
         this.plugin = plugin;
         this.cmdPrefix = "&8» &a/" + command;
     }

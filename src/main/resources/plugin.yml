@@ -1,8 +1,9 @@
 name: PixelMOTD
 version: ${project.version}
-main: dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder
+main: dev.mruniverse.pixelmotd.spigot.PixelMOTD
 softdepend: [ProtocolLib, ViaVersion, PlaceholderAPI]
 authors: [ MrUniverse44 ]
+website: "https://github.com/MrUniverse44/PixelMOTD3"
 description: Simple MOTD System plugin
 commands:
   pmotd:

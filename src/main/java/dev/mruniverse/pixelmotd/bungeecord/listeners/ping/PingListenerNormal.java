@@ -1,12 +1,12 @@
 package dev.mruniverse.pixelmotd.bungeecord.listeners.ping;
 
-import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.bungeecord.listeners.PingBuilder;
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Ping;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.global.enums.Type;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Ping;
+import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.commons.enums.MotdType;
+import dev.mruniverse.pixelmotd.commons.enums.Type;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.ProxyPingEvent;
@@ -17,7 +17,7 @@ import net.md_5.bungee.event.EventPriority;
 
 public class PingListenerNormal implements Listener, Ping {
 
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
     private final PingBuilder pingBuilder;
 
     private boolean isWhitelisted;
@@ -28,7 +28,7 @@ public class PingListenerNormal implements Listener, Ping {
 
     private int MAX_PROTOCOL;
 
-    public PingListenerNormal(PixelMOTDBuilder plugin) {
+    public PingListenerNormal(PixelMOTD plugin) {
         this.plugin = plugin;
         this.pingBuilder = new PingBuilder(plugin);
         plugin.getProxy().getPluginManager().registerListener(plugin, this);

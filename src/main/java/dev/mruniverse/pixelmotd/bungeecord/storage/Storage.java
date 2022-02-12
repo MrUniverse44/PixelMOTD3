@@ -1,13 +1,13 @@
 package dev.mruniverse.pixelmotd.bungeecord.storage;
 
-import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.bungeecord.utils.command.MainCommand;
-import dev.mruniverse.pixelmotd.global.PixelMOTD;
+import dev.mruniverse.pixelmotd.commons.PluginStorage;
 
-public class Storage extends PixelMOTD {
-    private final PixelMOTDBuilder plugin;
+public class Storage extends PluginStorage {
+    private final PixelMOTD plugin;
 
-    public Storage(PixelMOTDBuilder plugin) {
+    public Storage(PixelMOTD plugin) {
         this.plugin = plugin;
     }
 

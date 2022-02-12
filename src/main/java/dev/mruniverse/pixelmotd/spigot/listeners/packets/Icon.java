@@ -1,8 +1,8 @@
 package dev.mruniverse.pixelmotd.spigot.listeners.packets;
 
 import com.comphenix.protocol.wrappers.WrappedServerPing;
-import dev.mruniverse.pixelmotd.global.GLogger;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
+import dev.mruniverse.pixelmotd.commons.GLogger;
+import dev.mruniverse.pixelmotd.commons.enums.MotdType;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

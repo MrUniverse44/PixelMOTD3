@@ -1,8 +1,8 @@
 package dev.mruniverse.pixelmotd.bungeecord.utils.command;
 
-import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
-import dev.mruniverse.pixelmotd.global.enums.FileSaveMode;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
+import dev.mruniverse.pixelmotd.commons.enums.FileSaveMode;
+import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -12,7 +12,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class MainCommand extends Command {
 
 
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
 
     private final String cmdPrefix;
 
@@ -20,7 +20,7 @@ public class MainCommand extends Command {
 
     private final BlacklistCommand blacklist;
 
-    public MainCommand(PixelMOTDBuilder plugin, String command) {
+    public MainCommand(PixelMOTD plugin, String command) {
         super(command);
         this.plugin = plugin;
         this.cmdPrefix = "&8» &a/" + command;

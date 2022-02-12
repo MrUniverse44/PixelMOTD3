@@ -1,12 +1,12 @@
 package dev.mruniverse.pixelmotd.velocity.storage;
 
-import dev.mruniverse.pixelmotd.global.PixelMOTD;
-import dev.mruniverse.pixelmotd.velocity.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.PluginStorage;
+import dev.mruniverse.pixelmotd.velocity.PixelMOTD;
 
-public class Storage extends PixelMOTD {
-    private final PixelMOTDBuilder builder;
+public class Storage extends PluginStorage {
+    private final PixelMOTD builder;
 
-    public Storage(PixelMOTDBuilder builder) {
+    public Storage(PixelMOTD builder) {
         this.builder = builder;
     }
 

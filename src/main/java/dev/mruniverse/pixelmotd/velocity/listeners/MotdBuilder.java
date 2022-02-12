@@ -1,10 +1,10 @@
 package dev.mruniverse.pixelmotd.velocity.listeners;
 
 import com.velocitypowered.api.util.Favicon;
-import dev.mruniverse.pixelmotd.global.GLogger;
-import dev.mruniverse.pixelmotd.global.enums.IconFolders;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.velocity.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.GLogger;
+import dev.mruniverse.pixelmotd.commons.enums.IconFolders;
+import dev.mruniverse.pixelmotd.commons.enums.MotdType;
+import dev.mruniverse.pixelmotd.velocity.PixelMOTD;
 
 import java.io.File;
 import java.util.*;
@@ -14,11 +14,11 @@ public class MotdBuilder {
 
     private final Random random = new Random();
 
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
 
     private final GLogger logs;
 
-    public MotdBuilder(PixelMOTDBuilder plugin, GLogger logs) {
+    public MotdBuilder(PixelMOTD plugin, GLogger logs) {
         this.plugin = plugin;
         this.logs = logs;
         load();

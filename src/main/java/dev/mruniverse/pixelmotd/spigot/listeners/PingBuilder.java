@@ -1,11 +1,11 @@
 package dev.mruniverse.pixelmotd.spigot.listeners;
 
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Extras;
-import dev.mruniverse.pixelmotd.global.enums.*;
-import dev.mruniverse.pixelmotd.global.iridiumcolorapi.IridiumColorAPI;
-import dev.mruniverse.pixelmotd.global.shared.SpigotExtras;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Extras;
+import dev.mruniverse.pixelmotd.commons.enums.*;
+import dev.mruniverse.pixelmotd.commons.iridiumcolorapi.IridiumColorAPI;
+import dev.mruniverse.pixelmotd.commons.shared.SpigotExtras;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import dev.mruniverse.pixelmotd.spigot.utils.PlaceholderParser;
 import org.bukkit.ChatColor;
 import org.bukkit.event.server.ServerListPingEvent;
@@ -14,7 +14,7 @@ import org.bukkit.util.CachedServerIcon;
 import java.util.List;
 
 public class PingBuilder {
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
 
     private final MotdBuilder builder;
 
@@ -22,7 +22,7 @@ public class PingBuilder {
 
     private Control control;
 
-    public PingBuilder(PixelMOTDBuilder plugin) {
+    public PingBuilder(PixelMOTD plugin) {
         this.plugin  = plugin;
         this.builder = new MotdBuilder(plugin, plugin.getStorage().getLogs());
         this.extras  = new SpigotExtras(plugin);

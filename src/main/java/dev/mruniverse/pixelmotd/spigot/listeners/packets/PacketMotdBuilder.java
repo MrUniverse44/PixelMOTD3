@@ -1,10 +1,10 @@
 package dev.mruniverse.pixelmotd.spigot.listeners.packets;
 
 import com.comphenix.protocol.wrappers.WrappedServerPing;
-import dev.mruniverse.pixelmotd.global.GLogger;
-import dev.mruniverse.pixelmotd.global.enums.IconFolders;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.GLogger;
+import dev.mruniverse.pixelmotd.commons.enums.IconFolders;
+import dev.mruniverse.pixelmotd.commons.enums.MotdType;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 
 import java.io.File;
 import java.util.*;
@@ -14,11 +14,11 @@ public class PacketMotdBuilder {
 
     private final Random random = new Random();
 
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
 
     private final GLogger logs;
 
-    public PacketMotdBuilder(PixelMOTDBuilder plugin, GLogger logs) {
+    public PacketMotdBuilder(PixelMOTD plugin, GLogger logs) {
         this.plugin = plugin;
         this.logs = logs;
         load();

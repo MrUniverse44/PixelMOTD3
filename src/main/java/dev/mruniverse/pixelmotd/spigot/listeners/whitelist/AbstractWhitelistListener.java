@@ -1,10 +1,10 @@
 package dev.mruniverse.pixelmotd.spigot.listeners.whitelist;
 
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Converter;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Converter;
+import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -19,12 +19,12 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
 
     private Control blacklist;
 
-    public AbstractWhitelistListener(PixelMOTDBuilder builder) {
+    public AbstractWhitelistListener(PixelMOTD builder) {
         whitelist = builder.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
         blacklist = builder.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
     }
 
-    public void update(PixelMOTDBuilder plugin) {
+    public void update(PixelMOTD plugin) {
         whitelist = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
         blacklist = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
     }

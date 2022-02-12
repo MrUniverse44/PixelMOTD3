@@ -2,12 +2,12 @@ package dev.mruniverse.pixelmotd.spigot.listeners.packets;
 
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Extras;
-import dev.mruniverse.pixelmotd.global.enums.*;
-import dev.mruniverse.pixelmotd.global.iridiumcolorapi.IridiumColorAPI;
-import dev.mruniverse.pixelmotd.global.shared.SpigotExtras;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Extras;
+import dev.mruniverse.pixelmotd.commons.enums.*;
+import dev.mruniverse.pixelmotd.commons.iridiumcolorapi.IridiumColorAPI;
+import dev.mruniverse.pixelmotd.commons.shared.SpigotExtras;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 
 import org.bukkit.ChatColor;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class PacketPingBuilder {
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
 
     private final PacketMotdBuilder builder;
 
@@ -25,7 +25,7 @@ public class PacketPingBuilder {
 
     private Control control;
 
-    public PacketPingBuilder(PixelMOTDBuilder plugin) {
+    public PacketPingBuilder(PixelMOTD plugin) {
         this.plugin = plugin;
         this.builder = new PacketMotdBuilder(plugin, plugin.getStorage().getLogs());
         this.extras = new SpigotExtras(plugin);

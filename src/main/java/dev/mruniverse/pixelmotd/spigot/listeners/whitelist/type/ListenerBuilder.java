@@ -1,6 +1,6 @@
 package dev.mruniverse.pixelmotd.spigot.listeners.whitelist.type;
 
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 import dev.mruniverse.pixelmotd.spigot.listeners.whitelist.AbstractWhitelistListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ListenerBuilder extends AbstractWhitelistListener implements EventExecutor, Listener {
 
-    public ListenerBuilder(PixelMOTDBuilder plugin) {
+    public ListenerBuilder(PixelMOTD plugin) {
         super(plugin);
     }
 

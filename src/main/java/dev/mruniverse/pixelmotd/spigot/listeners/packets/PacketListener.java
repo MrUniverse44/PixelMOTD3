@@ -6,17 +6,17 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Ping;
-import dev.mruniverse.pixelmotd.global.Priority;
-import dev.mruniverse.pixelmotd.global.enums.GuardianFiles;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
-import dev.mruniverse.pixelmotd.global.enums.Type;
-import dev.mruniverse.pixelmotd.spigot.PixelMOTDBuilder;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Ping;
+import dev.mruniverse.pixelmotd.commons.Priority;
+import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.commons.enums.MotdType;
+import dev.mruniverse.pixelmotd.commons.enums.Type;
+import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 
 public class PacketListener extends PacketAdapter implements Ping {
 
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
     private final PacketPingBuilder pingBuilder;
 
     private boolean isWhitelisted;
@@ -27,7 +27,7 @@ public class PacketListener extends PacketAdapter implements Ping {
 
     private int MAX_PROTOCOL;
 
-    public PacketListener(PixelMOTDBuilder plugin, Priority priority) {
+    public PacketListener(PixelMOTD plugin, Priority priority) {
         super(plugin,get(priority), PacketType.Status.Server.SERVER_INFO);
         this.plugin = plugin;
         this.pingBuilder = new PacketPingBuilder(plugin);

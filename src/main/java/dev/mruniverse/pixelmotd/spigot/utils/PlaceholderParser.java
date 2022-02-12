@@ -1,6 +1,6 @@
 package dev.mruniverse.pixelmotd.spigot.utils;
 
-import dev.mruniverse.pixelmotd.global.GLogger;
+import dev.mruniverse.pixelmotd.commons.GLogger;
 import me.clip.placeholderapi.PlaceholderAPI;
 
 public class PlaceholderParser {

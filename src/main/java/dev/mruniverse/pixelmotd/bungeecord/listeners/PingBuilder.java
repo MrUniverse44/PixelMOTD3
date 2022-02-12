@@ -1,12 +1,12 @@
 package dev.mruniverse.pixelmotd.bungeecord.listeners;
 
-import dev.mruniverse.pixelmotd.bungeecord.PixelMOTDBuilder;
-import dev.mruniverse.pixelmotd.global.Control;
-import dev.mruniverse.pixelmotd.global.Extras;
-import dev.mruniverse.pixelmotd.global.enums.*;
-import dev.mruniverse.pixelmotd.global.iridiumcolorapi.IridiumColorAPI;
-import dev.mruniverse.pixelmotd.global.minedown.MineDown;
-import dev.mruniverse.pixelmotd.global.shared.BungeeExtras;
+import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
+import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.Extras;
+import dev.mruniverse.pixelmotd.commons.enums.*;
+import dev.mruniverse.pixelmotd.commons.iridiumcolorapi.IridiumColorAPI;
+import dev.mruniverse.pixelmotd.commons.minedown.MineDown;
+import dev.mruniverse.pixelmotd.commons.shared.BungeeExtras;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.Favicon;
 import net.md_5.bungee.api.ProxyServer;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class PingBuilder {
-    private final PixelMOTDBuilder plugin;
+    private final PixelMOTD plugin;
 
     private final MotdBuilder builder;
 
@@ -27,7 +27,7 @@ public class PingBuilder {
 
     private Control control;
 
-    public PingBuilder(PixelMOTDBuilder plugin) {
+    public PingBuilder(PixelMOTD plugin) {
         this.plugin = plugin;
         this.builder = new MotdBuilder(plugin, plugin.getStorage().getLogs());
         this.extras = new BungeeExtras(plugin);

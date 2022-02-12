@@ -1,7 +1,7 @@
 package dev.mruniverse.pixelmotd.bungeecord.listeners;
 
-import dev.mruniverse.pixelmotd.global.GLogger;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
+import dev.mruniverse.pixelmotd.commons.GLogger;
+import dev.mruniverse.pixelmotd.commons.enums.MotdType;
 import net.md_5.bungee.api.Favicon;
 
 import javax.imageio.ImageIO;

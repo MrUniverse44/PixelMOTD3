@@ -1,7 +1,7 @@
 package dev.mruniverse.pixelmotd.spigot.listeners;
 
-import dev.mruniverse.pixelmotd.global.GLogger;
-import dev.mruniverse.pixelmotd.global.enums.MotdType;
+import dev.mruniverse.pixelmotd.commons.GLogger;
+import dev.mruniverse.pixelmotd.commons.enums.MotdType;
 import org.bukkit.Bukkit;
 import org.bukkit.util.CachedServerIcon;
 

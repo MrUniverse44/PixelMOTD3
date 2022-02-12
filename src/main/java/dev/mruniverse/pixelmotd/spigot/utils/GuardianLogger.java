@@ -1,6 +1,6 @@
 package dev.mruniverse.pixelmotd.spigot.utils;
 
-import dev.mruniverse.pixelmotd.global.GLogger;
+import dev.mruniverse.pixelmotd.commons.GLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

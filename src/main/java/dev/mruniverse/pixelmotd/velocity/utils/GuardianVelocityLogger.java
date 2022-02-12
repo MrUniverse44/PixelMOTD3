@@ -2,7 +2,7 @@ package dev.mruniverse.pixelmotd.velocity.utils;
 
 
 import com.velocitypowered.api.proxy.ProxyServer;
-import dev.mruniverse.pixelmotd.global.GLogger;
+import dev.mruniverse.pixelmotd.commons.GLogger;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 public class GuardianVelocityLogger implements GLogger {
     private final String hidePackage;
     private final ProxyServer server;
-    private String pluginName = "PixelMOTDBuilder";
+    private String pluginName = "PixelMOTD";
     private String containIdentifier = "mruniverse";
 
     /**
