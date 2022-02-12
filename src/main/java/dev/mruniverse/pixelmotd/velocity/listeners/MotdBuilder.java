@@ -48,6 +48,10 @@ public class MotdBuilder {
 
         File folder = IconFolders.fromText(plugin.getStorage().getFiles(), motdType);
 
+        if (!folder.exists()) {
+            logs.info("Icon-Folder (" + folder.getName() + ") has been created. [" + folder.mkdirs() + "]");
+        }
+
         File[] files = folder.listFiles((d, fn) -> fn.endsWith(".png"));
 
         if (files == null) {
