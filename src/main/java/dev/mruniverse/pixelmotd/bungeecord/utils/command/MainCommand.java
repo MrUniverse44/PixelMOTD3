@@ -1,8 +1,10 @@
 package dev.mruniverse.pixelmotd.bungeecord.utils.command;
 
 import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
+import dev.mruniverse.pixelmotd.commons.Control;
 import dev.mruniverse.pixelmotd.commons.enums.FileSaveMode;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
+import dev.mruniverse.pixelmotd.commons.utils.Updater;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -79,10 +81,28 @@ public class MainCommand extends Command {
                         sendMessage(sender, cmdPrefix + " admin whitelist &8- &7Whitelist Commands.");
                         sendMessage(sender, cmdPrefix + " admin blacklist &8- &7Blacklist Commands.");
                         sendMessage(sender, cmdPrefix + " admin reload &8- &7Reload the plugin.");
+                        sendMessage(sender, cmdPrefix + " admin updater &8- &7Updater Command.");
                         sendMessage(sender, "&8[] &f= &bOPTIONAL &8| &8() &f= &bOBLIGATORY");
                         sendMessage(sender, "&a&l────── PIXEL MOTD ──────");
                     }
                     return;
+                }
+
+                if (args[1].equalsIgnoreCase("updater")) {
+                    if (hasPermission(sender, "pmotd.admin.updater", true) || hasPermission(sender,"pmotd.admin.help.*",true)) {
+                        final Control settings = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS);
+                        if (settings.getStatus("settings.update-check", true)) {
+                            sendMessage(sender, "&9Updater Command has been used, information will be posted in Console");
+                            if (settings.getStatus("settings.auto-download-updates", true)) {
+                                new Updater(plugin.getStorage().getLogs(), plugin.getDescription().getVersion(), 37177, plugin.getDataFolder(), Updater.UpdateType.CHECK_DOWNLOAD);
+                            } else {
+                                new Updater(plugin.getStorage().getLogs(), plugin.getDescription().getVersion(), 37177, plugin.getDataFolder(), Updater.UpdateType.VERSION_CHECK);
+                            }
+                            sendMessage(sender, "&bUpdater has been applied read info in Console.");
+                        } else {
+                            sendMessage(sender, "&cUpdater is not enabled in settings.yml");
+                        }
+                    }
                 }
 
                 if (args[1].equalsIgnoreCase("reload")) {

@@ -45,6 +45,10 @@ public class PingBuilder {
     }
 
     private void load() {
+        iconSystem = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system");
+        playerSystem = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.player-system.toggle",true);
+        control = plugin.getStorage().getFiles().getControl(GuardianFiles.MOTDS);
+
         motdsMap.clear();
 
         for (MotdType motdType : MotdType.values()) {
@@ -56,9 +60,6 @@ public class PingBuilder {
                     )
             );
         }
-        iconSystem = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system");
-        playerSystem = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.player-system.toggle",true);
-        control = plugin.getStorage().getFiles().getControl(GuardianFiles.MOTDS);
     }
 
     private List<String> loadMotds(MotdType type) {
