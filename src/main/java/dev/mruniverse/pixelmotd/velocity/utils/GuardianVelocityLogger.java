@@ -47,7 +47,7 @@ public class GuardianVelocityLogger implements GLogger {
      * @param message message to send.
      */
     public void error(String message) {
-        sendMessage("&f[&cERROR &7| &f" + pluginName + "] " + message);
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 " + message);
     }
     /**
      * Send an error message to console.
@@ -56,27 +56,27 @@ public class GuardianVelocityLogger implements GLogger {
     public void error(Exception throwable) {
         String location = throwable.getClass().getName();
         String error = throwable.getClass().getSimpleName();
-        sendMessage("&f[&cERROR &7| &f" + pluginName + "] -------------------------");
-        sendMessage("&f[&cERROR &7| &f" + pluginName + "] Location: " + location.replace("." + error,""));
-        sendMessage("&f[&cERROR &7| &f" + pluginName + "] Error: " + error);
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 -------------------------");
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 Location: " + location.replace("." + error,""));
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 Error: " + error);
         if (throwable.getStackTrace() != null) {
-            sendMessage("&f[&cERROR &7| &f" + pluginName + "] Internal - StackTrace: ");
+            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 Internal - StackTrace: ");
             List<StackTraceElement> other = new ArrayList<>();
             for(StackTraceElement line : throwable.getStackTrace()) {
                 if (line.toString().contains(containIdentifier)) {
-                    sendMessage("&f[&cERROR &7| &f" + pluginName + "] (Line: " + line.getLineNumber() + ") " + line.toString().replace("(" + line.getFileName() + ":" + line.getLineNumber() + ")","").replace(hidePackage,""));
+                    sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 (Line: " + line.getLineNumber() + ") " + line.toString().replace("(" + line.getFileName() + ":" + line.getLineNumber() + ")","").replace(hidePackage,""));
                 } else {
                     other.add(line);
                 }
             }
-            sendMessage("&f[&cERROR &7| &f" + pluginName + "]  -------------------------");
-            sendMessage("&f[&cERROR &7| &f" + pluginName + "] External - StackTrace: ");
+            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7  -------------------------");
+            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 External - StackTrace: ");
             for(StackTraceElement line : other) {
-                sendMessage("&f[&cERROR &7| &f" + pluginName + "] (Line: " + line.getLineNumber() + ") (Class: " + line.getFileName() + ") (Method: " + line.getMethodName() + ")".replace(".java",""));
+                sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 (Line: " + line.getLineNumber() + ") (Class: " + line.getFileName() + ") (Method: " + line.getMethodName() + ")".replace(".java",""));
             }
 
         }
-        sendMessage("&f[&cERROR &7| &f" + pluginName + "]  -------------------------");
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7  -------------------------");
     }
 
     /**
@@ -84,7 +84,7 @@ public class GuardianVelocityLogger implements GLogger {
      * @param message message to send.
      */
     public void warn(String message) {
-        sendMessage("&f[&eWARN &7| &f" + pluginName + "] " + message);
+        sendMessage("&8[&eWarn &8| &7" + pluginName + "&8]&7 " + message);
     }
 
     /**
@@ -92,7 +92,7 @@ public class GuardianVelocityLogger implements GLogger {
      * @param message message to send.
      */
     public void debug(String message) {
-        sendMessage("&f[&9DEBUG &7| &f" + pluginName + "] " + message);
+        sendMessage("&8[&9Info &8| &7" + pluginName + "&8]&7 " + message);
     }
 
     /**
@@ -100,7 +100,7 @@ public class GuardianVelocityLogger implements GLogger {
      * @param message message to send.
      */
     public void info(String message) {
-        sendMessage("&f[&bINFO &7| &f" + pluginName + "] " + message);
+        sendMessage("&8[&3Info &8| &7" + pluginName + "&8]&7 " + message);
     }
 
 

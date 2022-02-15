@@ -5,6 +5,7 @@ import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.api.util.Favicon;
 import dev.mruniverse.pixelmotd.commons.Control;
 import dev.mruniverse.pixelmotd.commons.Extras;
+import dev.mruniverse.pixelmotd.commons.GLogger;
 import dev.mruniverse.pixelmotd.commons.enums.*;
 import dev.mruniverse.pixelmotd.commons.shared.VelocityExtras;
 import dev.mruniverse.pixelmotd.velocity.PixelMOTD;
@@ -44,28 +45,25 @@ public class PingBuilder {
     }
 
     private String getMotd(MotdType type) {
-        List<String> motds = control.getContent(type.getPath().replace(".",""),false);
+        List<String> motds = control.getContent(type.getPath().replace(".",""), false);
         return motds.get(control.getRandom().nextInt(motds.size()));
     }
 
     public void execute(MotdType motdType, ProxyPingEvent event, int code) {
 
+        final GLogger logs = plugin.getStorage().getLogs();
+
         if (!plugin.getConfigVersion().isWork()) {
-            plugin.getStorage().getLogs().info("Your configuration is outdated,please check your config for missing paths, paths issues or update the plugin for new paths!");
-            plugin.getStorage().getLogs().info("You can backup your plugin files and let the plugin create new files to fix the issue");
-            plugin.getStorage().getLogs().info("Or apply manually file changes and update the config-version of the settings.yml to the latest config-version.");
+            logs.info("Your configuration is outdated,please check your config for missing paths, paths issues or update the plugin for new paths!");
+            logs.info("You can backup your plugin files and let the plugin create new files to fix the issue");
+            logs.info("Or apply manually file changes and update the config-version of the settings.yml to the latest config-version.");
             return;
         }
 
         ServerPing.Builder ping = event.getPing().asBuilder();
 
-        String motd;
-        try {
-            motd = getMotd(motdType);
-        } catch (Throwable ignored) {
-            plugin.getStorage().getLogs().error("This file isn't updated to the latest file or the motd-path is incorrect, can't find motds for MotdType: " + motdType.getName());
-            return;
-        }
+        String motd = getMotd(motdType);
+
         String line1,line2,completed;
         int online,max;
 
@@ -73,7 +71,9 @@ public class PingBuilder {
 
         if (plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system")) {
             Favicon img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
-            if (img != null) ping.favicon(img);
+            if (img != null) {
+                ping.favicon(img);
+            }
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
@@ -153,12 +153,8 @@ public class PingBuilder {
             lines = control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
         }
         for(String line : lines) {
-            try {
-                UUID id = UUID.randomUUID();
-                hoverToShow = addHoverLine(hoverToShow, new ServerPing.SamplePlayer(extras.getVariables(line,online,max), id));
-            } catch (Throwable ignored) {
-                plugin.getStorage().getLogs().info("Can't show the hover, please check if everything is correct in your motd config.");
-            }
+            UUID id = UUID.randomUUID();
+            hoverToShow = addHoverLine(hoverToShow, new ServerPing.SamplePlayer(extras.getVariables(line,online,max), id));
         }
         return hoverToShow;
     }

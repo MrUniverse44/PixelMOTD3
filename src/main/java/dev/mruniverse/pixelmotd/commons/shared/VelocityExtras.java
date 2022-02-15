@@ -117,8 +117,8 @@ public class VelocityExtras implements Extras {
             if (message.contains("%event_")) {
                 Date CurrentDate;
                 CurrentDate = new Date();
-                for (String event : events.getContent("events", false)) {
-                    try {
+                try {
+                    for (String event : events.getContent("events", false)) {
                         String timeLeft;
                         long difference = getEventDate(events, event).getTime() - CurrentDate.getTime();
                         MotdEventFormat format = MotdEventFormat.getFromText(events.getString("events." + event + ".format-Type"));
@@ -129,10 +129,12 @@ public class VelocityExtras implements Extras {
                         }
                         message = message.replace("%event_" + event + "_name%", events.getString("events." + event + ".eventName"))
                                 .replace("%event_" + event + "_TimeZone%", events.getString("events." + event + ".TimeZone"))
-                                .replace("%event_" + event + "_TimeLeft%", timeLeft);
-                    } catch (Throwable ignored) {
-                        plugin.getStorage().getLogs().info("Can't load event info of " + event);
+                                .replace("%event_" + event + "_TimeLeft%", timeLeft)
+                                .replace("%event_" + event + "_zone%", events.getString("events." + event + ".TimeZone"))
+                                .replace("%event_" + event + "_left%", timeLeft);
                     }
+                } catch (ParseException ignored) {
+                    plugin.getStorage().getLogs().info("Can't load events");
                 }
             }
             return message;

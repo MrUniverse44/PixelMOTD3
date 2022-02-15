@@ -111,13 +111,13 @@ public class MainCommand extends Command {
                         try {
                             plugin.getStorage().getFiles().reloadFile(FileSaveMode.ALL);
 
-                            plugin.getPing().update();
-
                             String lang = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getString("settings.language","en");
 
                             plugin.getStorage().getFiles().setMessages(lang);
 
                             plugin.update(plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS));
+
+                            plugin.getPing().update();
 
                             plugin.getStorage().updatePriority();
 

@@ -1,6 +1,8 @@
 package dev.mruniverse.pixelmotd.velocity;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
@@ -12,6 +14,8 @@ import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.commons.enums.InitialMode;
 import dev.mruniverse.pixelmotd.commons.shared.ConfigVersion;
 import dev.mruniverse.pixelmotd.commons.shared.VelocityInput;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.nio.file.Path;
 
@@ -32,28 +36,35 @@ import org.slf4j.Logger;
 )
 public class PixelMOTD {
 
-    @Inject
     private final ProxyServer server;
-    @Inject
+
     private final Logger logger;
 
     private final Storage storage;
 
     private final ConfigVersion configVersion;
 
-    // path of the plugin
-    @Inject
-    private @DataDirectory
-    Path dataDirectory;
+    private final Path dataDirectory;
+
+    private final CommandManager commandManager;
 
     private final Metrics.Factory metricsFactory;
 
     // connect to the server and logger
     @Inject
-    public PixelMOTD(ProxyServer server, Logger logger, Metrics.Factory metricsFactory) {
+    public PixelMOTD(
+            final ProxyServer server,
+            final Logger logger,
+            final CommandManager commandManager,
+            @DataDirectory final @NonNull Path dataDirectory,
+            final Metrics.Factory metricsFactory,
+            final @NonNull Injector injector
+            ) {
         this.server = server;
         this.logger = logger;
         this.metricsFactory = metricsFactory;
+        this.commandManager = commandManager;
+        this.dataDirectory = dataDirectory;
 
         storage = new Storage(this);
         storage.setInputManager(new VelocityInput(this));
@@ -68,6 +79,10 @@ public class PixelMOTD {
             storage.getLogs().info("Your configuration is outdated!");
             configVersion.setWork(false);
         }
+    }
+
+    public @NonNull Path dataDirectory() {
+        return this.dataDirectory;
     }
 
     public Storage getStorage() {
