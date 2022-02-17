@@ -43,7 +43,9 @@ public enum MotdType implements Motd {
 
     @Override
     public String getSettings(MotdSettings settings) {
-        if (hasMotd) return getPath() + motd + settings.getPath();
+        if (hasMotd) {
+            return path + motd + settings.getPath();
+        }
         return settings.getPath();
     }
 

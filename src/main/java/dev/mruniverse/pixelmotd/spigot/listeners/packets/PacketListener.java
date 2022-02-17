@@ -55,11 +55,21 @@ public class PacketListener extends PacketAdapter implements Ping {
 
     @Override
     public void onPacketSending(final PacketEvent event) {
-        if (event.getPacketType() != PacketType.Status.Server.SERVER_INFO) return;
-        if (event.isCancelled()) return;
-        if (event.getPlayer() == null) return;
+        if (event.getPacketType() != PacketType.Status.Server.SERVER_INFO) {
+            return;
+        }
+        if (event.isCancelled()) {
+            return;
+        }
+        if (event.getPlayer() == null) {
+            return;
+        }
 
         final WrappedServerPing ping = event.getPacket().getServerPings().read(0);
+
+        if (ping == null) {
+            return;
+        }
 
         final int protocol = plugin.getProtocolVersion(event.getPlayer());
 

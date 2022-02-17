@@ -68,7 +68,7 @@ public class PixelMOTD extends Plugin {
 
         loadWhitelist(settings);
 
-        Metrics bukkitMetrics = new Metrics(instance, 8509);
+        Metrics bungeeMetrics = new Metrics(instance, 8509);
 
         if (settings.getStatus("settings.update-check",true)) {
             if (settings.getStatus("settings.auto-download-updates",true)) {
@@ -85,7 +85,7 @@ public class PixelMOTD extends Plugin {
             storage.getLogs().info("Your configuration is outdated!");
             configVersion.setWork(false);
         }
-        storage.getLogs().debug(String.format("Spigot metrics has been enabled &7(%s)", bukkitMetrics.isEnabled()));
+        storage.getLogs().debug(String.format("Bungee metrics has been enabled &7(%s)", bungeeMetrics.isEnabled()));
         if (settings.getStatus("settings.server-status.toggle",false)) {
             checker = new ServerStatusChecker(this);
             checker.start();

@@ -35,10 +35,14 @@ public enum MotdSettings implements Settings {
 
     public static MotdSettings getValuePath(MotdPlayersMode mode, boolean isMaxPlayerPath) {
         if (isMaxPlayerPath) {
-            if (mode.equals(MotdPlayersMode.VALUES)) return PLAYERS_MAX_VALUES;
+            if (mode.equals(MotdPlayersMode.VALUES)) {
+                return PLAYERS_MAX_VALUES;
+            }
             return PLAYERS_MAX_SINGLE_VALUE;
         }
-        if (mode.equals(MotdPlayersMode.VALUES)) return PLAYERS_ONLINE_VALUES;
+        if (mode.equals(MotdPlayersMode.VALUES)) {
+            return PLAYERS_ONLINE_VALUES;
+        }
         return PLAYERS_ONLINE_SINGLE_VALUE;
     }
 }
