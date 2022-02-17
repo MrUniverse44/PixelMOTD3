@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 @Plugin(
         id = "pixelmotd",
         name = "PixelMOTD",
-        version = "9.2.3-SNAPSHOT",
+        version = "9.2.3.1-SNAPSHOT",
         description = "Simple Motd Plugin",
         url = "https://github.com/MrUniverse44/PixelMOTD3",
         authors = {"MrUniverse44"}
