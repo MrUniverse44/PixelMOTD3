@@ -8,7 +8,8 @@ public enum PluginVersion implements Config {
     V9_2_0(2),
     V9_2_1(2),
     V9_2_2(3),
-    V9_2_3(4);
+    V9_2_3(4),
+    V9_2_4(4);
 
     private final int version;
 

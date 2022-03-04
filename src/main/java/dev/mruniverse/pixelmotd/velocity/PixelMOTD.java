@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 @Plugin(
         id = "pixelmotd",
         name = "PixelMOTD",
-        version = "9.2.3.1-SNAPSHOT",
+        version = "9.2.4-SNAPSHOT",
         description = "Simple Motd Plugin",
         url = "https://github.com/MrUniverse44/PixelMOTD3",
         authors = {"MrUniverse44"}
@@ -49,6 +49,8 @@ public class PixelMOTD {
     private final CommandManager commandManager;
 
     private final Metrics.Factory metricsFactory;
+
+    private static PixelMOTD plugin;
 
     // connect to the server and logger
     @Inject
@@ -104,7 +106,7 @@ public class PixelMOTD {
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
 
-        server.getEventManager().register(this,new PingListener(this));
+        server.getEventManager().register(this, new PingListener(this));
 
         Metrics metrics = metricsFactory.make(this,8509);
 

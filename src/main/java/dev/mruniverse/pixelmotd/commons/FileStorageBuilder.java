@@ -10,9 +10,9 @@ import java.util.HashMap;
 
 public class FileStorageBuilder implements FileStorage {
 
-    private final HashMap<GuardianFiles,Control> files = new HashMap<>();
+    private final HashMap<GuardianFiles, Control> files = new HashMap<>();
 
-    private final HashMap<IconFolders,File> folders = new HashMap<>();
+    private final HashMap<IconFolders, File> folders = new HashMap<>();
 
     private final GLogger logs;
 
@@ -85,11 +85,11 @@ public class FileStorageBuilder implements FileStorage {
     }
 
     private void loadIconFolder() {
-        folders.put(IconFolders.GENERAL,new File(dataFolder,IconFolders.GENERAL.getName()));
+        folders.put(IconFolders.GENERAL, new File(dataFolder,IconFolders.GENERAL.getName()));
         File general = folders.get(IconFolders.GENERAL);
         for(IconFolders folder : IconFolders.values()) {
             if (folder != IconFolders.GENERAL) {
-                folders.put(folder,new File(general,folder.getName()));
+                folders.put(folder, new File(general,folder.getName()));
             }
         }
     }
@@ -97,7 +97,7 @@ public class FileStorageBuilder implements FileStorage {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void checkIconFolder() {
-        for(File folders : folders.values()) {
+        for (File folders : folders.values()) {
             if (!folders.exists()) folders.mkdir();
         }
     }
