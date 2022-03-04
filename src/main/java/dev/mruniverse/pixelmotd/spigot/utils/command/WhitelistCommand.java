@@ -88,7 +88,7 @@ public class WhitelistCommand {
                 String reason;
                 if (arguments.length >= 3) {
                     reason = Converter.ListToStringText(
-                            Arrays.asList(getArguments(arguments))
+                            Arrays.asList(getArguments(arguments, 2))
                     );
                 } else {
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getString("settings.default-reason","The server will be updated!");
@@ -128,7 +128,7 @@ public class WhitelistCommand {
                 String reason;
                 if (arguments.length >= 3) {
                     reason = Converter.ListToStringText(
-                            Arrays.asList(getArguments(arguments))
+                            Arrays.asList(getArguments(arguments, 2))
                     );
                 } else {
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getString("settings.default-reason","The server will be updated!");
@@ -253,12 +253,12 @@ public class WhitelistCommand {
         sendMessage(sender,"&7Invalid arguments, please use the correct syntax.");
     }
 
-    private String[] getArguments(String[] args) {
-        String[] arguments = new String[args.length - 3];
+    private String[] getArguments(String[] args, int size) {
+        String[] arguments = new String[args.length - size];
         int argID = 0;
         int aID = 0;
         for(String arg : args) {
-            if (aID < 3) {
+            if (aID < size) {
                 arguments[argID] = arg;
                 argID++;
             }

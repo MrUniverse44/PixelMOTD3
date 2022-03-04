@@ -176,7 +176,9 @@ public class PacketPingBuilder {
                     result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), IridiumColorAPI.process(extras.getVariables(line, online, max))));
                 }
             }
+            return result;
         }
+
         if (playerSystem) {
             for (String line : extras.getConvertedLines(control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)), control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)))) {
                 result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line, online, max)));
