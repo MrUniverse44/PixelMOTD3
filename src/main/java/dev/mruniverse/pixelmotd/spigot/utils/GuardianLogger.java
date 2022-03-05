@@ -54,7 +54,7 @@ public class GuardianLogger implements GLogger {
      * @param message message to send.
      */
     public void error(String message) {
-        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 " + message);
+        sendMessage("&8[&bError &8| &f" + pluginName + "&8]&7 " + message);
     }
     /**
      * Send a error message to console.
@@ -63,27 +63,27 @@ public class GuardianLogger implements GLogger {
     public void error(Exception throwable) {
         String location = throwable.getClass().getName();
         String error = throwable.getClass().getSimpleName();
-        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 -------------------------");
-        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 Location: " + location.replace("." + error,""));
-        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 Error: " + error);
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b -------------------------");
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b Location: " + location.replace("." + error,""));
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b Error: " + error);
         if (throwable.getStackTrace() != null) {
-            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 Internal - StackTrace: ");
+            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b Internal - StackTrace: ");
             List<StackTraceElement> other = new ArrayList<>();
             for (StackTraceElement line : throwable.getStackTrace()) {
                 if (line.toString().contains(containIdentifier)) {
-                    sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 (Line: " + line.getLineNumber() + ") " + line.toString().replace("(" + line.getFileName() + ":" + line.getLineNumber() + ")","").replace(hidePackage,""));
+                    sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b (Line: " + line.getLineNumber() + ") " + line.toString().replace("(" + line.getFileName() + ":" + line.getLineNumber() + ")","").replace(hidePackage,""));
                 } else {
                     other.add(line);
                 }
             }
-            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7  -------------------------");
-            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 External - StackTrace: ");
+            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b  -------------------------");
+            sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b External - StackTrace: ");
             for (StackTraceElement line : other) {
-                sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 (Line: " + line.getLineNumber() + ") (Class: " + line.getFileName() + ") (Method: " + line.getMethodName() + ")".replace(".java",""));
+                sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b (Line: " + line.getLineNumber() + ") (Class: " + line.getFileName() + ") (Method: " + line.getMethodName() + ")".replace(".java",""));
             }
 
         }
-        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7  -------------------------");
+        sendMessage("&8[&bError &8| &7" + pluginName + "&8]&b  -------------------------");
     }
 
     /**
