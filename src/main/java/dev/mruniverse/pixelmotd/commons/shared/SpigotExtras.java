@@ -37,7 +37,7 @@ public class SpigotExtras implements Extras {
         variables.clear();
         Control settings = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS);
         String path = "settings.online-variables";
-        for(String key : settings.getContent(path, false)) {
+        for (String key : settings.getContent(path, false)) {
             ListMode mode = ListMode.getFromText(key, settings.getString(path + "." + key + ".mode"));
             List<String> values = settings.getStringList(path + "." + key + ".values");
             variables.put(mode, values);
@@ -116,7 +116,7 @@ public class SpigotExtras implements Extras {
 
     private String getWorlds(String message) {
         if (message.contains("%variable_")) {
-            for(Map.Entry<ListMode, List<String>> entry : variables.entrySet()) {
+            for (Map.Entry<ListMode, List<String>> entry : variables.entrySet()) {
                 int online = 0;
                 switch (entry.getKey()) {
                     case NAMES:
@@ -138,7 +138,7 @@ public class SpigotExtras implements Extras {
 
     private int getOnlineByNames(List<String> values) {
         int count = 0;
-        for(World world : Bukkit.getWorlds()) {
+        for (World world : Bukkit.getWorlds()) {
             if (values.contains(world.getName())) {
                 count = count + world.getPlayers().size();
             }
@@ -148,7 +148,7 @@ public class SpigotExtras implements Extras {
 
     private int getOnlineByContains(List<String> values) {
         int count = 0;
-        for(World world : Bukkit.getWorlds()) {
+        for (World world : Bukkit.getWorlds()) {
             count = count + contain(world, values);
         }
         return count;
@@ -156,7 +156,7 @@ public class SpigotExtras implements Extras {
 
     private int contain(World world,List<String> values) {
         int number = 0;
-        for(String value :  values) {
+        for (String value :  values) {
             if (world.getName().contains(value)) {
                 return world.getPlayers().size();
             }

@@ -89,7 +89,7 @@ public class ServerStatusChecker {
 
     public Collection<ServerInfo> getOnlineServers() {
         List<ServerInfo> onlineServers = new ArrayList<>();
-        for(Map.Entry<String, Boolean> entry : getStatusMap().entrySet()) {
+        for (Map.Entry<String, Boolean> entry : getStatusMap().entrySet()) {
             if (entry.getValue() != null && entry.getValue()) {
                 ServerInfo server = plugin.getProxy().getServerInfo(entry.getKey());
                 if (server != null) {
@@ -102,7 +102,7 @@ public class ServerStatusChecker {
 
     public Collection<ServerInfo> getOfflineServers() {
         List<ServerInfo> offlineServers = new ArrayList<>();
-        for(Map.Entry<String, Boolean> entry : getStatusMap().entrySet()) {
+        for (Map.Entry<String, Boolean> entry : getStatusMap().entrySet()) {
             if (entry.getValue() != null && !entry.getValue()) {
                 ServerInfo server = plugin.getProxy().getServerInfo(entry.getKey());
                 if (server != null) {
@@ -115,7 +115,7 @@ public class ServerStatusChecker {
 
     @SuppressWarnings("deprecation")
     public void refreshStatusMap(Collection<ServerInfo> servers) {
-        for(final ServerInfo server : servers) {
+        for (final ServerInfo server : servers) {
             if (server.getPlayers().size() == 0) {
                 plugin.getProxy().getScheduler().runAsync(plugin, () -> setStatus(server, isReachable(server.getAddress())));
             } else {

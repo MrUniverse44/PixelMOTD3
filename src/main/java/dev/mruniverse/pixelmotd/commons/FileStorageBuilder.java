@@ -39,7 +39,7 @@ public class FileStorageBuilder implements FileStorage {
     }
 
     private void load() {
-        for(GuardianFiles guardianFiles : GuardianFiles.values()) {
+        for (GuardianFiles guardianFiles : GuardianFiles.values()) {
             File mainFolder = dataFolder;
             if (guardianFiles.isInDifferentFolder()) {
                 mainFolder = new File(dataFolder,guardianFiles.getFolderName());
@@ -87,7 +87,7 @@ public class FileStorageBuilder implements FileStorage {
     private void loadIconFolder() {
         folders.put(IconFolders.GENERAL, new File(dataFolder,IconFolders.GENERAL.getName()));
         File general = folders.get(IconFolders.GENERAL);
-        for(IconFolders folder : IconFolders.values()) {
+        for (IconFolders folder : IconFolders.values()) {
             if (folder != IconFolders.GENERAL) {
                 folders.put(folder, new File(general,folder.getName()));
             }
@@ -189,7 +189,7 @@ public class FileStorageBuilder implements FileStorage {
                 break;
             case ALL:
             default:
-                for(GuardianFiles file : GuardianFiles.values()) {
+                for (GuardianFiles file : GuardianFiles.values()) {
                     files.get(file).reload();
                 }
                 break;
@@ -231,7 +231,7 @@ public class FileStorageBuilder implements FileStorage {
                 break;
             case ALL:
             default:
-                for(GuardianFiles file : GuardianFiles.values()) {
+                for (GuardianFiles file : GuardianFiles.values()) {
                     files.get(file).save();
                 }
                 break;

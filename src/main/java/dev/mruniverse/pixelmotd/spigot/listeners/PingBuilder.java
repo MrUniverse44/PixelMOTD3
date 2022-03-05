@@ -2,11 +2,13 @@ package dev.mruniverse.pixelmotd.spigot.listeners;
 
 import dev.mruniverse.pixelmotd.commons.Control;
 import dev.mruniverse.pixelmotd.commons.Extras;
+import dev.mruniverse.pixelmotd.commons.FileStorage;
 import dev.mruniverse.pixelmotd.commons.GLogger;
 import dev.mruniverse.pixelmotd.commons.enums.*;
 import dev.mruniverse.pixelmotd.commons.iridiumcolorapi.IridiumColorAPI;
 import dev.mruniverse.pixelmotd.commons.shared.SpigotExtras;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
+import dev.mruniverse.pixelmotd.spigot.storage.Storage;
 import dev.mruniverse.pixelmotd.spigot.utils.PlaceholderParser;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.util.CachedServerIcon;
@@ -42,17 +44,29 @@ public class PingBuilder {
     }
 
     private void load() {
-        iconSystem = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system");
-        control = plugin.getStorage().getFiles().getControl(GuardianFiles.MOTDS);
+        Storage storage = plugin.getStorage();
+        FileStorage fileStorage = storage.getFiles();
+
+        iconSystem = fileStorage.getControl(GuardianFiles.SETTINGS).getStatus("settings.icon-system");
+
+        fileStorage.reloadFile(FileSaveMode.MOTDS);
+        control = fileStorage.getControl(GuardianFiles.MOTDS);
+
+        motdsMap.clear();
 
         for (MotdType motdType : MotdType.values()) {
+
+            List<String> motds = control.getContent(
+                    motdType.getPath().replace(".", ""),
+                    false
+            );
+
             motdsMap.put(
                     motdType,
-                    control.getContent(
-                            motdType.getPath().replace(".", ""),
-                            false
-                    )
+                    motds
             );
+
+            storage.getLogs().info("&aMotds loaded for type &e" + motdType.getName() + "&a, motds loaded: &f" + motds.toString().replace("[","").replace("]",""));
         }
     }
 

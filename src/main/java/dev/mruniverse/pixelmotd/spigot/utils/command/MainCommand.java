@@ -151,7 +151,7 @@ public class MainCommand implements CommandExecutor {
         String[] arguments = new String[args.length - 2];
         int argID = 0;
         int aID = 0;
-        for(String arg : args) {
+        for (String arg : args) {
             if (aID != 0 && aID != 1) {
                 arguments[argID] = arg;
                 argID++;

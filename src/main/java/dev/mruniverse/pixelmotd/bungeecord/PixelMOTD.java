@@ -45,7 +45,6 @@ public class PixelMOTD extends Plugin {
         storage.updatePriority();
 
         Priority listener = Priority.getFromText(settings.getString("settings.event-priority", "HIGH"));
-        ping = new PingListenerHighest(this);
         switch (listener) {
             default:
             case HIGHEST:

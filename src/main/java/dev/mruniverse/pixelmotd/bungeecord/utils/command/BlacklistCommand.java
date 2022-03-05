@@ -89,7 +89,7 @@ public class BlacklistCommand {
                 String reason;
                 if (arguments.length >= 3) {
                     reason = Converter.ListToStringText(
-                            Arrays.asList(getArguments(arguments))
+                            Arrays.asList(getArguments(arguments, 2))
                     );
                 } else {
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).getString("settings.default-reason","The server will be updated!");
@@ -128,7 +128,7 @@ public class BlacklistCommand {
                 String reason;
                 if (arguments.length >= 3) {
                     reason = Converter.ListToStringText(
-                            Arrays.asList(getArguments(arguments))
+                            Arrays.asList(getArguments(arguments, 2))
                     );
                 } else {
                     reason = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST).getString("settings.default-reason","You are blocked from this server!");
@@ -200,7 +200,7 @@ public class BlacklistCommand {
         if (arguments[0].equalsIgnoreCase("list")) {
             sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
             Control control = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
-            for(String key : control.getContent("players",false)) {
+            for (String key : control.getContent("players",false)) {
                 sendList(sender,control,key);
             }
             sendMessage(sender,"&8");
@@ -215,11 +215,11 @@ public class BlacklistCommand {
         List<String> players = control.getStringList(player);
         List<String> uuids = control.getStringList(uuid);
         sendMessage(sender,"&8" + key + " players: (&7" + players.size() + "&8)");
-        for(String value : players) {
+        for (String value : players) {
             sendMessage(sender,"  &8- &7" + value);
         }
         sendMessage(sender,"&8" + key + " uuids: (&7" + players.size() + "&8)");
-        for(String value : uuids) {
+        for (String value : uuids) {
             sendMessage(sender,"  &8- &7" + value);
         }
     }
@@ -244,12 +244,12 @@ public class BlacklistCommand {
         );
     }
 
-    private String[] getArguments(String[] args) {
-        String[] arguments = new String[args.length - 3];
+    private String[] getArguments(String[] args, int size) {
+        String[] arguments = new String[args.length - size];
         int argID = 0;
         int aID = 0;
-        for(String arg : args) {
-            if (aID < 3) {
+        for (String arg : args) {
+            if (aID < size) {
                 arguments[argID] = arg;
                 argID++;
             }

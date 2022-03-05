@@ -62,7 +62,7 @@ public class GuardianVelocityLogger implements GLogger {
         if (throwable.getStackTrace() != null) {
             sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 Internal - StackTrace: ");
             List<StackTraceElement> other = new ArrayList<>();
-            for(StackTraceElement line : throwable.getStackTrace()) {
+            for (StackTraceElement line : throwable.getStackTrace()) {
                 if (line.toString().contains(containIdentifier)) {
                     sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 (Line: " + line.getLineNumber() + ") " + line.toString().replace("(" + line.getFileName() + ":" + line.getLineNumber() + ")","").replace(hidePackage,""));
                 } else {
@@ -71,7 +71,7 @@ public class GuardianVelocityLogger implements GLogger {
             }
             sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7  -------------------------");
             sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 External - StackTrace: ");
-            for(StackTraceElement line : other) {
+            for (StackTraceElement line : other) {
                 sendMessage("&8[&bError &8| &7" + pluginName + "&8]&7 (Line: " + line.getLineNumber() + ") (Class: " + line.getFileName() + ") (Method: " + line.getMethodName() + ")".replace(".java",""));
             }
 

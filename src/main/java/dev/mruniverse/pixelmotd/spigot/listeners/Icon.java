@@ -37,6 +37,7 @@ public class Icon {
     private CachedServerIcon getFavicon(File icon) {
         try {
             BufferedImage image = ImageIO.read(icon);
+            logs.info("&aIcon loaded: &6" + icon.getName() + "&a of MotdType &6" + motdType.getName());
             return Bukkit.loadServerIcon(image);
         } catch (Exception exception) {
             logs.error("Can't create favicon: " + name + ", maybe the icon is not 64x64 or is broken. Showing Exception:");

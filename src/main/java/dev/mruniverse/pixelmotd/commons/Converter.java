@@ -33,14 +33,14 @@ public class Converter {
 
     public static List<String> listReplacer(List<String> list, Map<String,String> replacements) {
         List<String> replaced = new ArrayList<>();
-        for(String line : list) {
+        for (String line : list) {
             replaced.add(replacedLine(line,replacements));
         }
         return replaced;
     }
 
     private static String replacedLine(String line,Map<String,String> replacements) {
-        for(Map.Entry<String,String> entry : replacements.entrySet()) {
+        for (Map.Entry<String,String> entry : replacements.entrySet()) {
             line = line.replace(entry.getKey(),entry.getValue());
         }
         return line;

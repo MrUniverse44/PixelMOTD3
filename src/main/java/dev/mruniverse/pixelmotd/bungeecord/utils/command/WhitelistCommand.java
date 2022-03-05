@@ -202,7 +202,7 @@ public class WhitelistCommand {
         if (arguments[0].equalsIgnoreCase("list")) {
             sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
             Control control = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
-            for(String key : control.getContent("players",false)) {
+            for (String key : control.getContent("players",false)) {
                 sendList(sender,control,key);
             }
             sendMessage(sender,"&a&l────── PIXEL MOTD ──────");
@@ -217,11 +217,11 @@ public class WhitelistCommand {
         List<String> players = control.getStringList(player);
         List<String> uuids = control.getStringList(uuid);
         sendMessage(sender,"&8" + key + " players: (&7" + players.size() + "&8)");
-        for(String value : players) {
+        for (String value : players) {
             sendMessage(sender,"  &8- &7" + value);
         }
         sendMessage(sender,"&8" + key + " uuids: (&7" + players.size() + "&8)");
-        for(String value : uuids) {
+        for (String value : uuids) {
             sendMessage(sender,"  &8- &7" + value);
         }
     }
@@ -262,7 +262,7 @@ public class WhitelistCommand {
         String[] arguments = new String[args.length - size];
         int argID = 0;
         int aID = 0;
-        for(String arg : args) {
+        for (String arg : args) {
             if (aID < size) {
                 arguments[argID] = arg;
                 argID++;
