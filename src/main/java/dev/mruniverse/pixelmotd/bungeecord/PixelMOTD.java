@@ -115,6 +115,11 @@ public class PixelMOTD extends Plugin {
         getProxy().getPluginManager().registerListener(this,whitelist);
     }
 
+    @Override
+    public void onDisable() {
+        ping.getPlayerDatabase().clear();
+    }
+
     public void update(Control control) {
         this.configVersion.setControl(control);
     }

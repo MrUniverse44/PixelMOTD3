@@ -102,6 +102,11 @@ public final class PixelMOTD extends JavaPlugin {
         runnable.runTaskLater(this,1L);
     }
 
+    @Override
+    public void onDisable() {
+        ping.getPlayerDatabase().clear();
+    }
+
     public static PixelMOTD getInstance() {
         return instance;
     }

@@ -16,6 +16,9 @@ public class PlayersDatabase {
     }
 
     public void add(String key, String value) {
+        if (playersMap.size() >= 50) {
+            clear();
+        }
         playersMap.put(key, value);
     }
 

@@ -4,11 +4,13 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import dev.mruniverse.pixelmotd.commons.Control;
 import dev.mruniverse.pixelmotd.commons.FileStorageBuilder;
+import dev.mruniverse.pixelmotd.commons.Ping;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.commons.enums.InitialMode;
 import dev.mruniverse.pixelmotd.commons.shared.ConfigVersion;
@@ -44,6 +46,8 @@ public class PixelMOTD {
 
     private Storage storage;
 
+    private Ping ping;
+
     private ConfigVersion configVersion;
 
     @Inject
@@ -64,6 +68,10 @@ public class PixelMOTD {
 
     public Storage getStorage() {
         return storage;
+    }
+
+    public Ping getPing() {
+        return ping;
     }
 
     public ProxyServer getServer() {
@@ -105,7 +113,9 @@ public class PixelMOTD {
             configVersion.setWork(false);
         }
 
-        server.getEventManager().register(this, new PingListener(this));
+        ping = new PingListener(this);
+
+        server.getEventManager().register(this, ping);
 
         Metrics metrics = metricsFactory.make(this,8509);
 
@@ -115,6 +125,11 @@ public class PixelMOTD {
         logger.error("Velocity support isn't finished so commands,features don't work yet");
         logger.error("So the plugin don't have files generated for velocity for now, sorry.");
         logger.error("For now i recommend use another Motd plugin for velocity");
+    }
+
+    @Subscribe
+    public void onShutdown(ProxyShutdownEvent event) {
+        ping.getPlayerDatabase().clear();
     }
 
     public File getPluginFolder() {
