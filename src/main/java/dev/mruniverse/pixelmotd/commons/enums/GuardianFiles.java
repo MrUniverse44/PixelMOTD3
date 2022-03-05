@@ -40,6 +40,11 @@ public enum GuardianFiles implements GuardianFile {
     }
 
     @Override
+    public String getPath() {
+        return "/" + this.file;
+    }
+
+    @Override
     public boolean isInDifferentFolder() {
         return this.differentFolder;
     }

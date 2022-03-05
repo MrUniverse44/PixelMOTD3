@@ -58,7 +58,7 @@ public class FileStorageBuilder implements FileStorage {
                 } else if (initialMode.equals(InitialMode.VELOCITY)) {
                     files.put(guardianFiles, new VelocityControl(logs,
                             new File(mainFolder, guardianFiles.getFileName()),
-                            inputManager.getInputStream(guardianFiles.getFileName())
+                            inputManager.getInputStream(guardianFiles.getPath())
                     ));
                 }
             }

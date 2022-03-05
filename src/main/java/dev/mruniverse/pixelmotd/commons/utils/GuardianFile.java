@@ -6,4 +6,6 @@ public interface GuardianFile {
     boolean isInDifferentFolder();
 
     String getFolderName();
+
+    String getPath();
 }

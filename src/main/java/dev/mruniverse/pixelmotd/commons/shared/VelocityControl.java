@@ -106,6 +106,10 @@ public class VelocityControl implements Control {
             try (InputStream in = resource) {
                 if (in != null) {
                     Files.copy(in, fileToSave.toPath());
+                } else {
+                    logs.info("Not found InputStream of file: " + fileToSave.getName());
+                    logs.info("Creating empty file!");
+                    fileToSave.createNewFile();
                 }
             } catch (Exception exception) {
                 logs.error(String.format("A error occurred while copying the config %s to the plugin data folder. Error: %s", fileToSave.getName(), exception));
@@ -124,6 +128,7 @@ public class VelocityControl implements Control {
             cnf = ConfigurationProvider.getProvider(ConfigurationProvider.Provider.YAML).load(file);
         } catch (Exception exception) {
             logs.error("Can't load: " + file.getName() + ".!");
+            logs.error("File: " + file.getPath());
             logs.error(exception);
         }
 

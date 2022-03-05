@@ -14,7 +14,7 @@ public class VelocityInput implements InputManager {
 
     @Override
     public InputStream getInputStream(String resource) {
-        return plugin.getClass().getResourceAsStream(resource);
+        return VelocityInput.class.getResourceAsStream(resource);
     }
 
     @Override
