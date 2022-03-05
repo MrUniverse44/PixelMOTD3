@@ -12,7 +12,22 @@ public class PlayersDatabase {
     }
 
     public String getPlayer(String key) {
+        if (key.contains(":")) {
+            return getPlayerFromSocket(key);
+        }
         return playersMap.computeIfAbsent(key, V -> "unknown#1");
+    }
+
+    public String getPlayerFromSocket(String socket) {
+        socket = socket.replace("/","");
+
+        String[] key = socket.split(":");
+
+        return getPlayer(key[0]);
+    }
+
+    public Map<String, String> getPlayersMap() {
+        return playersMap;
     }
 
     public void add(String key, String value) {

@@ -71,6 +71,8 @@ public class PingListenerHigh implements Listener, Ping {
 
         final String user = getPlayerDatabase().getPlayer(socketAddress.toString());
 
+        plugin.getStorage().getLogs().info(getPlayerDatabase().getPlayersMap().toString());
+
         if (isWhitelisted) {
             if (protocol >= 735) {
                 pingBuilder.execute(MotdType.WHITELIST_HEX, ping, protocol, user);
