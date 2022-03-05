@@ -15,10 +15,10 @@ public class Icon {
     private final String name;
 
     public Icon(GLogger logs, MotdType motdType, File icon) {
-        this.favicon  = getFavicon(icon);
         this.motdType = motdType;
         this.name     = icon.getName();
         this.logs     = logs;
+        this.favicon  = getFavicon(icon);
     }
 
     public MotdType getType() {
