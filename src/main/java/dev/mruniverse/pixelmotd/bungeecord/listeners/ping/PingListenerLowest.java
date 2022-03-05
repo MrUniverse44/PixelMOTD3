@@ -15,6 +15,8 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
+import java.net.SocketAddress;
+
 public class PingListenerLowest implements Listener, Ping {
 
     private final PixelMOTD plugin;
@@ -65,28 +67,32 @@ public class PingListenerLowest implements Listener, Ping {
 
         final int protocol = data.getVersion();
 
+        final SocketAddress socketAddress = data.getSocketAddress();
+
+        final String user = getPlayerDatabase().getPlayer(socketAddress.toString());
+
         if (isWhitelisted) {
             if (protocol >= 735) {
-                pingBuilder.execute(MotdType.WHITELIST_HEX,ping,protocol);
+                pingBuilder.execute(MotdType.WHITELIST_HEX, ping, protocol, user);
                 return;
             }
-            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED), ping,protocol);
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED), ping, protocol, user);
             return;
         }
         if (!hasOutdatedClient && !hasOutdatedServer || protocol >= MIN_PROTOCOL && protocol <= MAX_PROTOCOL) {
             if (protocol >= 735) {
-                pingBuilder.execute(MotdType.NORMAL_HEX,ping,protocol);
+                pingBuilder.execute(MotdType.NORMAL_HEX, ping, protocol, user);
                 return;
             }
-            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping,protocol);
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, protocol, user);
             return;
         }
         if (MAX_PROTOCOL < protocol && hasOutdatedServer) {
-            pingBuilder.execute(MotdType.OUTDATED_SERVER,ping,protocol);
+            pingBuilder.execute(MotdType.OUTDATED_SERVER, ping, protocol, user);
             return;
         }
         if (MIN_PROTOCOL > protocol && hasOutdatedClient) {
-            pingBuilder.execute(MotdType.OUTDATED_CLIENT,ping,protocol);
+            pingBuilder.execute(MotdType.OUTDATED_CLIENT, ping, protocol, user);
         }
     }
 }

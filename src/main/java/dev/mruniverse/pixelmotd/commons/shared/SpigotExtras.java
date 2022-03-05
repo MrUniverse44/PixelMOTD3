@@ -46,12 +46,13 @@ public class SpigotExtras implements Extras {
 
 
     @Override
-    public String getVariables(String message, int customOnline, int customMax) {
+    public String getVariables(String message, int customOnline, int customMax, String user) {
         return getWorlds(message).replace("%online%","" + Bukkit.getOnlinePlayers().size())
                 .replace("%max%","" + max)
                 .replace("%fake_online%","" + customOnline)
                 .replace("%plugin_author%","MrUniverse44")
                 .replace("%whitelist_author%", getWhitelistAuthor())
+                .replace("%user%", user)
                 .replace("%plugin_version%", plugin.getDescription().getVersion())
                 .replace("%fake_max%","" + customMax);
     }

@@ -3,12 +3,16 @@ package dev.mruniverse.pixelmotd.velocity.listeners;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
+import com.velocitypowered.api.proxy.InboundConnection;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import dev.mruniverse.pixelmotd.commons.Control;
 import dev.mruniverse.pixelmotd.commons.Ping;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.commons.enums.MotdType;
 import dev.mruniverse.pixelmotd.velocity.PixelMOTD;
+
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public class PingListener implements Ping {
     private final PixelMOTD plugin;
@@ -52,28 +56,42 @@ public class PingListener implements Ping {
 
         final int protocol = ping.getVersion().getProtocol();
 
+        final String user;
+
+        InboundConnection connection = event.getConnection();
+
+        InetSocketAddress socketAddress = connection.getRemoteAddress();
+
+        if (socketAddress != null) {
+            InetAddress address = socketAddress.getAddress();
+
+            user = getPlayerDatabase().getPlayer(address.getHostAddress());
+        } else {
+            user = "unknown#1";
+        }
+
         if (isWhitelisted) {
             if (protocol >= 735) {
-                pingBuilder.execute(MotdType.WHITELIST_HEX,event,protocol);
+                pingBuilder.execute(MotdType.WHITELIST_HEX, event, protocol, user);
                 return;
             }
-            pingBuilder.execute(MotdType.WHITELIST,event,protocol);
+            pingBuilder.execute(MotdType.WHITELIST, event, protocol, user);
             return;
         }
         if (!hasOutdatedClient && !hasOutdatedServer || protocol >= MIN_PROTOCOL && protocol <= MAX_PROTOCOL) {
             if (protocol >= 735) {
-                pingBuilder.execute(MotdType.NORMAL_HEX,event,protocol);
+                pingBuilder.execute(MotdType.NORMAL_HEX, event, protocol, user);
                 return;
             }
-            pingBuilder.execute(MotdType.NORMAL,event,protocol);
+            pingBuilder.execute(MotdType.NORMAL, event, protocol, user);
             return;
         }
         if (MAX_PROTOCOL < protocol && hasOutdatedServer) {
-            pingBuilder.execute(MotdType.OUTDATED_SERVER,event,protocol);
+            pingBuilder.execute(MotdType.OUTDATED_SERVER, event, protocol, user);
             return;
         }
         if (MIN_PROTOCOL > protocol && hasOutdatedClient) {
-            pingBuilder.execute(MotdType.OUTDATED_CLIENT,event,protocol);
+            pingBuilder.execute(MotdType.OUTDATED_CLIENT, event, protocol, user);
         }
     }
 }

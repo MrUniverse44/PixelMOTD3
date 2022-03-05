@@ -3,6 +3,7 @@ package dev.mruniverse.pixelmotd.bungeecord.listeners.whitelist;
 import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.commons.Control;
 import dev.mruniverse.pixelmotd.commons.Converter;
+import dev.mruniverse.pixelmotd.commons.GLogger;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -13,17 +14,22 @@ import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 
+import java.net.SocketAddress;
+
 public abstract class AbstractWhitelistListener implements Listener {
 
     private final String security = ChatColor.translateAlternateColorCodes('&',"&cWarning PixelMOTD detected a Null IP from player: &6");
 
     private final TextComponent suggest = new TextComponent(ChatColor.translateAlternateColorCodes('&',"&cIf you want a Block-Null-IPs features suggest it to me and i will add this feature."));
 
+    private final PixelMOTD plugin;
+
     private Control whitelist;
 
     private Control blacklist;
 
     public AbstractWhitelistListener(PixelMOTD builder) {
+        plugin = builder;
         whitelist = builder.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
         blacklist = builder.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
     }
@@ -50,8 +56,11 @@ public abstract class AbstractWhitelistListener implements Listener {
             return;
         }
 
+        final SocketAddress socket = connection.getSocketAddress();
         final String user = connection.getName();
         final String uuid = connection.getUniqueId().toString();
+
+        plugin.getPing().getPlayerDatabase().fromSocket(socket.toString(), user);
 
         if (whitelist.getStatus("whitelist.global.Enabled")) {
             if (!whitelist.getStringList("players.global.by-name").contains(user) && !whitelist.getStringList("players.global.by-uuid").contains(uuid)) {

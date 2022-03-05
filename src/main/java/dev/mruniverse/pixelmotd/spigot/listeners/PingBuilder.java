@@ -90,7 +90,7 @@ public class PingBuilder {
         return motds.get(control.getRandom().nextInt(motds.size()));
     }
 
-    public void execute(MotdType motdType, ServerListPingEvent ping) {
+    public void execute(MotdType motdType, ServerListPingEvent ping, String user) {
 
         final GLogger logs = plugin.getStorage().getLogs();
 
@@ -135,17 +135,32 @@ public class PingBuilder {
 
         if (!motdType.isHexMotd()) {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
+
+            if (plugin.hasPAPI()) {
+                line1 = PlaceholderParser.parse(logs, user, line1);
+            }
+
             line2 = control.getColoredString(motdType.getSettings(MotdSettings.LINE2));
-            completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
+
+            if (plugin.hasPAPI()) {
+                line2 = PlaceholderParser.parse(logs, user, line2);
+            }
+
+            completed = extras.getVariables(line1, online, max, user) + "\n" + extras.getVariables(line2, online, max, user);
         } else {
             line1 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE1));
+
+            if (plugin.hasPAPI()) {
+                line1 = PlaceholderParser.parse(logs, user, line1);
+            }
+
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
 
-            completed = IridiumColorAPI.process(extras.getVariables(line1,online,max)) + "\n" + IridiumColorAPI.process(extras.getVariables(line2,online,max));
-        }
+            if (plugin.hasPAPI()) {
+                line2 = PlaceholderParser.parse(logs, user, line2);
+            }
 
-        if (plugin.hasPAPI()) {
-            completed = PlaceholderParser.parse(plugin.getStorage().getLogs(),completed);
+            completed = IridiumColorAPI.process(extras.getVariables(line1, online, max, user)) + "\n" + IridiumColorAPI.process(extras.getVariables(line2, online, max, user));
         }
 
         ping.setMotd(completed);

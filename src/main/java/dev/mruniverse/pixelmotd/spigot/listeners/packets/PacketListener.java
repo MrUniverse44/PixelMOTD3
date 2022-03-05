@@ -14,6 +14,9 @@ import dev.mruniverse.pixelmotd.commons.enums.MotdType;
 import dev.mruniverse.pixelmotd.commons.enums.Type;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+
 public class PacketListener extends PacketAdapter implements Ping {
 
     private final PixelMOTD plugin;
@@ -73,45 +76,57 @@ public class PacketListener extends PacketAdapter implements Ping {
 
         final int protocol = plugin.getProtocolVersion(event.getPlayer());
 
+        final InetSocketAddress socketAddress = event.getPlayer().getAddress();
+
+        final String user;
+
+        if (socketAddress != null) {
+            final InetAddress address = socketAddress.getAddress();
+
+            user = getPlayerDatabase().getPlayer(address.getHostAddress());
+        } else {
+            user = "unknown#1";
+        }
+
         if (isWhitelisted) {
             if (protocol >= 735) {
-                pingBuilder.execute(MotdType.WHITELIST_HEX,ping, protocol);
+                pingBuilder.execute(MotdType.WHITELIST_HEX, ping, protocol, user);
                 return;
             }
-            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED),ping, protocol);
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED), ping, protocol, user);
             return;
         }
 
         if (MAX_PROTOCOL < protocol) {
             if (hasOutdatedServer) {
-                pingBuilder.execute(MotdType.OUTDATED_SERVER,ping, protocol);
+                pingBuilder.execute(MotdType.OUTDATED_SERVER, ping, protocol, user);
             } else {
                 if (protocol >= 735) {
-                    pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
+                    pingBuilder.execute(MotdType.NORMAL_HEX, ping, protocol, user);
                     return;
                 }
-                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping, protocol);
+                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, protocol, user);
             }
             return;
         }
         if (MIN_PROTOCOL > protocol) {
             if (hasOutdatedClient) {
-                pingBuilder.execute(MotdType.OUTDATED_CLIENT, ping, protocol);
+                pingBuilder.execute(MotdType.OUTDATED_CLIENT, ping, protocol, user);
             } else {
                 if (protocol >= 735) {
-                    pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
+                    pingBuilder.execute(MotdType.NORMAL_HEX, ping, protocol, user);
                     return;
                 }
-                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),ping, protocol);
+                pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, protocol, user);
             }
 
             return;
         }
 
         if (protocol >= 735) {
-            pingBuilder.execute(MotdType.NORMAL_HEX,ping, protocol);
+            pingBuilder.execute(MotdType.NORMAL_HEX, ping, protocol, user);
         } else {
-            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, protocol);
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), ping, protocol, user);
         }
     }
 

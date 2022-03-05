@@ -30,11 +30,12 @@ public class VelocityExtras implements Extras {
 
 
     @Override
-    public String getVariables(String message, int customOnline, int customMax) {
+    public String getVariables(String message, int customOnline, int customMax, String user) {
         return getWorlds(message).replace("%online%", "" + plugin.getServer().getPlayerCount())
                 .replace("%max%", "" + max)
                 .replace("%fake_online%", "" + customOnline)
                 .replace("%plugin_author%", "MrUniverse44")
+                .replace("%user%", user)
                 .replace("%whitelist_author%", getWhitelistAuthor())
                 .replace("%fake_max%", "" + customMax);
     }

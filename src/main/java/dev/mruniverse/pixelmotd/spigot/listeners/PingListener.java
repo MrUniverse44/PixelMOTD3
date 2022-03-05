@@ -10,6 +10,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
+import java.net.InetAddress;
+
 public class PingListener implements Listener, Ping {
 
     private final PixelMOTD plugin;
@@ -39,11 +41,17 @@ public class PingListener implements Listener, Ping {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onMotd(ServerListPingEvent event) {
 
+        final InetAddress address = event.getAddress();
+
+        final String user;
+
+        user = getPlayerDatabase().getPlayer(address.getHostAddress());
+
         if (isWhitelisted) {
-            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED),event);
+            pingBuilder.execute(plugin.getStorage().getPriority().get(Type.WHITELISTED), event, user);
             return;
         }
-        pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT),event);
+        pingBuilder.execute(plugin.getStorage().getPriority().get(Type.DEFAULT), event, user);
     }
 
     @Override

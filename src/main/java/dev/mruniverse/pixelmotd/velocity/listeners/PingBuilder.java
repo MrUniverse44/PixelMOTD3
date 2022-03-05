@@ -96,7 +96,7 @@ public class PingBuilder {
         return motds.get(control.getRandom().nextInt(motds.size()));
     }
 
-    public void execute(MotdType motdType, ProxyPingEvent event, int code) {
+    public void execute(MotdType motdType, ProxyPingEvent event, int code, String user) {
 
         final GLogger logs = plugin.getStorage().getLogs();
 
@@ -159,7 +159,7 @@ public class PingBuilder {
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.HOVER_TOGGLE))) {
-            ping.samplePlayers(getHover(motdType,online,max));
+            ping.samplePlayers(getHover(motdType, online, max, user));
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PROTOCOL_TOGGLE))) {
@@ -180,7 +180,9 @@ public class PingBuilder {
                     extras.getVariables(
                             control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)),
                             online,
-                            max)
+                            max,
+                            user
+                    )
             ).content();
 
             ping.version(new ServerPing.Version(p1,protocolName));
@@ -189,18 +191,18 @@ public class PingBuilder {
         if (!motdType.isHexMotd()) {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getColoredString(motdType.getSettings(MotdSettings.LINE2));
-            completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
+            completed = extras.getVariables(line1, online, max, user) + "\n" + extras.getVariables(line2, online, max, user);
             result = Component.text(completed);
         } else {
             line1 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
             try {
-                completed = extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max);
+                completed = extras.getVariables(line1, online, max, user) + "\n" + extras.getVariables(line2, online, max, user);
                 result = Component.text(completed);
                 
             } catch (NullPointerException exception) {
                 plugin.getStorage().getLogs().error(exception);
-                completed = LegacyComponentSerializer.builder().character('&').build().deserialize(extras.getVariables(line1,online,max) + "\n" + extras.getVariables(line2,online,max)).content();
+                completed = LegacyComponentSerializer.builder().character('&').build().deserialize(extras.getVariables(line1, online, max, user) + "\n" + extras.getVariables(line2, online, max, user)).content();
                 result = Component.text(completed);
             }
         }
@@ -211,7 +213,7 @@ public class PingBuilder {
         event.setPing(ping.build());
     }
 
-    public ServerPing.SamplePlayer[] getHover(MotdType motdType, int online, int max) {
+    public ServerPing.SamplePlayer[] getHover(MotdType motdType, int online, int max, String user) {
         ServerPing.SamplePlayer[] hoverToShow = new ServerPing.SamplePlayer[0];
         List<String> lines;
         if (playerSystem) {
@@ -225,7 +227,7 @@ public class PingBuilder {
         }
         for (String line : lines) {
             UUID id = UUID.randomUUID();
-            hoverToShow = addHoverLine(hoverToShow, new ServerPing.SamplePlayer(extras.getVariables(line,online,max), id));
+            hoverToShow = addHoverLine(hoverToShow, new ServerPing.SamplePlayer(extras.getVariables(line, online, max, user), id));
         }
         return hoverToShow;
     }

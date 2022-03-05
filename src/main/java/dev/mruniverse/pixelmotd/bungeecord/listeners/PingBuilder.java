@@ -95,7 +95,7 @@ public class PingBuilder {
         return motds.get(control.getRandom().nextInt(motds.size()));
     }
 
-    public void execute(MotdType motdType, ServerPing ping, int code) {
+    public void execute(MotdType motdType, ServerPing ping, int code, String user) {
 
         final GLogger logs = plugin.getStorage().getLogs();
 
@@ -128,25 +128,47 @@ public class PingBuilder {
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TOGGLE))) {
-            MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TYPE)));
-            online = mode.execute(control,motdType,MotdSettings.getValuePath(mode,false),ProxyServer.getInstance().getOnlineCount());
+            MotdPlayersMode mode = MotdPlayersMode.getModeFromText(
+                    control.getString(motdType.getSettings(MotdSettings.PLAYERS_ONLINE_TYPE))
+            );
+            online = mode.execute(control,
+                    motdType,
+                    MotdSettings.getValuePath(mode,false),
+                    ProxyServer.getInstance().getOnlineCount()
+            );
         } else {
             online = ProxyServer.getInstance().getOnlineCount();
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PLAYERS_MAX_TOGGLE))) {
-            MotdPlayersMode mode = MotdPlayersMode.getModeFromText(control.getString(motdType.getSettings(MotdSettings.PLAYERS_MAX_TYPE)));
+            MotdPlayersMode mode = MotdPlayersMode.getModeFromText(
+                    control.getString(motdType.getSettings(MotdSettings.PLAYERS_MAX_TYPE))
+            );
             if (mode != MotdPlayersMode.EQUALS) {
-                max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), ping.getPlayers().getMax());
+                max = mode.execute(control,
+                        motdType,
+                        MotdSettings.getValuePath(mode, false),
+                        ping.getPlayers().getMax()
+                );
             } else {
-                max = mode.execute(control, motdType, MotdSettings.getValuePath(mode, false), online);
+                max = mode.execute(control,
+                        motdType,
+                        MotdSettings.getValuePath(mode, false),
+                        online
+                );
             }
         } else {
             max = ping.getPlayers().getMax();
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.HOVER_TOGGLE))) {
-            ping.getPlayers().setSample(getHover(motdType,online,max));
+            ping.getPlayers().setSample(
+                    getHover(motdType,
+                            online,
+                            max,
+                            user
+                    )
+            );
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PROTOCOL_TOGGLE))) {
@@ -165,7 +187,8 @@ public class PingBuilder {
                         extras.getVariables(
                                 control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)),
                                 online,
-                                max
+                                max,
+                                user
                         )
                 );
             } else {
@@ -173,7 +196,8 @@ public class PingBuilder {
                         extras.getVariables(
                                 control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)),
                                 online,
-                                max
+                                max,
+                                user
                         )
                 );
             }
@@ -185,14 +209,14 @@ public class PingBuilder {
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getColoredString(motdType.getSettings(MotdSettings.LINE2));
 
-            completed = extras.getVariables(line1, online, max) + "\n" + extras.getVariables(line2, online, max);
+            completed = extras.getVariables(line1, online, max, user) + "\n" + extras.getVariables(line2, online, max, user);
 
             result.addExtra(completed);
         } else {
             line1 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE1));
             line2 = control.getStringWithoutColors(motdType.getSettings(MotdSettings.LINE2));
 
-            completed = extras.getVariables(line1, online, max) + "\n" + extras.getVariables(line2, online, max);
+            completed = extras.getVariables(line1, online, max, user) + "\n" + extras.getVariables(line2, online, max, user);
 
             result = new TextComponent(new MineDown(completed.replace('§', '&')).urlDetection(false).toComponent());
         }
@@ -203,7 +227,7 @@ public class PingBuilder {
 
     }
 
-    public ServerPing.PlayerInfo[] getHover(MotdType motdType, int online, int max) {
+    public ServerPing.PlayerInfo[] getHover(MotdType motdType, int online, int max, String user) {
         ServerPing.PlayerInfo[] hoverToShow = new ServerPing.PlayerInfo[0];
         List<String> lines;
 
@@ -219,7 +243,7 @@ public class PingBuilder {
         final UUID uuid = UUID.fromString("0-0-0-0-0");
 
         for (String line : lines) {
-            hoverToShow = addHoverLine(hoverToShow, new ServerPing.PlayerInfo(extras.getVariables(line, online, max), uuid));
+            hoverToShow = addHoverLine(hoverToShow, new ServerPing.PlayerInfo(extras.getVariables(line, online, max, user), uuid));
         }
 
         return hoverToShow;
