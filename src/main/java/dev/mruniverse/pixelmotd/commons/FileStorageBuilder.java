@@ -146,9 +146,31 @@ public class FileStorageBuilder implements FileStorage {
                 return;
             }
             logs.info("Plugin now is using custom language-file code: '" + code + "'.");
-            files.put(GuardianFiles.MESSAGES, new SpigotControl(logs,
-                    new File(translationsFolder, "messages_" + code + ".yml"))
-            );
+            String fileName = "messages_" + code + ".yml";
+            if (isBungee) {
+                files.put(GuardianFiles.MESSAGES,
+                        new BungeeControl(
+                                logs,
+                                new File(translationsFolder, fileName)
+                        )
+                );
+            } else {
+                if (initialMode == InitialMode.VELOCITY) {
+                    files.put(GuardianFiles.MESSAGES,
+                            new VelocityControl(
+                                    logs,
+                                    new File(translationsFolder, fileName)
+                            )
+                    );
+                } else {
+                    files.put(GuardianFiles.MESSAGES,
+                            new SpigotControl(
+                                    logs,
+                                    new File(translationsFolder, fileName)
+                            )
+                    );
+                }
+            }
         }catch (Exception exception) {
             logs.error("Can't find messages file with code: " + code);
             logs.error(exception);
