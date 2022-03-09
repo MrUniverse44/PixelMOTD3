@@ -6,9 +6,12 @@ import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.FileStorage;
 import dev.mruniverse.pixelmotd.commons.Ping;
+import dev.mruniverse.pixelmotd.commons.enums.FileSaveMode;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.commons.enums.MotdType;
+import dev.mruniverse.pixelmotd.velocity.storage.Storage;
 import dev.mruniverse.pixelmotd.velocity.PixelMOTD;
 
 import java.net.InetAddress;
@@ -33,8 +36,15 @@ public class PingListener implements Ping {
     }
 
     private void load() {
-        final Control control = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS);
-        isWhitelisted = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
+        Storage storage = plugin.getStorage();
+        FileStorage fileStorage = storage.getFiles();
+
+        fileStorage.reloadFile(FileSaveMode.MOTDS);
+        fileStorage.reloadFile(FileSaveMode.SETTINGS);
+
+        final Control control = fileStorage.getControl(GuardianFiles.SETTINGS);
+
+        isWhitelisted = fileStorage.getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
         hasOutdatedClient = control.getStatus("settings.outdated-client-motd",true);
         hasOutdatedServer = control.getStatus("settings.outdated-server-motd",true);
         MAX_PROTOCOL = control.getInt("settings.max-server-protocol",756);

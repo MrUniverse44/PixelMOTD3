@@ -2,8 +2,11 @@ package dev.mruniverse.pixelmotd.bungeecord.listeners.ping;
 
 import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.bungeecord.listeners.PingBuilder;
+import dev.mruniverse.pixelmotd.bungeecord.storage.Storage;
 import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.FileStorage;
 import dev.mruniverse.pixelmotd.commons.Ping;
+import dev.mruniverse.pixelmotd.commons.enums.FileSaveMode;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.commons.enums.MotdType;
 import dev.mruniverse.pixelmotd.commons.enums.Type;
@@ -11,14 +14,10 @@ import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Cancellable;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
-import net.md_5.bungee.event.EventPriority;
 
 import java.net.SocketAddress;
 
-public class PingListenerLow implements Listener, Ping {
-
+public abstract class AbstractPingListener implements Ping {
     private final PixelMOTD plugin;
     private final PingBuilder pingBuilder;
 
@@ -30,16 +29,22 @@ public class PingListenerLow implements Listener, Ping {
 
     private int MAX_PROTOCOL;
 
-    public PingListenerLow(PixelMOTD plugin) {
+    public AbstractPingListener(PixelMOTD plugin) {
         this.plugin = plugin;
         this.pingBuilder = new PingBuilder(plugin);
-        plugin.getProxy().getPluginManager().registerListener(plugin, this);
         load();
     }
 
     private void load() {
-        final Control control = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS);
-        isWhitelisted = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
+        Storage storage = plugin.getStorage();
+        FileStorage fileStorage = storage.getFiles();
+
+        fileStorage.reloadFile(FileSaveMode.WHITELIST);
+        fileStorage.reloadFile(FileSaveMode.SETTINGS);
+
+        final Control control = fileStorage.getControl(GuardianFiles.SETTINGS);
+
+        isWhitelisted = fileStorage.getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
         hasOutdatedClient = control.getStatus("settings.outdated-client-motd",true);
         hasOutdatedServer = control.getStatus("settings.outdated-server-motd",true);
         MAX_PROTOCOL = control.getInt("settings.max-server-protocol",756);
@@ -55,8 +60,7 @@ public class PingListenerLow implements Listener, Ping {
     @Override
     public void setWhitelist(boolean status) { isWhitelisted = status; }
 
-    @EventHandler(priority = EventPriority.LOW)
-    public void onPing(final ProxyPingEvent event) {
+    public void execute(final ProxyPingEvent event) {
         final ServerPing ping = event.getResponse();
 
         if (ping == null || event instanceof Cancellable && ((Cancellable) event).isCancelled()) {

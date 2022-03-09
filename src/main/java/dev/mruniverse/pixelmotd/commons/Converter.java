@@ -22,10 +22,7 @@ public class Converter {
 
     public static String ListToStringText(List<String> list) {
         StringBuilder builder = new StringBuilder();
-        int line = 0;
-        int maxLine = list.size();
         for (String lines : list) {
-            line++;
             builder.append(" ").append(lines);
         }
         return builder.toString();

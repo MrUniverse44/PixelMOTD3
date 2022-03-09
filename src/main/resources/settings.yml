@@ -42,14 +42,14 @@ settings:
         - "hub2"
         - "hub3"
     exampleContains:
-      # CONTAINS (Example): You have sub-servers for SkyWars minigame, all servers contains "swmap" in the name.
-      # Example: swmap1,swmap2,swmap3,swmap4 and you want to get the online players count of these servers
-      # Including the lobby players-count (swlobby1,swlobby2). This mode will check the name of all servers
+      # CONTAINS (Example): You have sub-servers for SkyWars minigame, all servers contains "sw_map" in the name.
+      # Example: sw_map1,sw_map2,sw_map3,sw_map4 and you want to get the online players count of these servers
+      # Including the lobby players-count (sw_lobby1,sw_lobby2). This mode will check the name of all servers
       # with your values to get the online-size.
       mode: CONTAINS
       values:
-        - "swmap"
-        - "swlobby1"
+        - "sw_map"
+        - "sw_lobby1"
   # Player Name system, usage: %player_<number>% system
   player-system:
     # Toggle this option
@@ -74,8 +74,12 @@ settings:
       offline: 10
       timeout: 500
   # Customize your event priority level, priorities: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST, Now on bungeecord!
+  # For Velocity, priorities: NORMAL, FIRST, LATE, LAST, EARLY
+  # For default use: EARLY
   event-priority: HIGH
   # Customize your event priority level for blacklist & whitelist check: MONITOR-LOWEST-LOW-NORMAL-HIGH-HIGHEST
+  # For Velocity, priorities: NORMAL, FIRST, LATE, LAST, EARLY
+  # For default use: EARLY
   extras-event-priority: HIGH
   # Toggle the 1.16+ motd
   different-motd-for-116-or-higher: true

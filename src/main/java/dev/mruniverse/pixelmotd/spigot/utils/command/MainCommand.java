@@ -115,7 +115,7 @@ public class MainCommand implements CommandExecutor {
 
                             plugin.getStorage().updatePriority();
 
-                            plugin.getWhitelist().update(plugin);
+                            plugin.getWhitelist().update();
 
                         }catch (Exception exception) {
                             plugin.getStorage().getLogs().error("Something bad happened, maybe the plugin is broken, please check if you have all without issues");

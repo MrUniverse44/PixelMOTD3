@@ -11,11 +11,14 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import dev.mruniverse.pixelmotd.commons.Control;
 import dev.mruniverse.pixelmotd.commons.FileStorageBuilder;
 import dev.mruniverse.pixelmotd.commons.Ping;
+import dev.mruniverse.pixelmotd.commons.Priority;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.commons.enums.InitialMode;
 import dev.mruniverse.pixelmotd.commons.shared.ConfigVersion;
 import dev.mruniverse.pixelmotd.commons.shared.VelocityInput;
 
+import dev.mruniverse.pixelmotd.velocity.listeners.whitelist.AbstractWhitelistListener;
+import dev.mruniverse.pixelmotd.velocity.listeners.whitelist.type.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.File;
@@ -115,6 +118,17 @@ public class PixelMOTD {
 
         ping = new PingListener(this);
 
+        server.getEventManager().register(
+                this,
+                getPriority(
+                        Priority.getFromText(
+                                storage.getFiles().getControl(GuardianFiles.SETTINGS).getString(
+                                        "settings",
+                                        "NORMAL"
+                                )
+                        )
+                )
+        );
         server.getEventManager().register(this, ping);
 
         Metrics metrics = metricsFactory.make(this,8509);
@@ -134,6 +148,30 @@ public class PixelMOTD {
 
     public File getPluginFolder() {
         return pluginFolder;
+    }
+
+    public AbstractWhitelistListener getPriority(Priority priority) {
+        switch (priority) {
+            case HIGHEST:
+            case HIGH:
+            case LOWEST:
+            case LOW:
+            case MONITOR:
+            default:
+                logger.info("You are using a priority that is not for Velocity");
+                logger.info("The plugin is using priority: NORMAL, for Whitelist and Blacklist");
+                return new PlayerConnectNormal(this);
+            case EARLY:
+                return new PlayerConnectEarly(this);
+            case LATE:
+                return new PlayerConnectLate(this);
+            case LAST:
+                return new PlayerConnectLast(this);
+            case FIRST:
+                return new PlayerConnectFirst(this);
+            case NORMAL:
+                return new PlayerConnectNormal(this);
+        }
     }
 
 }

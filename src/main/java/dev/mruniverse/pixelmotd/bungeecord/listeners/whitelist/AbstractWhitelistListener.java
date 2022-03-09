@@ -3,7 +3,6 @@ package dev.mruniverse.pixelmotd.bungeecord.listeners.whitelist;
 import dev.mruniverse.pixelmotd.bungeecord.PixelMOTD;
 import dev.mruniverse.pixelmotd.commons.Control;
 import dev.mruniverse.pixelmotd.commons.Converter;
-import dev.mruniverse.pixelmotd.commons.GLogger;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -34,7 +33,7 @@ public abstract class AbstractWhitelistListener implements Listener {
         blacklist = builder.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
     }
 
-    public void update(PixelMOTD plugin) {
+    public void update() {
         whitelist = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
         blacklist = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
     }

@@ -8,8 +8,8 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-public class ListenerLowest extends AbstractWhitelistListener implements Listener {
-    public ListenerLowest(PixelMOTD plugin) {
+public class WhitelistListenerLowest extends AbstractWhitelistListener implements Listener {
+    public WhitelistListenerLowest(PixelMOTD plugin) {
 
         super(plugin);
     }

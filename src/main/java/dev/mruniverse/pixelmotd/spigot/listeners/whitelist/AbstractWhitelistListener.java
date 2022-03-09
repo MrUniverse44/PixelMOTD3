@@ -24,14 +24,13 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
 
     private Control blacklist;
 
-
     public AbstractWhitelistListener(PixelMOTD builder) {
         plugin = builder;
         whitelist = builder.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
         blacklist = builder.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
     }
 
-    public void update(PixelMOTD plugin) {
+    public void update() {
         whitelist = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST);
         blacklist = plugin.getStorage().getFiles().getControl(GuardianFiles.BLACKLIST);
     }
@@ -87,15 +86,29 @@ public abstract class AbstractWhitelistListener implements Listener, EventExecut
     }
 
     public void checkPlayer(PlayerTeleportEvent event) {
-        if (event == null) return;
+        if (event == null) {
+            return;
+        }
+
+        if (event.getTo() == null) {
+            return;
+        }
+
         final Player player = event.getPlayer();
+
         final String user = player.getName();
         final String uuid = player.getUniqueId().toString();
+
         World actualWorld = event.getPlayer().getWorld();
-        if (event.getTo() == null) return;
+
         World nextWorld = event.getTo().getWorld();
-        if (nextWorld == null) nextWorld = actualWorld;
+
+        if (nextWorld == null) {
+            nextWorld = actualWorld;
+        }
+
         final String target = nextWorld.getName();
+
         if (whitelist.getStatus("whitelist." + target + ".Enabled")) {
             if (!whitelist.getStringList("players." + target + ".by-name").contains(user) && !whitelist.getStringList("players." + target + ".by-uuid").contains(uuid)) {
                 String reason = Converter.ListToString(whitelist.getStringList("whitelist." + target + ".kick-message"));

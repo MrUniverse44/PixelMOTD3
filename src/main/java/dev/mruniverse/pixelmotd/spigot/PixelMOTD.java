@@ -145,8 +145,12 @@ public final class PixelMOTD extends JavaPlugin {
                 return EventPriority.HIGHEST;
             case NORMAL:
                 return EventPriority.NORMAL;
-            default:
+            case EARLY:
+            case LATE:
+            case LAST:
+            case FIRST:
             case HIGH:
+            default:
                 return EventPriority.HIGH;
             case LOWEST:
                 return EventPriority.LOWEST;

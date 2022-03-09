@@ -6,8 +6,16 @@ public enum Priority {
     NORMAL,
     LOW,
     LOWEST,
-    MONITOR;
+    MONITOR,
+    FIRST,
+    EARLY,
+    LATE,
+    LAST;
 
+    /**
+     * Get the priority for motd ping or whitelist / blacklist listeners.
+     * @return Priority
+     **/
     public static Priority getFromText(String text) {
         try {
             return Priority.valueOf(text.toUpperCase());

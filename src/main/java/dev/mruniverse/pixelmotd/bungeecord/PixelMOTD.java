@@ -1,6 +1,6 @@
 package dev.mruniverse.pixelmotd.bungeecord;
 
-import dev.mruniverse.pixelmotd.bungeecord.listeners.ping.*;
+import dev.mruniverse.pixelmotd.bungeecord.listeners.ping.type.*;
 import dev.mruniverse.pixelmotd.bungeecord.listeners.whitelist.AbstractWhitelistListener;
 import dev.mruniverse.pixelmotd.bungeecord.listeners.whitelist.type.*;
 import dev.mruniverse.pixelmotd.bungeecord.storage.Storage;
@@ -48,20 +48,30 @@ public class PixelMOTD extends Plugin {
         switch (listener) {
             default:
             case HIGHEST:
-                ping = new PingListenerHighest(this);
+                ping = new ProxyPingListenerHighest(this);
                 break;
             case HIGH:
-                ping = new PingListenerHigh(this);
+                ping = new ProxyPingListenerHigh(this);
+                break;
+            case FIRST:
+            case LAST:
+            case LATE:
+            case EARLY:
+                ping = new ProxyPingListenerNormal(this);
+                GLogger logger = getStorage().getLogs();
+                logger.info("You are using a priority that is for Velocity");
+                logger.info("The plugin is using priority for ProxyPing: NORMAL, for Whitelist and Blacklist");
+                logger.info("Please use a BungeeCord Priority");
                 break;
             case MONITOR:
             case NORMAL:
-                ping = new PingListenerNormal(this);
+                ping = new ProxyPingListenerNormal(this);
                 break;
             case LOW:
-                ping = new PingListenerLow(this);
+                ping = new ProxyPingListenerLow(this);
                 break;
             case LOWEST:
-                ping = new PingListenerLowest(this);
+                ping = new ProxyPingListenerLowest(this);
                 break;
         }
 
@@ -96,20 +106,30 @@ public class PixelMOTD extends Plugin {
         Priority priority = Priority.getFromText(value);
         switch (priority) {
             case LOW:
-                whitelist = new ListenerLow(this);
+                whitelist = new WhitelistListenerLow(this);
                 break;
             case LOWEST:
-                whitelist = new ListenerLowest(this);
+                whitelist = new WhitelistListenerLowest(this);
                 break;
             case HIGH:
-                whitelist = new ListenerHigh(this);
+                whitelist = new WhitelistListenerHigh(this);
+                break;
+            case FIRST:
+            case LAST:
+            case LATE:
+            case EARLY:
+                whitelist = new WhitelistListenerNormal(this);
+                GLogger logger = getStorage().getLogs();
+                logger.info("You are using a priority that is for Velocity");
+                logger.info("The plugin is using priority Whitelist / Blacklist Events: NORMAL, for Whitelist and Blacklist");
+                logger.info("Please use a BungeeCord Priority");
                 break;
             case MONITOR:
             case NORMAL:
-                whitelist = new ListenerNormal(this);
+                whitelist = new WhitelistListenerNormal(this);
                 break;
             case HIGHEST:
-                whitelist = new ListenerHighest(this);
+                whitelist = new WhitelistListenerHighest(this);
                 break;
         }
         getProxy().getPluginManager().registerListener(this,whitelist);

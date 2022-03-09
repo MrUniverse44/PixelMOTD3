@@ -68,7 +68,7 @@ public class WhitelistCommand {
                                 .replace("<type>",type.getName())
                                 .replace("<player>",value)
                 );
-                plugin.getWhitelist().update(plugin);
+                plugin.getWhitelist().update();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set(path,list);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).reload();
@@ -190,7 +190,7 @@ public class WhitelistCommand {
                                 .replace("<type>",type.getName())
                                 .replace("<player>",value)
                 );
-                plugin.getWhitelist().update(plugin);
+                plugin.getWhitelist().update();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).set(path,list);
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).save();
                 plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).reload();

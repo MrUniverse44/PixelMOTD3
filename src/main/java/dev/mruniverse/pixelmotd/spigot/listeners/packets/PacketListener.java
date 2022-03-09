@@ -7,12 +7,15 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
 import dev.mruniverse.pixelmotd.commons.Control;
+import dev.mruniverse.pixelmotd.commons.FileStorage;
 import dev.mruniverse.pixelmotd.commons.Ping;
 import dev.mruniverse.pixelmotd.commons.Priority;
+import dev.mruniverse.pixelmotd.commons.enums.FileSaveMode;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.commons.enums.MotdType;
 import dev.mruniverse.pixelmotd.commons.enums.Type;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
+import dev.mruniverse.pixelmotd.spigot.storage.Storage;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -31,7 +34,7 @@ public class PacketListener extends PacketAdapter implements Ping {
     private int MAX_PROTOCOL;
 
     public PacketListener(PixelMOTD plugin, Priority priority) {
-        super(plugin,get(priority), PacketType.Status.Server.SERVER_INFO);
+        super(plugin, get(priority), PacketType.Status.Server.SERVER_INFO);
         this.plugin = plugin;
         this.pingBuilder = new PacketPingBuilder(plugin);
         ProtocolLibrary.getProtocolManager().addPacketListener(this);
@@ -39,8 +42,15 @@ public class PacketListener extends PacketAdapter implements Ping {
     }
 
     private void load() {
-        final Control control = plugin.getStorage().getFiles().getControl(GuardianFiles.SETTINGS);
-        isWhitelisted = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
+        Storage storage = plugin.getStorage();
+        FileStorage fileStorage = storage.getFiles();
+
+        fileStorage.reloadFile(FileSaveMode.MOTDS);
+        fileStorage.reloadFile(FileSaveMode.SETTINGS);
+
+        final Control control = fileStorage.getControl(GuardianFiles.SETTINGS);
+
+        isWhitelisted = fileStorage.getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
         hasOutdatedClient = control.getStatus("settings.outdated-client-motd",true);
         hasOutdatedServer = control.getStatus("settings.outdated-server-motd",true);
         MAX_PROTOCOL = control.getInt("settings.max-server-protocol",756);

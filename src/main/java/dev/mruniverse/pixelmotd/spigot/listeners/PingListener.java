@@ -1,10 +1,13 @@
 package dev.mruniverse.pixelmotd.spigot.listeners;
 
+import dev.mruniverse.pixelmotd.commons.FileStorage;
 import dev.mruniverse.pixelmotd.commons.Ping;
 import dev.mruniverse.pixelmotd.commons.Priority;
+import dev.mruniverse.pixelmotd.commons.enums.FileSaveMode;
 import dev.mruniverse.pixelmotd.commons.enums.GuardianFiles;
 import dev.mruniverse.pixelmotd.commons.enums.Type;
 import dev.mruniverse.pixelmotd.spigot.PixelMOTD;
+import dev.mruniverse.pixelmotd.spigot.storage.Storage;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -29,7 +32,13 @@ public class PingListener implements Listener, Ping {
     }
 
     private void load() {
-        isWhitelisted = plugin.getStorage().getFiles().getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
+
+        Storage storage = plugin.getStorage();
+        FileStorage fileStorage = storage.getFiles();
+
+        fileStorage.reloadFile(FileSaveMode.MOTDS);
+
+        isWhitelisted = fileStorage.getControl(GuardianFiles.WHITELIST).getStatus("whitelist.global.Enabled");
         pingBuilder.update();
     }
 
