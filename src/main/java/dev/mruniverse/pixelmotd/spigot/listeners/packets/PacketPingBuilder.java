@@ -87,11 +87,18 @@ public class PacketPingBuilder {
         return list;
     }
 
+    /**
+     * This method will return the motd-name.
+     * @param type MotdType
+     * @return String
+     */
     private String getMotd(MotdType type) {
         List<String> motds = motdsMap.get(type);
+
         if (motds == null) {
             motds = loadMotds(type);
         }
+
         return motds.get(control.getRandom().nextInt(motds.size()));
     }
 
@@ -100,12 +107,18 @@ public class PacketPingBuilder {
         String motd = getMotd(motdType);
 
         String line1, line2, completed;
+
         int online, max;
 
         motdType.setMotd(motd);
 
+        boolean hex = motdType.isHexMotd();
+
         if (iconSystem) {
-            WrappedServerPing.CompressedImage img = builder.getFavicon(motdType, control.getString(motdType.getSettings(MotdSettings.ICONS_ICON)));
+            WrappedServerPing.CompressedImage img = builder.getFavicon(
+                    motdType,
+                    control.getString(motdType.getSettings(MotdSettings.ICONS_ICON))
+            );
             if (img != null) {
                 ping.setFavicon(img);
             }
@@ -132,7 +145,14 @@ public class PacketPingBuilder {
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.HOVER_TOGGLE))) {
-            ping.setPlayers(getHover(motdType,online,max, user));
+            ping.setPlayers(
+                    getHover(
+                            motdType,
+                            online,
+                            max,
+                            user
+                    )
+            );
         }
 
         if (control.getStatus(motdType.getSettings(MotdSettings.PROTOCOL_TOGGLE))) {
@@ -150,8 +170,17 @@ public class PacketPingBuilder {
 
             String result;
 
-            if (!motdType.isHexMotd()) {
-                result = ChatColor.translateAlternateColorCodes('&', extras.getVariables(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)), online, max, user));
+            if (!hex) {
+                result = color(
+                        extras.getVariables(
+                                control.getString(
+                                        motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)
+                                ),
+                                online,
+                                max,
+                                user
+                        )
+                );
             } else {
                 result = IridiumColorAPI.process(extras.getVariables(control.getString(motdType.getSettings(MotdSettings.PROTOCOL_MESSAGE)), online, max, user));
             }
@@ -161,7 +190,7 @@ public class PacketPingBuilder {
 
         GLogger logs = plugin.getStorage().getLogs();
 
-        if (!motdType.isHexMotd()) {
+        if (!hex) {
 
             line1 = control.getColoredString(motdType.getSettings(MotdSettings.LINE1));
 
@@ -191,7 +220,10 @@ public class PacketPingBuilder {
                 line2 = PlaceholderParser.parse(logs, user, line2);
             }
 
-            completed = IridiumColorAPI.process(extras.getVariables(line1,online,max, user)) + "\n" + IridiumColorAPI.process(extras.getVariables(line2,online,max, user));
+            completed = process(extras.getVariables(line1,online,max, user))
+                    + "\n"
+                    + process(extras.getVariables(line2,online,max, user)
+            );
 
         }
 
@@ -201,28 +233,71 @@ public class PacketPingBuilder {
 
     }
 
+    /**
+     * This method will return the text with color codes
+     * @return String
+     */
+    public String color(String text) {
+        return ChatColor.translateAlternateColorCodes(
+                '&',
+                text
+        );
+    }
+    /**
+     * This method will return the text with Hex Color variables
+     * @return String
+     */
+    public String process(String text) {
+        return IridiumColorAPI.process(text);
+    }
+
+    /**
+     * This method will return the hover for the motd converted with variables and hex colors.
+     * Depending on the minecraft version and the MotdType data.
+     * @return List<WrappedGameProfile>
+     */
     public List<WrappedGameProfile> getHover(MotdType motdType, int online, int max, String user) {
         List<WrappedGameProfile> result = new ArrayList<>();
-        if (motdType.isHexMotd()) {
-            if (playerSystem) {
-                for (String line : extras.getConvertedLines(control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES)), control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)))) {
-                    result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), IridiumColorAPI.process(extras.getVariables(line, online, max, user))));
-                }
-            } else {
-                for (String line : control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES))) {
-                    result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), IridiumColorAPI.process(extras.getVariables(line, online, max, user))));
-                }
-            }
-            return result;
-        }
+
+        List<String> lines;
+
+        boolean hex = motdType.isHexMotd();
 
         if (playerSystem) {
-            for (String line : extras.getConvertedLines(control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES)), control.getInt(motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)))) {
-                result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line, online, max, user)));
+            lines = extras.getConvertedLines(
+                    control.getStringList(
+                            motdType.getSettings(MotdSettings.HOVER_LINES)
+                    ),
+                    control.getInt(
+                            motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)
+                    )
+            );
+        } else {
+            if (hex) {
+                lines = control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
+            } else {
+                lines = control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
+            }
+        }
+        if (hex) {
+            for (String line : lines) {
+                result.add(
+                        new WrappedGameProfile(
+                                UUID.fromString("0-0-0-0-0"),
+                                IridiumColorAPI.process(
+                                        extras.getVariables(line, online, max, user)
+                                )
+                        )
+                );
             }
         } else {
-            for (String line : control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES))) {
-                result.add(new WrappedGameProfile(UUID.fromString("0-0-0-0-0"), extras.getVariables(line, online, max, user)));
+            for (String line : lines) {
+                result.add(
+                        new WrappedGameProfile(
+                                UUID.fromString("0-0-0-0-0"),
+                                extras.getVariables(line, online, max, user)
+                        )
+                );
             }
         }
         return result;

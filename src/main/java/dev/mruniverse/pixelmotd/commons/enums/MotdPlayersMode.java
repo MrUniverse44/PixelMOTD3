@@ -77,15 +77,29 @@ public enum MotdPlayersMode implements Players {
     };
 
     public static MotdPlayersMode getModeFromText(String paramText) {
-        paramText = paramText.toUpperCase();
-        if (paramText.contains("EQUAL")) return MotdPlayersMode.EQUALS;
-        if (paramText.contains("DEFAULT")) return MotdPlayersMode.DEFAULT;
-        if (paramText.equalsIgnoreCase("ADD_MIDDLE")) return MotdPlayersMode.ADD_MIDDLE;
-        if (paramText.equalsIgnoreCase("REMOVE_MIDDLE")) return MotdPlayersMode.REMOVE_MIDDLE;
-        if (paramText.equalsIgnoreCase("ADD_DOUBLE")) return MotdPlayersMode.ADD_DOUBLE;
-        if (paramText.contains("ADD")) return MotdPlayersMode.ADD;
-        if (paramText.contains("REMOVE")) return MotdPlayersMode.REMOVE;
-        if (paramText.contains("VALUES")) return MotdPlayersMode.VALUES;
-        return MotdPlayersMode.SINGLE_VALUE;
+        paramText = paramText.toLowerCase();
+        switch (paramText) {
+            case "equal":
+                return EQUALS;
+            case "default":
+                return DEFAULT;
+            case "add_middle":
+                return ADD_MIDDLE;
+            case "remove_middle":
+                return REMOVE_MIDDLE;
+            case "add_double":
+                return ADD_DOUBLE;
+            case "add":
+                return ADD;
+            case "remove":
+                return REMOVE;
+            case "values":
+                return VALUES;
+            default:
+            case "single":
+            case "single_value":
+                return SINGLE_VALUE;
+
+        }
     }
 }
