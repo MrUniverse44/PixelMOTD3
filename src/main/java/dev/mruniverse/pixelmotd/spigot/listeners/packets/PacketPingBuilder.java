@@ -263,29 +263,30 @@ public class PacketPingBuilder {
 
         boolean hex = motdType.isHexMotd();
 
+        if (hex) {
+            lines = control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
+        } else {
+            lines = control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
+        }
+
         if (playerSystem) {
             lines = extras.getConvertedLines(
-                    control.getStringList(
-                            motdType.getSettings(MotdSettings.HOVER_LINES)
-                    ),
+                    lines,
                     control.getInt(
                             motdType.getSettings(MotdSettings.HOVER_MORE_PLAYERS)
                     )
             );
-        } else {
-            if (hex) {
-                lines = control.getStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
-            } else {
-                lines = control.getColoredStringList(motdType.getSettings(MotdSettings.HOVER_LINES));
-            }
         }
+
         if (hex) {
             for (String line : lines) {
                 result.add(
                         new WrappedGameProfile(
                                 UUID.fromString("0-0-0-0-0"),
-                                IridiumColorAPI.process(
-                                        extras.getVariables(line, online, max, user)
+                                color(
+                                    IridiumColorAPI.process(
+                                            extras.getVariables(line, online, max, user)
+                                    )
                                 )
                         )
                 );
@@ -295,7 +296,9 @@ public class PacketPingBuilder {
                 result.add(
                         new WrappedGameProfile(
                                 UUID.fromString("0-0-0-0-0"),
-                                extras.getVariables(line, online, max, user)
+                                color(
+                                    extras.getVariables(line, online, max, user)
+                                )
                         )
                 );
             }
